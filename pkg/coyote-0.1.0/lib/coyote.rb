@@ -1,5 +1,3 @@
 module Coyote
-	def self.say_hello
-		puts 'herrro'
-	end
+	ROOT_PATH = Dir.pwd
 end

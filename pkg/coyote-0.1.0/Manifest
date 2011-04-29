@@ -1,4 +1,6 @@
 Manifest
 Rakefile
-coyote.gemspec
+bin/coyote
 lib/coyote.rb
+lib/coyote/builder.rb
+lib/coyote/generator.rb

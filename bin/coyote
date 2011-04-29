@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'rubygems'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
+require "coyote/builder"
+require "coyote/generator"
+
+case ARGV.first
+when 'build'
+	Coyote::Builder.new
+when 'generate'
+	Coyote::Generator.new
+else
+	Coyote::Builder.new
+end
