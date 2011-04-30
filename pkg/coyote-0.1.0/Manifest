@@ -4,3 +4,4 @@ bin/coyote
 lib/coyote.rb
 lib/coyote/builder.rb
 lib/coyote/generator.rb
+lib/coyote/output.rb
