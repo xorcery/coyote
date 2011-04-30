@@ -3,27 +3,28 @@ require 'yaml'
 module Coyote
   class Builder
 
-		attr_accessor :input, :output
+		attr_accessor :input
 
 		def initialize
 			@input = get_input_or_defaults
- 			@output = Coyote::Output.new
 			build
 		end
 
+		
 		def build
 			@input.each do |k,v|
 				input_files = @input[k]['files']
 				output_filename = @input[k]['output']
+				output = Coyote::Output.new output_filename
 
 				input_files.each do |filename|
-					puts filename
-					@output.append(filename)
+					output.append(filename)
 				end
 				
-				@output.save(output_filename)
+				output.save
 			end
 		end
+		
 
 		def get_input_or_defaults
 			yaml_file = "coyote.yaml"

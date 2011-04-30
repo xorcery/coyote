@@ -8,8 +8,6 @@ require "coyote/generator"
 require "coyote/output"
 
 case ARGV.first
-when 'build'
-	Coyote::Builder.new
 when 'generate'
 	Coyote::Generator.new
 else
