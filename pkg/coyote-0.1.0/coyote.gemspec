@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.email = %q{casey.ohara@imulus.com}
   s.executables = ["coyote"]
   s.extra_rdoc_files = ["bin/coyote", "lib/coyote.rb", "lib/coyote/builder.rb", "lib/coyote/generator.rb", "lib/coyote/output.rb"]
-  s.files = ["Manifest", "Rakefile", "bin/coyote", "lib/coyote.rb", "lib/coyote/builder.rb", "lib/coyote/generator.rb", "lib/coyote/output.rb", "coyote.gemspec"]
+  s.files = ["Manifest", "Rakefile", "bin/coyote", "config/coyote.yaml", "lib/coyote.rb", "lib/coyote/builder.rb", "lib/coyote/generator.rb", "lib/coyote/output.rb", "coyote.gemspec"]
   s.homepage = %q{http://github.com/caseyohara/coyote}
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Coyote"]
   s.require_paths = ["lib"]

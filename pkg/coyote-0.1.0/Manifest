@@ -1,6 +1,7 @@
 Manifest
 Rakefile
 bin/coyote
+config/coyote.yaml
 lib/coyote.rb
 lib/coyote/builder.rb
 lib/coyote/generator.rb

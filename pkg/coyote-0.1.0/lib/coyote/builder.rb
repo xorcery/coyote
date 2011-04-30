@@ -5,11 +5,10 @@ module Coyote
 
 		attr_accessor :input
 
-		def initialize
-			@input = get_input_or_defaults
+		def initialize(options)
+			@input = get_config_or_defaults
 			build
 		end
-
 		
 		def build
 			@input.each do |k,v|
@@ -24,9 +23,9 @@ module Coyote
 				output.save
 			end
 		end
-		
 
-		def get_input_or_defaults
+
+		def get_config_or_defaults
 			yaml_file = "coyote.yaml"
 
 			if File.exists?(yaml_file)

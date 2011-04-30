@@ -2,14 +2,26 @@
 
 require 'fileutils'
 require 'rubygems'
+require 'optparse'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
 require "coyote/builder"
 require "coyote/generator"
 require "coyote/output"
 
+
+options = {}
+OptionParser.new do |opts|
+  opts.on("-f", "--force", "Version") do |f|
+  	options[:force] = f
+  end
+end.parse!
+
+
 case ARGV.first
 when 'generate'
-	Coyote::Generator.new
+	Coyote::Generator.new options
 else
-	Coyote::Builder.new
+	Coyote::Builder.new options
 end
+
+
