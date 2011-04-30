@@ -30,6 +30,6 @@ module Coyote
 			end
 			print "+ Coyote config generated at #{Coyote::CONFIG_FILENAME}\n"
 			print "Coyote generated \n\n".green
-		end			
+		end
   end
 end
