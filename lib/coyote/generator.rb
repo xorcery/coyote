@@ -10,7 +10,7 @@ module Coyote
 		
 		def generate
 			if config_exists? && ! options[:force]
-				puts "Coyote config already exists in this directory. Use --force to overwrite."				
+				print "Coyote config already exists in this directory. Use --force to overwrite.\n".red				
 			elsif (!config_exists?) || (config_exists? && options[:force])
 				copy_config
 			end			
@@ -23,13 +23,13 @@ module Coyote
 		
 		# copy sample coyote.yaml to directory
 		def copy_config
-			puts "\n----- Generating Coyote"
+			print "\n----- Generating Coyote\n".bold
 			File.open("#{Coyote::CONFIG_PATH}/#{Coyote::CONFIG_FILENAME}") do |file|
 				output_file = File.open(Coyote::CONFIG_FILENAME, 'w+')
 				output_file.write(file.read)
 			end
-			puts "+ Coyote config generated at #{Coyote::CONFIG_FILENAME}"
-			puts "= Coyote generated \n\n"
+			print "+ Coyote config generated at #{Coyote::CONFIG_FILENAME}\n"
+			print "Coyote generated \n\n".green
 		end			
   end
 end

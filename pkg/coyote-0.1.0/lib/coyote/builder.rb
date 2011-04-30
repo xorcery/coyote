@@ -1,5 +1,3 @@
-require 'yaml'
-
 module Coyote
   class Builder
 
@@ -24,7 +22,7 @@ module Coyote
 					output.save
 				end
 			else
-				puts "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}"
+				print "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n".red
 			end
 		end
 
@@ -34,10 +32,10 @@ module Coyote
 				parsed = begin
 				  YAML.load(File.open(Coyote::CONFIG_FILENAME))
 				rescue ArgumentError => e
-				  puts "Could not parse YAML: #{e.message}"
+				  print "Could not parse YAML: #{e.message}\n".red
 				end
 			else
-				puts "Could not find a Coyote configuration file in this directory.\n\n Use 'coyote generate' to create one."
+				print "Could not find a Coyote configuration file in this directory.\n\n Use 'coyote generate' to create one.\n".red
 			end
 		end
 		

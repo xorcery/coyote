@@ -7,7 +7,7 @@ module Coyote
 			@output_filename = output_filename
 			@output_file = File.open(@output_filename, 'w+')
 			@input = ""
-			puts "\n----- Creating #{@output_filename}"
+			print "\n----- Creating #{@output_filename}\n".bold
 		end
 
 		# open file, add contents to output
@@ -17,15 +17,15 @@ module Coyote
 				@input += file.read
        	@input += "\n\n\n"
 			end
-			puts "+ Added #{filename}"
+			print "+ Added #{filename}\n"
 		end
 
 		# save output to file
 		def save
 			@output_file.write(@input)
-			puts "= Saved to #{@output_filename} \n\n"
+			print "Saved to #{@output_filename} \n\n".green
 		end
-
+		
 	end
 end
 			
