@@ -3,40 +3,46 @@ require 'yaml'
 module Coyote
   class Builder
 
-		attr_accessor :input
+		attr_accessor :config
 
 		def initialize(options)
-			@input = get_config_or_defaults
+			@config = get_config_or_defaults
 			build
 		end
 		
 		def build
-			@input.each do |k,v|
-				input_files = @input[k]['files']
-				output_filename = @input[k]['output']
-				output = Coyote::Output.new output_filename
-
-				input_files.each do |filename|
-					output.append(filename)
-				end
+			if config_defined?
+				@config.each do |k,v|
+					input_files = @config[k]['files']
+					output_filename = @config[k]['output']
+					output = Coyote::Output.new output_filename
+			
+					input_files.each do |filename|
+						output.append(filename)
+					end
 				
-				output.save
+					output.save
+				end
+			else
+				puts "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}"
 			end
 		end
 
 
 		def get_config_or_defaults
-			yaml_file = "coyote.yaml"
-
-			if File.exists?(yaml_file)
+			if File.exists?(Coyote::CONFIG_FILENAME)
 				parsed = begin
-				  YAML.load(File.open(yaml_file))
+				  YAML.load(File.open(Coyote::CONFIG_FILENAME))
 				rescue ArgumentError => e
 				  puts "Could not parse YAML: #{e.message}"
 				end
 			else
-				puts "Could not find Coyote configuration file"
+				puts "Could not find a Coyote configuration file in this directory.\n\n Use 'coyote generate' to create one."
 			end
+		end
+		
+		def config_defined?
+			@config.class == Hash && ! @config.empty?
 		end
 
   end

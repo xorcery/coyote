@@ -1,0 +1,15 @@
+# Example usage:
+
+# application:
+#   output: "application.js"
+#   files: 
+#     - "application/Application.Data.js"
+#     - "application/Application.Controller.js"
+#     - "application/Application.Interface.js"
+#     
+# jquery:
+#   output: "jquery/jquery.plugins.js"
+#   files:
+#     - "jquery/plugins/jquery.cookie.js"
+#     - "jquery/plugins/jquery.cycle.js"
+#     - "jquery/plugins/jquery.query.js"

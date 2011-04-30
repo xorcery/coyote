@@ -3,10 +3,6 @@ module Coyote
 		
 		attr_accessor :options
 		
-		@@config_path 		= File.expand_path(File.dirname(__FILE__) + "/../../config")
-		@@config_filename = "coyote.yaml"
-		@@copy_filename 	= "#{@@config_path}/#{@@config_filename}"		
-
 		def initialize(options)
 			@options = options
 			generate
@@ -15,24 +11,25 @@ module Coyote
 		def generate
 			if config_exists? && ! options[:force]
 				puts "Coyote config already exists in this directory. Use --force to overwrite."				
-			elsif config_exists? && options[:force] 
+			elsif (!config_exists?) || (config_exists? && options[:force])
 				copy_config
-			elsif ! config_exists?
-				copy_config
-			end
+			end			
 		end
 
 		# check to see if coyote.yaml already exists in directory
 		def config_exists?
-			File.exists?(@@config_filename)
+			File.exists?(Coyote::CONFIG_FILENAME)
 		end
 		
 		# copy sample coyote.yaml to directory
 		def copy_config
-			File.open(@@copy_filename) do |file|
-				output_file = File.open(@@config_filename, 'w+')
+			puts "\n----- Generating Coyote"
+			File.open("#{Coyote::CONFIG_PATH}/#{Coyote::CONFIG_FILENAME}") do |file|
+				output_file = File.open(Coyote::CONFIG_FILENAME, 'w+')
 				output_file.write(file.read)
 			end
+			puts "+ Coyote config generated at #{Coyote::CONFIG_FILENAME}"
+			puts "= Coyote generated \n\n"
 		end			
   end
 end
