@@ -2,13 +2,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{coyote}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Casey O'Hara"]
   s.date = %q{2011-04-30}
-  s.default_executable = %q{coyote}
-  s.description = %q{A command-line gem to combine multiple files}
+  s.description = %q{A command-line tool for combining and compressing JS files}
   s.email = %q{casey.ohara@imulus.com}
   s.executables = ["coyote"]
   s.extra_rdoc_files = ["bin/coyote", "lib/coyote.rb", "lib/coyote/builder.rb", "lib/coyote/generator.rb", "lib/coyote/output.rb"]
@@ -17,8 +16,8 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Coyote"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{coyote}
-  s.rubygems_version = %q{1.6.2}
-  s.summary = %q{A command-line gem to combine multiple files}
+  s.rubygems_version = %q{1.7.2}
+  s.summary = %q{Coyote is a command-line tool for combining and compressing JS files. It uses YAML for configuration and the Google Closure Compiler to compilation and compression.}
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
