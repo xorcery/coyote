@@ -24,13 +24,19 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<closure-compiler>, [">= 1.1.1"])
+      s.add_runtime_dependency(%q<term-ansicolor>, [">= 1.0.5"])
       s.add_development_dependency(%q<closure-compiler>, [">= 1.1.1"])
+      s.add_development_dependency(%q<term-ansicolor>, [">= 1.0.5"])
     else
       s.add_dependency(%q<closure-compiler>, [">= 1.1.1"])
+      s.add_dependency(%q<term-ansicolor>, [">= 1.0.5"])
       s.add_dependency(%q<closure-compiler>, [">= 1.1.1"])
+      s.add_dependency(%q<term-ansicolor>, [">= 1.0.5"])
     end
   else
     s.add_dependency(%q<closure-compiler>, [">= 1.1.1"])
+    s.add_dependency(%q<term-ansicolor>, [">= 1.0.5"])
     s.add_dependency(%q<closure-compiler>, [">= 1.1.1"])
+    s.add_dependency(%q<term-ansicolor>, [">= 1.0.5"])
   end
 end
