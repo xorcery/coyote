@@ -26,6 +26,11 @@ module Coyote
 			print "Saved to #{@output_filename} \n\n".green
 		end
 		
+		# compress output
+		def compress
+			print "Compiling #{@output_filename}...\n"
+			@input = Closure::Compiler.new.compile(@input)
+		end		
 	end
 end
 			

@@ -8,5 +8,6 @@ Echoe.new('coyote', '0.1.0') do |p|
   p.author         = "Casey O'Hara"
   p.email          = "casey.ohara@imulus.com"
   p.ignore_pattern = ["tmp/*", "script/*"]
-  p.development_dependencies = []
+  p.development_dependencies = ["closure-compiler >=1.1.1"]
+	p.runtime_dependencies = ["closure-compiler >=1.1.1"]
 end

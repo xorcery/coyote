@@ -2,6 +2,7 @@
 
 require 'fileutils'
 require 'rubygems'
+require 'closure-compiler'
 require 'optparse'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
 require "coyote/builder"

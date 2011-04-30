@@ -18,14 +18,17 @@ module Coyote
 					input_files.each do |filename|
 						output.append(filename)
 					end
-				
+
+					if @config[k]['compress']
+						output.compress
+					end
+
 					output.save
 				end
 			else
 				print "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n".red
 			end
 		end
-
 
 		def get_config_or_defaults
 			if File.exists?(Coyote::CONFIG_FILENAME)
