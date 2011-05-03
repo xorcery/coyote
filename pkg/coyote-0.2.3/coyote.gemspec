@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Casey O'Hara"]
-  s.date = %q{2011-04-30}
+  s.date = %q{2011-05-02}
   s.default_executable = %q{coyote}
   s.description = %q{A command-line tool for combining and compressing JS files}
   s.email = %q{casey.ohara@imulus.com}

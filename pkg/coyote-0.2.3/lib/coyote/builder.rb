@@ -5,21 +5,29 @@ module Coyote
 
 		def initialize(options)
 			@options = options
-			@config = get_config_or_defaults
+			@config = get_config_or_screw_off
 		end
 		
 		def build
-			if @config && config_defined?
-				@config.each do |k,v|
-					input_files = @config[k]['files']
-					output_filename = @config[k]['output']
+			if config_defined?
+				@config.each do |key,value|
+					input = value['input']
+					output_filename = value['output']
 					output = Coyote::Output.new output_filename
 			
-					input_files.each do |filename|
-						output.append(filename)
+					if input.class == Array
+						input.each do |input|
+							Dir.glob(input).each do |file|
+								output.append file								
+							end
+						end
+					elsif input.class == String 
+						Dir.glob(input).each do |file|
+							output.append file
+						end
 					end
 
-					if @config[k]['compress'] || @options[:compress]
+					if value['compress'] || @options[:compress]
 						output.compress
 					end
 
@@ -31,12 +39,13 @@ module Coyote
 		end
 
 
-		def get_config_or_defaults
+		def get_config_or_screw_off
 			if File.exists?(Coyote::CONFIG_FILENAME)
-				config = begin
-				  YAML.load(File.open(Coyote::CONFIG_FILENAME))
+				begin
+				  return YAML.load(File.open(Coyote::CONFIG_FILENAME))
 				rescue ArgumentError => e
 				  print "Could not parse YAML: #{e.message}\n".red
+				  return false
 				end
 			else
 				print "Could not find a Coyote configuration file in this directory. Use 'coyote generate' to create one.\n".red
@@ -45,7 +54,7 @@ module Coyote
 		end
 		
 		def config_defined?
-			@config.class == Hash && ! @config.empty?
+			@config && @config.class == Hash && ! @config.empty?
 		end
   end
 end

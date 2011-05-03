@@ -10,7 +10,6 @@ require "coyote/generator"
 require "coyote/output"
 
 
-
 options = {}
 OptionParser.new do |opts|
   opts.on("-f", "--force", "Force") do |f|

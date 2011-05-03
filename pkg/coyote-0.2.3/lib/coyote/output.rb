@@ -13,13 +13,17 @@ module Coyote
 
 		# open file, add contents to output
 		def append(filename)
-			@input_files.push(filename)
-			File.open(filename, 'r') do |file|
-				@input += "/***** #{filename} *****/\n"
-				@input += file.read
-       	@input += "\n\n\n"
+		  if File.exists?(filename) 
+			  @input_files.push(filename)
+			  File.open(filename, 'r') do |file|
+			  	@input += "/***** #{filename} *****/\n"
+			  	@input += file.read
+         	@input += "\n\n\n"
+			  end
+			  print "+ Added #{filename}\n"
+			else
+			  print "! Error adding #{filename}\n"
 			end
-			print "+ Added #{filename}\n"
 		end
 
 		# save output to file
@@ -27,6 +31,7 @@ module Coyote
 			add_file_comments
 			@output_file.write(@input)
 			print "Saved to #{@output_filename} \n\n".green
+			@output_file.close
 		end
 
 		def add_file_comments
