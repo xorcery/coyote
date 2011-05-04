@@ -12,15 +12,16 @@ require "coyote/output"
 
 options = {}
 OptionParser.new do |opts|
-  opts.on("-f", "--force", "Force") do |f|
-  	options[:force] = f
-  end
-  opts.on("-c", "--compress", "Compress") do |c|
-  	options[:compress] = c
+  opts.on("-f", "--force", "Force") do |o|
+  	options[:force] = o
   end
 
-  opts.on("-a", "--all", "Compress All") do |a|
-  	options[:compress_all] = a
+  opts.on("-c", "--compress", "Compress") do |o|
+  	options[:compress] = o
+  end
+
+  opts.on("-a", "--all", "Compress All") do |o|
+  	options[:all] = o
   end
 end.parse!
 
