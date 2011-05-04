@@ -18,6 +18,10 @@ OptionParser.new do |opts|
   opts.on("-c", "--compress", "Compress") do |c|
   	options[:compress] = c
   end
+
+  opts.on("-a", "--all", "Compress All") do |a|
+  	options[:compress_all] = a
+  end
 end.parse!
 
 
@@ -29,5 +33,3 @@ when 'build'
 else
 	Coyote::Builder.new(options).build
 end
-
-
