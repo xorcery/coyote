@@ -45,7 +45,7 @@ module Coyote
 
 		# compress output
 		def compress
-			print "Compiling #{@output_filename}...\n"
+			print "Compiling #{@output_filename}...\n".yellow
 			@input = Closure::Compiler.new.compile(@input)
 		end
 	end

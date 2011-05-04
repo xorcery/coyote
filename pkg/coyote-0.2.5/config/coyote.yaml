@@ -1,22 +1,5 @@
-# Example usages:
+# Coyote Compressor configuration
 
-# Explicitly defining individual files to join
-application:
-  compress: true
-  output: application.js
-  input: 
-    - application/Application.Data.js
-    - application/Application.Controller.js
-    - application/Application.Interface.js
-
-# Recursively searching and adding
-application_classes:
-  compress: false
-  output:   application.classes.js
-  input:    application/**/*.class.js
-
-# Adding by extension
-jquery:
-  compress: true
-  output:   jquery.plugins.js
-  input:    jquery/plugins/*.js
+output: scripts.js
+compress: true
+input:

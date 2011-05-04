@@ -19,10 +19,6 @@ OptionParser.new do |opts|
   opts.on("-c", "--compress", "Compress") do |o|
   	options[:compress] = o
   end
-
-  opts.on("-a", "--all", "Compress All") do |o|
-  	options[:all] = o
-  end
 end.parse!
 
 

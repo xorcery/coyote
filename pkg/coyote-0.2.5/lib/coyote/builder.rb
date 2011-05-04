@@ -1,49 +1,25 @@
 module Coyote
   class Builder
 
-		attr_accessor :config, :options, :settings, :input_files
+		attr_accessor :config, :options, :input_files
 
 		def initialize(options)
 			@options = options
 			@config = get_config_or_screw_off
-			@settings = @config['settings']
 			@input_files = []
 		end
 		
 
 		def build
-			if @options[:all]
-				build_all
-			else
-				build_blocks
+			output = Coyote::Output.new "#{@config['output']}"
+			
+			@config['input'].each do |key, value|
+				add_input_files key
 			end
-		end
-		
-
-		def build_blocks
-			@config['javascript'].each do |key,value|
-				add_input_files value['input']
-				output = Coyote::Output.new "#{@settings['javascript_output_dir']}#{value['output']}"
-				send_input_to_output output
-				compress_and_save output, value['compress']
-		
-				# clear out for next
-				@input_files = [] 
-			end			
-		end
-		
-		
-		def build_all
-			output = Coyote::Output.new "#{@settings['javascript_output_dir']}#{@settings['javascript_output_file']}"
-			
-			@config['javascript'].each do |key, value|
-				add_input_files value['input']
-			end		
-			
+									
 			send_input_to_output output
 			compress_and_save output
 		end
-		
 		
 		def add_input_files(input)
 			if input.class == Array
@@ -65,8 +41,8 @@ module Coyote
 		end
 		
 		
-		def compress_and_save(output, force=false)
-			if @options[:compress] || (@settings['compress'] && force.class == NilClass) || force
+		def compress_and_save(output)
+			if @options[:compress] || @config['compress']
 				output.compress
 			end
 
