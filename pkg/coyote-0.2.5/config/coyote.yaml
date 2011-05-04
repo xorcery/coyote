@@ -1,5 +1,0 @@
-# Coyote Compressor configuration
-
-output: scripts.js
-compress: true
-input:
