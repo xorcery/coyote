@@ -1,4 +1,4 @@
-// require application.interface
+// require application/interface
 
 $(document).ready(function(){
 

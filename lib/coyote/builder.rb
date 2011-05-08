@@ -1,13 +1,12 @@
 module Coyote
   class Builder
 
-		attr_accessor :config, :options, :input_files, :input_classes
+		attr_accessor :config, :options, :input_files
 
 		def initialize(options)
 			@options = options
 			@config = get_config_or_screw_off
 			@input_files = []
-			@input_classes = []
 		end
 
 
@@ -39,9 +38,6 @@ module Coyote
 				if ! @input_files.include? file
 					@input_files.push file
 				end
-				if ! @input_classes.include? file				
-					@input_classes.push file.gsub(/([.](js))/, '').gsub(/(["]|['])/, '').split('/').last
-				end
 			end
 		end
 
@@ -53,9 +49,10 @@ module Coyote
 				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/x)
 				matches = file.scan(pattern)
 				matches.each do |match|
-					required.push match.last.strip.to_s.gsub(/([.](js))/, '').gsub(/(["]|['])/, '').split('/').last
+					required.push match.last.strip.to_s.gsub(/([.](js))/, '').gsub(/(["]|['])/, '')
 				end
 			end
+			puts required
 			return required
 		end	
 
