@@ -13,7 +13,6 @@ module Coyote
 
 		def build
 			@config['input'].each { |input| add_input input }
-			add_requires
 			output = Coyote::Output.new "#{@config['output']}"
 			send_files_to_output output
 			compress_and_save output
@@ -33,32 +32,25 @@ module Coyote
 		
 		def find_and_add_files(input)
 			Dir.glob(input).each do |file|
-				@input_files.push file
-				@input_classes.push file.gsub(/([.](js))/, '').gsub(/(["]|['])/, '').split('/').last
-			end
-		end
-
-		
-		def add_requires
-			@input_files.each do |file|
 				required = find_requires file
 				required.each do |requirement|
-					if ! @input_classes.include? requirement
-						find_and_add_files "**/#{requirement}.js"
-					end
-				end				
+					find_and_add_files "**/#{requirement}.js"
+				end
+				if ! @input_files.include? file
+					@input_files.push file
+				end
+				if ! @input_classes.include? file				
+					@input_classes.push file.gsub(/([.](js))/, '').gsub(/(["]|['])/, '').split('/').last
+				end
 			end
 		end
 
-		# move this into output and run at compile time
-		# so the file is only open once
-		# this will also make inserting the classes 
-		# in the right place easier		
+
 		def find_requires(input_file)
 			required = []
 			File.open(input_file) do |file|
 				file = file.read
-				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/)
+				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/x)
 				matches = file.scan(pattern)
 				matches.each do |match|
 					required.push match.last.strip.to_s.gsub(/([.](js))/, '').gsub(/(["]|['])/, '').split('/').last

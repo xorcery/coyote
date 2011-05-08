@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+require 'rubygems'
+require 'closure-compiler'
+require 'optparse'
+require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/builder")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/generator")
+require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/output")
+
+
+options = {}
+OptionParser.new do |opts|
+  opts.on("-f", "--force", "Force") do |o|
+  	options[:force] = o
+  end
+
+  opts.on("-c", "--compress", "Compress") do |o|
+  	options[:compress] = o
+  end
+end.parse!
+
+
+case ARGV.first
+when 'generate'
+	Coyote::Generator.new(options).generate
+when 'build'
+	Coyote::Builder.new(options).build
+else
+	Coyote::Builder.new(options).build
+end

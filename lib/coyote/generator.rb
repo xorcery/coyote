@@ -37,7 +37,7 @@ module Coyote
 				output_file = File.open(Coyote::CONFIG_FILENAME, 'w+')
 				generated = file.read
 				@files_found.each do |file|
-				  generated += "  - #{file} \n"
+				  generated += "  - #{file}\n"
 				end
 				output_file.write(generated)
 			end
