@@ -10,14 +10,14 @@ require "coyote/generator"
 require "coyote/output"
 
 
-
 options = {}
 OptionParser.new do |opts|
-  opts.on("-f", "--force", "Force") do |f|
-  	options[:force] = f
+  opts.on("-f", "--force", "Force") do |o|
+  	options[:force] = o
   end
-  opts.on("-c", "--compress", "Compress") do |c|
-  	options[:compress] = c
+
+  opts.on("-c", "--compress", "Compress") do |o|
+  	options[:compress] = o
   end
 end.parse!
 
@@ -25,8 +25,8 @@ end.parse!
 case ARGV.first
 when 'generate'
 	Coyote::Generator.new(options).generate
+when 'build'
+	Coyote::Builder.new(options).build
 else
 	Coyote::Builder.new(options).build
 end
-
-
