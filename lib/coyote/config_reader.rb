@@ -1,5 +1,5 @@
 module Coyote
-  class Builder
+  class ConfigReader
 
 		attr_accessor :config, :options, :input_files
 
@@ -8,13 +8,18 @@ module Coyote
 			@config = get_config_or_screw_off
 			@input_files = []
 		end
+		
+		def output_file
+		  return @config['output']
+		end
+		
+		def should_compress?
+		  return @config['compress'] || options[:compress]
+		end
 
-
-		def build
+		def find_input_files
+		  @input_files = []
 			@config['input'].each { |input| add_input input }
-			output = Coyote::Output.new "#{@config['output']}"
-			send_files_to_output output
-			compress_and_save output
 		end
 
 
@@ -23,7 +28,7 @@ module Coyote
 				input.each do |input|
 					find_and_add_files input
 				end
-			elsif input.class == String
+			elsif input.class == String and @config['output'] != input
 				find_and_add_files input
 			end
 		end
@@ -49,28 +54,12 @@ module Coyote
 				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/x)
 				matches = file.scan(pattern)
 				matches.each do |match|
-					required.push match.last.strip.to_s.gsub(/([.](js))/, '').gsub(/(["]|['])/, '')
+					required.push match.last.strip.to_s.gsub(/\.js/, '').gsub(/(\"|\')/, '')
 				end
 			end
 			puts required
 			return required
 		end	
-
-
-		def send_files_to_output(output)
-			@input_files.uniq.each do |file|
-				output.append file
-			end
-		end
-
-
-		def compress_and_save(output)
-			if @options[:compress] || @config['compress']
-				output.compress
-			end
-
-			output.save
-		end
 
 
 		def get_config_or_screw_off

@@ -3,6 +3,11 @@ Rakefile
 bin/coyote
 config/coyote.yaml
 lib/coyote.rb
-lib/coyote/builder.rb
+lib/coyote/config_reader.rb
 lib/coyote/generator.rb
 lib/coyote/output.rb
+lib/coyote/fs_listener.rb
+lib/coyote/fs_listeners/darwin.rb
+lib/coyote/fs_listeners/linux.rb
+lib/coyote/fs_listeners/polling.rb
+lib/coyote/fs_listeners/windows.rb

@@ -1,19 +1,26 @@
 module Coyote
   class Output
 
-		attr_accessor :input, :input_files, :output_file, :output_filename
+		attr_accessor :input, :input_files, :output_file, :output_filename, :compress
 
-		def initialize(output_filename)
+		def initialize(output_filename, compress = false)
 			@output_filename = output_filename
 			@output_file = File.open(@output_filename, 'w+')
 			@input_files = []
 			@input = ""
+			@compress = compress
 			print "\n----- Creating #{@output_filename}\n".bold
 		end
 
+    def add_files(files)
+      files.each do |file|
+        append(file)
+      end
+    end
+    
 		# open file, add contents to output
 		def append(filename)
-		  if File.exists?(filename) 
+		  if File.exists?(filename) and ! @input_files.inlude?(filename)
 			  @input_files.push(filename)
 			  File.open(filename, 'r') do |file|
 			  	@input += "/***** #{filename} *****/\n"
@@ -29,6 +36,9 @@ module Coyote
 		# save output to file
 		def save
 			add_file_comments
+			
+			compress if @compress
+			
 			@output_file.write(@input)
 			print "Saved to #{@output_filename} \n\n".green
 			@output_file.close

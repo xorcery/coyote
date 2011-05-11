@@ -5,28 +5,44 @@ require 'rubygems'
 require 'closure-compiler'
 require 'optparse'
 require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
-require "coyote/builder"
 require "coyote/generator"
 require "coyote/output"
+require "coyote/config_reader"
 
 
-options = {}
+@options = {}
 OptionParser.new do |opts|
   opts.on("-f", "--force", "Force") do |o|
-  	options[:force] = o
+  	@options[:force] = o
   end
 
   opts.on("-c", "--compress", "Compress") do |o|
-  	options[:compress] = o
+  	@options[:compress] = o
   end
 end.parse!
 
+
+def coyote_the_sources
+  reader = Coyote::ConfigReader.new(@options)
+  reader.find_input_files
+  
+  output = Coyote::Output.new(reader.output_file, reader.should_compress?)
+  ouput.add_files(reader.input_files)
+  output.save
+end
 
 case ARGV.first
 when 'generate'
 	Coyote::Generator.new(options).generate
 when 'build'
-	Coyote::Builder.new(options).build
+  coyote_the_sources
 else
-	Coyote::Builder.new(options).build
+  coyote_the_sources
+  
+  listener = Coyote::FSListener.select_and_init
+  listener.on_change do |files|
+    puts files
+  end
+  
+  listener.start
 end
