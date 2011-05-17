@@ -74,7 +74,7 @@ module Coyote
 					end
 				rescue ArgumentError => e
 				  print "Could not parse YAML: #{e.message}\n".red
-				  return false
+				  exit
 				end
 			else
 				print "Could not find a Coyote configuration file in this directory. Use 'coyote generate' to create one.\n".red

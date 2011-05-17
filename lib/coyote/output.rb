@@ -1,3 +1,5 @@
+require  "rexml/document"
+
 module Coyote
   class Output
 
@@ -56,7 +58,16 @@ module Coyote
 		# compress output
 		def compress
 			print "Compiling #{@output_filename}...\n".yellow
-			@input = Closure::Compiler.new.compile(@input)
+			compiler = ClosureCompiler.new.compile(@input)
+			if compiler.success?
+			  @input = compiler.compiled_code
+			elsif compiler.file_too_big?
+			  print "Input code too big for API, creating uncompiled file\n".red
+			elsif compiler.errors
+			  print "Google closure API failed to compile, creating uncompiled file\n".red
+			  print "Errors: \n".red
+			  print "#{compiler.errors.to_s}\n\n".red
+			end  
 		end
 	end
 end

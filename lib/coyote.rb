@@ -4,6 +4,7 @@ require 'coyote/config_reader'
 require 'coyote/fs_listener'
 require 'coyote/generator'
 require 'coyote/output'
+require 'coyote/closure_compiler'
 
 include Term::ANSIColor
 
