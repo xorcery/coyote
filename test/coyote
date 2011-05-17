@@ -1,32 +1,64 @@
 #!/usr/bin/env ruby
-
+$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'fileutils'
 require 'rubygems'
 require 'closure-compiler'
 require 'optparse'
-require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote")
-require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/builder")
-require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/generator")
-require File.expand_path(File.dirname(__FILE__) + "/../lib/coyote/output")
+require 'coyote'
 
-
-options = {}
+@options = {}
 OptionParser.new do |opts|
   opts.on("-f", "--force", "Force") do |o|
-  	options[:force] = o
+  	@options[:force] = o
   end
 
   opts.on("-c", "--compress", "Compress") do |o|
-  	options[:compress] = o
+  	@options[:compress] = o
   end
 end.parse!
 
+def config_file_reader(rebuild = false)
+  if nil == @reader or rebuild
+    @reader = Coyote::ConfigReader.new(@options)
+    @reader.find_input_files
+  end
+  
+  return @reader
+end
+
+def coyote_the_sources
+  
+  reader = config_file_reader
+  
+  output = Coyote::Output.new(reader.output_file, reader.should_compress?)
+  output.add_files(reader.input_files)
+  output.save
+end
 
 case ARGV.first
 when 'generate'
-	Coyote::Generator.new(options).generate
+	Coyote::Generator.new(@options).generate
 when 'build'
-	Coyote::Builder.new(options).build
+  coyote_the_sources
 else
-	Coyote::Builder.new(options).build
+  
+  coyote_the_sources
+  
+  listener = Coyote::FSListener.select_and_init
+  
+  listener.on_change do |files|
+    if files.include?(Coyote::CONFIG_FILENAME)
+      print "Config file changed.  Reading it in.\n".yellow
+      config_file_reader(true) #rebuild the sources of the config file
+      coyote_the_sources
+    else
+      #see if any of the files in the config file changed
+      changed_watched_files = config_file_reader.input_files & files
+      if changed_watched_files.length > 0
+        coyote_the_sources
+      end
+    end
+  end
+
+  listener.start
 end

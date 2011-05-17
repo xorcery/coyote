@@ -1,5 +1,10 @@
 require 'yaml'
 require 'term/ansicolor'
+require 'coyote/config_reader'
+require 'coyote/fs_listener'
+require 'coyote/generator'
+require 'coyote/output'
+
 include Term::ANSIColor
 
 module Coyote

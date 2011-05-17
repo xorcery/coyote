@@ -8,7 +8,7 @@ module Coyote
     end
 
     def on_change(&callback)
-      @fsevent.watch Dir.pwd do |modified_dirs|
+      @fsevent.watch [Dir.pwd] do |modified_dirs|
         files = modified_files(modified_dirs)
         update_last_event
         callback.call(files)

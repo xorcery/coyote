@@ -20,7 +20,7 @@ module Coyote
     
 		# open file, add contents to output
 		def append(filename)
-		  if File.exists?(filename) and ! @input_files.inlude?(filename)
+		  if File.exists?(filename) and ! @input_files.include?(filename)
 			  @input_files.push(filename)
 			  File.open(filename, 'r') do |file|
 			  	@input += "/***** #{filename} *****/\n"

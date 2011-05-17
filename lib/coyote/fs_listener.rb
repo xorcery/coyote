@@ -1,3 +1,5 @@
+require 'digest'
+
 module Coyote
   autoload :Darwin,  'coyote/fs_listeners/darwin'
   autoload :Linux,   'coyote/fs_listeners/linux'
@@ -51,7 +53,7 @@ module Coyote
 
     def file_content_modified?(path)
       sha1_checksum = Digest::SHA1.file(path).to_s
-      if sha1_checksums_hash[path] != sha1_checksum
+      if @sha1_checksums_hash[path] != sha1_checksum
         @sha1_checksums_hash[path] = sha1_checksum
         true
       else
