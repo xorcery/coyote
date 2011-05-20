@@ -28,7 +28,7 @@ Usage
 
 	$ coyote build
 
-**Wildcarding input**
+**Input wildcards**
 
 You can wildcard your input parameters to find files.
 
