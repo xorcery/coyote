@@ -29,6 +29,7 @@ Usage
 	$ coyote build
 
 **Wildcarding input**
+
 You can wildcard your input parameters to find files.
 
 	- **/*.js # recursively find all files with the extension '.js'
@@ -36,6 +37,7 @@ You can wildcard your input parameters to find files.
 	
 
 **Dependency discovery**
+
 If your JavaScript files depend on other files or libraries to run, you can define those dependencies so Coyote will include them in the compiled output before the files that require them.
 
 	// require /jquery/jquery.js
