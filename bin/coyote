@@ -16,8 +16,8 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-def config_file_reader
-  unless @reader
+def config_file_reader(rebuild = false)
+  if nil == @reader or rebuild
     @reader = Coyote::ConfigReader.new(@options)
     @reader.find_input_files
   end
