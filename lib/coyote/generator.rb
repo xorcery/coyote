@@ -42,7 +42,7 @@ module Coyote
 				output_file.write(generated)
 			end
 			print "Coyote generated at #{Coyote::CONFIG_FILENAME}\n\n".green
-			Coyote::Notification.new "Coyote generated at #{Coyote::CONFIG_FILENAME}\n\n"			
+			Coyote::Notification.new "Coyote generated at #{Coyote::CONFIG_FILENAME}"			
 		end
   end
 end
