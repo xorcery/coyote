@@ -11,7 +11,7 @@ include Term::ANSIColor
 
 module Coyote
 	APP_NAME = "Coyote"
-	VERSION = "0.3.0"
+	VERSION = "0.3.1"
 	ROOT_PATH = Dir.pwd
 	CONFIG_PATH = File.expand_path(File.dirname(__FILE__) + "/../config")
 	CONFIG_FILENAME = "coyote.yaml"
