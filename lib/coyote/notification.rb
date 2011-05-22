@@ -3,8 +3,8 @@ require 'appscript'
 module Coyote
   class Notification
 	  include Appscript
-		
-		attr_accessor :growl, :application, :icon, :default_notifications, :notifications 
+
+		attr_accessor :growl, :application, :icon, :default_notifications, :notifications
 
 		def initialize(message)
 			@growl = app("GrowlHelperApp");
@@ -27,14 +27,14 @@ module Coyote
 		# trigger a growl notification
     def notify(message)
 			options = { :title => @application,
-									:description => message, 
-									:application_name => @application, 
-									:image_from_location => @icon, 
-									:sticky => false, 
-									:priority => 0, 
-									:with_name => notifications.first }	
+									:description => message,
+									:application_name => @application,
+									:image_from_location => @icon,
+									:sticky => false,
+									:priority => 0,
+									:with_name => notifications.first }
       @growl.notify options
-    end		
+    end
 
 	end
 end

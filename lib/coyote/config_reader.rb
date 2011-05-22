@@ -57,7 +57,6 @@ module Coyote
 					required.push match.last.strip.to_s.gsub(/\.js/, '').gsub(/(\"|\')/, '')
 				end
 			end
-			#puts required
 			return required
 		end	
 

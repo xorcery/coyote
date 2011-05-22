@@ -1,9 +1,11 @@
 Manifest
+README.md
 Rakefile
 bin/coyote
+config/coyote-icon.png
 config/coyote.yaml
-coyote.yaml
 lib/coyote.rb
+lib/coyote/closure_compiler.rb
 lib/coyote/config_reader.rb
 lib/coyote/fs_listener.rb
 lib/coyote/fs_listeners/darwin.rb
@@ -11,10 +13,8 @@ lib/coyote/fs_listeners/linux.rb
 lib/coyote/fs_listeners/polling.rb
 lib/coyote/fs_listeners/windows.rb
 lib/coyote/generator.rb
+lib/coyote/notification.rb
 lib/coyote/output.rb
-scripts.js
-test.txt
-test/coyote
 test/javascript/application.js
 test/javascript/application/controller.js
 test/javascript/application/interface.js

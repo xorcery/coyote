@@ -43,6 +43,9 @@ module Coyote
 			
 			@output_file.write(@input)
 			print "Saved to #{@output_filename} \n\n".green
+			
+			Coyote::Notification.new "Successfully saved to #{@output_filename}"
+
 			@output_file.close
 		end
 
@@ -58,9 +61,12 @@ module Coyote
 		# compress output
 		def compress
 			print "Compiling #{@output_filename}...\n".yellow
+			Coyote::Notification.new "Compiling #{@output_filename}..."
+						
 			compiler = ClosureCompiler.new.compile(@input)
 			if compiler.success?
 			  @input = compiler.compiled_code
+				add_file_comments
 			elsif compiler.file_too_big?
 			  print "Input code too big for API, creating uncompiled file\n".red
 			elsif compiler.errors
