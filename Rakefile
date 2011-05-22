@@ -11,7 +11,7 @@ Echoe.new(Coyote::APP_NAME.downcase, Coyote::VERSION) do |p|
   p.url            = "http://github.com/imulus/coyote"
   p.author         = "Imulus"
   p.email          = "developer@imulus.com"
-  p.ignore_pattern = ["tmp/*", "script/*", "test/*"]
+  p.ignore_pattern = ["tmp/*", "script/*", "test/*", "assets/*"]
   p.development_dependencies = ["term-ansicolor >=1.0.5", "rb-appscript >=0.6.1"]
 	p.runtime_dependencies = ["term-ansicolor >=1.0.5", "rb-appscript >=0.6.1"]
 end
