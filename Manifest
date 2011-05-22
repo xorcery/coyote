@@ -1,6 +1,7 @@
 Manifest
 README.md
 Rakefile
+assets/coyote-icon.psd
 bin/coyote
 config/coyote-icon.png
 config/coyote.yaml

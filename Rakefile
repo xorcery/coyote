@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'rake'
 require 'echoe'
-require "Coyote"
+
+$: << File.expand_path(File.dirname(__FILE__) + "/lib")
+require 'coyote'
 
 Echoe.new(Coyote::APP_NAME.downcase, Coyote::VERSION) do |p|
   p.description    = "An intelligent command-line tool for combining and compressing JavaScript files."
