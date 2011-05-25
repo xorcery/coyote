@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'rbconfig'
 require 'rake'
 require 'echoe'
 
@@ -12,6 +13,20 @@ Echoe.new(Coyote::APP_NAME.downcase, Coyote::VERSION) do |p|
   p.author         = "Imulus"
   p.email          = "developer@imulus.com"
   p.ignore_pattern = ["tmp/*", "script/*", "test/*", "assets/*"]
-  p.development_dependencies = ["term-ansicolor >=1.0.5", "rb-appscript >=0.6.1"]
-	p.runtime_dependencies = ["term-ansicolor >=1.0.5", "rb-appscript >=0.6.1"]
+  
+  dependencies = Array.new
+  dependencies << "term-ansicolor >=1.0.5"
+  target_os = Config::CONFIG['target_os']
+  
+  if target_os =~ /darwin/i
+    dependencies << "rb-fsevent >=0.4.0"
+    dependencies << "rb-appscript >=0.6.1"
+  elsif target_os =~ /linux/i
+    dependencies << "rb-inotify >=0.8.4"
+  elsif target_os =~ /mswin|mingw/i
+    dependencies << "rb-fchange >=0.0.5"
+  end
+  
+  p.development_dependencies = dependencies
+	p.runtime_dependencies = dependencies
 end
