@@ -2,76 +2,149 @@
 <html>
 <head>
   <meta charset='utf-8'>
+  <title>Coyote | An intelligent command-line tool for combining and compressing your JavaScript files</title>
+	<meta name="description" content="An intelligent command-line tool for combining and compressing your JavaScript files" />
+	<meta name="keywords" content="Coyote, JavaScript, compressor, Imulus" />
 
-  <title>imulus/coyote @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #1e3b52;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #e1c4ad; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #e1c4ad; }
-    h3 { text-align: center; color: #e1c4ad; }
-    a { color: #e1c4ad; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
+	<link rel="stylesheet" href="./css/reset.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./css/fonts.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
 </head>
 
 <body>
-  <a href="http://github.com/imulus/coyote"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-  <div id="container">
+<div id="header">
+	<div class="inner autoclear">
+		
+		<div class="left">
+			<h1><a href="/">Coyote</a></h1>
+		</div>
 
-    <div class="download">
-      <a href="http://github.com/imulus/coyote/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/imulus/coyote/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
+		<div class="right">
+			<h2>An intelligent command-line tool for <br />combining and compressing your JavaScript files.</h2>
+			<p>Coyote concatenates your JS files, combining them into a single file with the option of running the output through the Google Closure Compiler before save. Coyote automatically observes your source files for changes and will recompile on the fly for easy development.</p>
+		</div>
 
-    <h1><a href="http://github.com/imulus/coyote">coyote</a>
-      <span class="small">by <a href="http://github.com/imulus">imulus</a></span></h1>
-
-    <div class="description">
-      An intelligent command-line tool for combining and compressing JavaScript files.
-    </div>
-
-    <h2>Authors</h2>
-<p>Casey O'Hara (casey.ohara@imulus.com)<br/>Bryce Hammond (bryce.hammond@imulus.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Imulus (developer@imulus.com)<br/>      </p>
+	</div>
+</div>
 
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/imulus/coyote/zipball/master">zip</a> or
-      <a href="http://github.com/imulus/coyote/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/imulus/coyote</pre>
-    </p>
 
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/imulus/coyote">imulus/coyote</a>
-    </div>
+<div id="container">
 
-  </div>
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Installation</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> gem install coyote</code>
+		</div>
+	</div>
 
-  
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Configuration</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> cd myproject/scripts <br /> <b>$</b> coyote generate	</code>
+			<p class="description">This will create the configuration file at coyote.yaml and will find any .js files and automatically add them to the input parameter. Open coyote.yaml and modify the input and output configurations to meet your needs. Coyote will combine the input files in the order you define.</p>
+		</div>
+	</div>
+
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Usage</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> coyote</code>
+			<p class="description">This will start the Coyote "server" -- the directory watcher mechanism. One started, any changes made to your source files will automatically trigger the compiler.</p>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Running Manually</h3>
+		</div>
+		<div class="right">
+			<code><b>$</b> coyote build</code>
+			<p class="description">This will trigger the compiler without the "server" for a one-time build and save.</p>
+		</div>
+	</div>	
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Input Wildcards</h3>
+		</div>
+		<div class="right">
+			<p>You can wildcard your input parameters to find files.</p>
+			<code>- **/*.js <i># recursively find all files with the extension '.js'</i><br />- /jquery/plugins/*.js <i># find all .js files in the directory</i></code>
+			<p class="description">This will trigger the compiler without the "server" for a one-time build and save.</p>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Dependency Discovery</h3>
+		</div>
+		<div class="right">
+			<p><strong>To include a dependency, put a require comment in the top of your JS file</strong></p>
+			<p>If your JavaScript files depend on other files or libraries to run, you can define those dependencies so Coyote will include them in the compiled output before the files that require them.</p>
+			<code>// require /jquery/jquery.js</code>
+			<br />
+			<code>// require jquery</code>
+			<br />
+			<p>When you don't define an explicit path to the file, as in the example above, Coyote will recursively search for a file of that name. "// require jquery" will search the entire directory for the file "jquery.js"</p>
+			<p class="description">Dependencies are searched for relative to the top level of your directory -- where your coyote.yaml config file is located.</p>			
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Options</h3>
+		</div>
+		<div class="right">
+			<p><strong>Force compression</strong></p>
+			<code><b>$</b> coyote -c</code>
+			<br />
+			<code><b>$</b> coyote build -c</code>
+		</div>
+	</div>
+	
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Contribute</h3>
+		</div>
+		<div class="right">
+			<p><strong>We want your help. Fork us so we can make Coyote better.</strong></p>
+			<code><b>$</b> git clone git://github.com/imulus/coyote</code>
+		</div>
+	</div>
+	
+	<div class="section autoclear">
+		<div class="left">
+			<h3>Download</h3>
+		</div>
+		<div class="right">
+		  <p> 
+		    You can download this project in either
+		    <a href="http://github.com/imulus/coyote/zipball/master">zip</a> or
+		    <a href="http://github.com/imulus/coyote/tarball/master">tar</a> formats.
+		  </p>
+			<p class="description">or get the source code on GitHub : <a href="http://github.com/imulus/coyote">imulus/coyote</a></p>
+		</div>
+	</div>	
+	
+</div> <!-- end: #container -->
+
+
+<div id="footer">
+	<a href="http://www.imulus.com">
+		<img src="./images/imulus.png" />
+	</a>
+</div>
+
+
+<a href="http://github.com/imulus/coyote"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 </body>
 </html>
