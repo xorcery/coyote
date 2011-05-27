@@ -68,15 +68,16 @@ module Coyote
 					if config.class == Hash && ! config.empty?
 				  	return config
 					else
-						print "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n".red
+					  
+            Coyote::Notification.new "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n", "failure"					  
 						exit(0)
 					end
 				rescue ArgumentError => e
-				  print "Could not parse YAML: #{e.message}\n".red
+          Coyote::Notification.new "Could not parse YAML: #{e.message}\n", "failure"
 				  exit
 				end
 			else
-				print "Could not find a Coyote configuration file in this directory. Use 'coyote generate' to create one.\n".red
+        Coyote::Notification.new "Could not find a Coyote configuration file in this directory. Use 'coyote generate' to create one.\n", "failure"
 				exit
 			end
 		end

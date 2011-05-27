@@ -47,7 +47,7 @@ else
   
   listener.on_change do |files|
     if files.include?(Coyote::CONFIG_FILENAME)
-      print "Config file changed.  Reading it in.\n".yellow
+			Coyote::Notification.new "Config file changed.  Reading it in.\n", "warning"      
       config_file_reader(true) #rebuild the sources of the config file
       coyote_the_sources
     else

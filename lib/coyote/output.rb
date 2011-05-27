@@ -19,7 +19,7 @@ module Coyote
         append(file)
       end
     end
-    
+
 		# open file, add contents to output
 		def append(filename)
 		  if File.exists?(filename) and ! @input_files.include?(filename)
@@ -31,21 +31,16 @@ module Coyote
 			  end
 			  print "+ Added #{filename}\n"
 			else
-			  print "! Error adding #{filename}\n"
+			  Coyote::Notification.new "! Error adding #{filename}\n", "failure"
 			end
 		end
 
 		# save output to file
 		def save
 			add_file_comments
-			
 			compress if @compress
-			
 			@output_file.write(@input)
-			print "Saved to #{@output_filename} \n\n".green
-			
-			Coyote::Notification.new "Successfully saved to #{@output_filename}"
-
+			Coyote::Notification.new "Successfully saved to #{@output_filename}\n\n", "success"
 			@output_file.close
 		end
 
@@ -60,20 +55,19 @@ module Coyote
 
 		# compress output
 		def compress
-			print "Compiling #{@output_filename}...\n".yellow
-			Coyote::Notification.new "Compiling #{@output_filename}..."
-						
+			Coyote::Notification.new "Compiling #{@output_filename}...\n", "warning"
+
 			compiler = ClosureCompiler.new.compile(@input)
 			if compiler.success?
 			  @input = compiler.compiled_code
 				add_file_comments
 			elsif compiler.file_too_big?
-			  print "Input code too big for API, creating uncompiled file\n".red
+			  Coyote::Notification.new "Input code too big for API, creating uncompiled file\n", "failure"
 			elsif compiler.errors
-			  print "Google closure API failed to compile, creating uncompiled file\n".red
-			  print "Errors: \n".red
-			  print "#{compiler.errors.to_s}\n\n".red
-			end  
+			  Coyote::Notification.new "Google closure API failed to compile, creating uncompiled file\n", "failure"
+			  Coyote::Notification.new "Errors: \n", "failure"
+			  Coyote::Notification.new "#{compiler.errors.to_s}\n\n", "failure"
+			end
 		end
 	end
 end
