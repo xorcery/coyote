@@ -14,11 +14,11 @@ module Coyote
 			print "\n----- Creating #{@output_filename}\n".bold
 		end
 
-    def add_files(files)
-      files.each do |file|
-        append(file)
-      end
-    end
+               def add_files(files)
+                 files.each do |file|
+                   append(file)
+                 end
+               end
 
 		# open file, add contents to output
 		def append(filename)
