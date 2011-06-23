@@ -6,6 +6,7 @@ require 'coyote/generator'
 require 'coyote/output'
 require 'coyote/closure_compiler'
 require 'coyote/notification'
+require 'coyote/hooks'
 
 include Term::ANSIColor
 

@@ -5,4 +5,5 @@ input:
   - src/snake.coffee
   - src/init.coffee  
 hooks:
-  after_save: "coffee -c lib/animals.coffee"
+  before_save: "echo hello"
+  after_save: "coffee -c lib/animals.coffee && rm lib/animals.coffee"

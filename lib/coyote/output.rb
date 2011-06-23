@@ -11,7 +11,7 @@ module Coyote
       @input_files = []
       @input = ""
       @compress = compress
-      @hooks = hooks
+      @hooks = Coyote::Hooks.new(hooks)
       print "\n----- Creating #{@output_filename}\n".bold
     end
 
@@ -39,14 +39,14 @@ module Coyote
     # save output to file
     def save
       # add_file_comments
-      system(hooks['before_compress']) if hooks and hooks['before_compress']
+      @hooks.invoke('before_compress')
       compress if @compress
-      system(hooks['after_compress']) if hooks and hooks['after_compress']
-      system(hooks['before_save']) if hooks and hooks['before_save']
+      @hooks.invoke('after_compress')
+      @hooks.invoke('before_save')
       @output_file.write(@input)
       @output_file.close
-      system(hooks['after_save']) if hooks and hooks['after_save']
-      Coyote::Notification.new "Successfully saved to #{@output_filename}\n\n", "success"
+      Coyote::Notification.new "Successfully saved to #{@output_filename}\n", "success"
+      @hooks.invoke('after_save')
     end
 
     def add_file_comments
