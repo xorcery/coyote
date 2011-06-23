@@ -7,7 +7,6 @@ module Coyote
 			@options = options
 			@config = get_config_or_screw_off
 			@input_files = []
-			hooks
 		end
 		
 		def output_file
