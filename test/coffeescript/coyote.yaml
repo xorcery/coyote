@@ -1,0 +1,8 @@
+output: lib/animals.coffee
+input:
+  - src/animal.coffee
+  - src/horse.coffee
+  - src/snake.coffee
+  - src/init.coffee  
+hooks:
+  after_save: "coffee -c lib/animals.coffee"

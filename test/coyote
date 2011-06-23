@@ -26,10 +26,9 @@ def config_file_reader(rebuild = false)
 end
 
 def coyote_the_sources
-  
   reader = config_file_reader
   
-  output = Coyote::Output.new(reader.output_file, reader.should_compress?)
+  output = Coyote::Output.new(reader.output_file, reader.should_compress?, reader.hooks)
   output.add_files(reader.input_files)
   output.save
 end

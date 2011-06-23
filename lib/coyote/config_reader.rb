@@ -7,14 +7,19 @@ module Coyote
 			@options = options
 			@config = get_config_or_screw_off
 			@input_files = []
+			hooks
 		end
 		
 		def output_file
-		  return @config['output']
+		  @config['output']
 		end
 		
 		def should_compress?
-		  return @config['compress'] || options[:compress]
+		  @config['compress'] || options[:compress]
+		end
+		
+		def hooks
+      @config['hooks']
 		end
 
 		def find_input_files
