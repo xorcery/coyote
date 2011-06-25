@@ -26,19 +26,48 @@ def config_file_reader(rebuild = false)
 end
 
 def coyote_the_sources
-  
   reader = config_file_reader
   
-  output = Coyote::Output.new(reader.output_file, reader.should_compress?)
+  output = Coyote::Output.new(reader.output_file, reader.should_compress?, reader.hooks)
   output.add_files(reader.input_files)
   output.save
 end
+
+def compress
+  ARGV.shift
+	if ! ARGV[0]
+    Coyote::Notification.new "Compress requires an input parameter\n", "failure"			
+		puts "Example: 'coyote compress app.js'"
+		exit
+	else
+	  input_output_file = ARGV[0]
+	  temp_file = "#{input_output_file}.tmp"
+
+    output = Coyote::Output.new(temp_file, true, false)
+    output.add_files([input_output_file])
+    output.save  
+
+    Coyote::Notification.new "Copying temporary file #{temp_file} to #{input_output_file}\n", "warning"    
+    File.open(temp_file, 'r') do |temp|
+      output_file = File.open(input_output_file, 'w+')    
+      output_file.write(temp.read)
+      output_file.close
+      Coyote::Notification.new "Successfully copied temporary file #{temp_file} to #{input_output_file}\n", "success"    
+    end
+    
+    File.delete(temp_file)        
+    Coyote::Notification.new "Deleted temporary file #{temp_file}\n", "success"        
+	end  
+end
+
 
 case ARGV.first
 when 'generate'
 	Coyote::Generator.new(@options).generate
 when 'build'
   coyote_the_sources
+when 'compress'
+  compress
 else
   
   coyote_the_sources
@@ -47,7 +76,8 @@ else
   
   listener.on_change do |files|
     if files.include?(Coyote::CONFIG_FILENAME)
-			Coyote::Notification.new "Config file changed.  Reading it in.\n", "warning"
+      Coyote::Notification.new "Config file changed.  Reading it in.\n", "warning"
+
       config_file_reader(true) #rebuild the sources of the config file
       coyote_the_sources
     else
