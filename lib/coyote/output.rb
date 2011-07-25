@@ -26,7 +26,6 @@ module Coyote
       if File.exists?(filename) and ! @input_files.include?(filename)
         @input_files.push(filename)
         File.open(filename, 'r') do |file|
-          # @input += "/***** #{filename} *****/\n"
         	@input += file.read
          	@input += "\n\n\n"
         end
@@ -38,7 +37,6 @@ module Coyote
 
     # save output to file
     def save
-      # add_file_comments
       @hooks.invoke('before_compress')
       compress if @compress
       @hooks.invoke('after_compress')
@@ -65,7 +63,6 @@ module Coyote
       compiler = ClosureCompiler.new.compile(@input)
       if compiler.success?
         @input = compiler.compiled_code
-        add_file_comments
       elsif compiler.file_too_big?
         Coyote::Notification.new "Input code too big for API, creating uncompiled file\n", "failure"
       elsif compiler.errors
