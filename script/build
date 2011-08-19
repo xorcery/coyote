@@ -1,4 +1,5 @@
 #!/bin/bash
+require 'psych'
 
 rake manifest
 rake build_gemspec

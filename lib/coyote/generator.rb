@@ -1,30 +1,31 @@
 module Coyote
   class Generator
+		attr_accessor :files_found
 
-		attr_accessor :options, :files_found
-
-		def initialize(options)
-			@options = options
+		def initialize
 			@files_found = []
 		end
 
-		def generate
-			discover_files
-			if config_exists? && ! options[:force]
-        Coyote::Notification.new "Coyote config already exists in this directory. Use --force to overwrite.\n", "failure"				
-			elsif (!config_exists?) || (config_exists? && options[:force])
+		def generate!
+			if config_exists?
+        Coyote::Notification.new "Coyote config already exists in this directory.\n", "failure"
+			else
+        discover_files
 				copy_config
 			end
 		end
 
 		def discover_files
-			js_files = File.join("**","*.js")
-			Dir.glob(js_files).each do |file|
+			js_file_identifier = File.join("**","*#{Coyote::JAVASCRIPT_EXTENSION}")
+      cs_file_identifier = File.join("**","*#{Coyote::COFFEESCRIPT_EXTENSION}")
+			Dir.glob(js_file_identifier).each do |file|
+				@files_found.push file
+			end
+			Dir.glob(cs_file_identifier).each do |file|
 				@files_found.push file
 			end
 		end
 
-		# check to see if coyote.yaml already exists in directory
 		def config_exists?
 			File.exists?(Coyote::CONFIG_FILENAME)
 		end
@@ -42,7 +43,7 @@ module Coyote
 				end
 				output_file.write(generated)
 			end
-			
+
 			Coyote::Notification.new "Coyote generated at #{Coyote::CONFIG_FILENAME}\n\n", "success"
 		end
   end

@@ -1,22 +1,22 @@
 module Coyote
-  class ConfigReader
+  class Configuration
 
 		attr_accessor :config, :options, :input_files
 
 		def initialize(options)
 			@options = options
-			@config = get_config_or_screw_off
+			@config = get_config
 			@input_files = []
 		end
-		
+
 		def output_file
 		  @config['output']
 		end
-		
+
 		def should_compress?
 		  @config['compress'] || options[:compress]
 		end
-		
+
 		def hooks
       @config['hooks']
 		end
@@ -37,7 +37,7 @@ module Coyote
 			end
 		end
 
-		
+
 		def find_and_add_files(input)
 			Dir.glob(input).each do |file|
 				required = find_requires file
@@ -62,18 +62,18 @@ module Coyote
 				end
 			end
 			return required
-		end	
+		end
 
 
-		def get_config_or_screw_off
+		def get_config
 			if File.exists?(Coyote::CONFIG_FILENAME)
 				begin
 					config = YAML.load(File.open(Coyote::CONFIG_FILENAME))
 					if config.class == Hash && ! config.empty?
 				  	return config
 					else
-					  
-            Coyote::Notification.new "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n", "failure"					  
+
+            Coyote::Notification.new "Coyote configuration exists but has not been defined yet. Configure it in #{Coyote::CONFIG_FILENAME}\n", "failure"
 						exit(0)
 					end
 				rescue ArgumentError => e
@@ -81,7 +81,7 @@ module Coyote
 				  exit
 				end
 			else
-        Coyote::Notification.new "Could not find a Coyote configuration file in this directory. Use 'coyote generate' to create one.\n", "failure"
+        Coyote::Notification.new "Could not find a Coyote configuration file in this directory. Use 'coyote new' to create one.\n", "failure"
 				exit
 			end
 		end

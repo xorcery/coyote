@@ -1,9 +1,0 @@
-output: lib/animals.coffee
-input:
-  - src/animal.coffee
-  - src/horse.coffee
-  - src/snake.coffee
-  - src/init.coffee  
-hooks:
-  before_save: "echo great job"
-  after_save: "coffee -c lib/animals.coffee && rm lib/animals.coffee"

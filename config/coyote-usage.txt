@@ -1,0 +1,17 @@
+------------------------------------------
+Coyote - Command-line Concatenation
+http://github.com/imulus/coyote
+------------------------------------------
+
+Usage :  'coyote Action [Environment] [Options]'
+
+== Actions
+  build     - Execute the compiler
+  watch     - Starts the Coyote observe mechanism.
+  new       - Create a Coyote configuration in this directory
+
+== Options
+  -c | --compress  - use Google Closure Compiler
+  -q | --quiet     - suppress notifications
+  -v | --verbose   - output log messages
+
