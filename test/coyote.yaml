@@ -1,0 +1,4 @@
+output: coyote.js
+input:
+  - test.js
+  - test.coffee

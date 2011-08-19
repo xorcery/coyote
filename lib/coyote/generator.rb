@@ -8,7 +8,7 @@ module Coyote
 
 		def generate!
 			if config_exists?
-        Coyote::Notification.new "Coyote config already exists in this directory.\n", "failure"
+        Coyote::Notification.new "This directory is already configured for Coyote.\n", "failure"
 			else
         discover_files
 				copy_config
@@ -16,12 +16,12 @@ module Coyote
 		end
 
 		def discover_files
-			js_file_identifier = File.join("**","*#{Coyote::JAVASCRIPT_EXTENSION}")
-      cs_file_identifier = File.join("**","*#{Coyote::COFFEESCRIPT_EXTENSION}")
-			Dir.glob(js_file_identifier).each do |file|
+			js_files = File.join("**","*#{Coyote::JAVASCRIPT_EXTENSION}")
+      cs_files = File.join("**","*#{Coyote::COFFEESCRIPT_EXTENSION}")
+			Dir.glob(js_files).each do |file|
 				@files_found.push file
 			end
-			Dir.glob(cs_file_identifier).each do |file|
+			Dir.glob(cs_files).each do |file|
 				@files_found.push file
 			end
 		end
@@ -30,10 +30,9 @@ module Coyote
 			File.exists?(Coyote::CONFIG_FILENAME)
 		end
 
-		# copy sample coyote.yaml to directory
 		def copy_config
       Coyote::Notification.new "\nGenerating Coyote\n"
-      Coyote::Notification.new "#{@files_found.length} JavaScript files discovered\n"
+      Coyote::Notification.new "#{@files_found.length} files discovered\n"
 
 			File.open("#{Coyote::CONFIG_PATH}/#{Coyote::CONFIG_FILENAME}") do |file|
 				output_file = File.open(Coyote::CONFIG_FILENAME, 'w+')

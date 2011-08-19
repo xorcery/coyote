@@ -1,0 +1,1 @@
+var article = 'http://www.paulgraham.com/yahoo.html';
