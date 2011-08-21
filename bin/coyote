@@ -10,13 +10,13 @@ require 'coyote'
 @options = {}
 OptionParser.new do |opts|
   opts.on("-c", "--compress", "Compress") do |option|
-  	@options[:compress] = option
+  	@options['compress'] = option
   end
   opts.on("-q", "--quiet", "Quiet") do |option|
-  	@options[:quiet] = option
+  	@options['quiet'] = option
   end
   opts.on("-v", "--verbose", "Verbose") do |option|
-  	@options[:verbose] = option
+  	@options['verbose'] = option
   end
 end.parse!
 
@@ -25,11 +25,11 @@ case ARGV.first
 when 'new'
   Coyote::generate
 when 'build'
-  @config = Coyote::Configuration.new(@options)
-  Coyote::build @config
+  config = Coyote::Configuration.new @options
+  config.load_from_yaml!
+  Coyote::build config
 when 'watch'
-  @config = Coyote::Configuration.new(@options)
-  Coyote::watch @config
+  Coyote::watch @options
 else
   Coyote::usage
 end

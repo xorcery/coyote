@@ -3,15 +3,14 @@ require  "rexml/document"
 module Coyote
   class Output
 
-    attr_accessor :input, :input_files, :output_file, :output_filename, :compress, :hooks
+    attr_accessor :input, :input_files, :output_file, :output_filename, :compress
 
-    def initialize(output_filename, compress = false, hooks)
+    def initialize(output_filename, compress = false)
       @output_filename = output_filename
       @output_file = File.open(@output_filename, 'w+')
       @input_files = []
       @input = ""
       @compress = compress
-      @hooks = Coyote::Hooks.new(hooks)
       print "\n----- Creating #{@output_filename}\n".bold
     end
 
@@ -37,14 +36,10 @@ module Coyote
 
     # save output to file
     def save
-      @hooks.invoke('before_compress')
       compress if @compress
-      @hooks.invoke('after_compress')
-      @hooks.invoke('before_save')
       @output_file.write(@input)
       @output_file.close
       Coyote::Notification.new "Successfully saved to #{@output_filename}\n", "success"
-      @hooks.invoke('after_save')
     end
 
     def add_file_comments

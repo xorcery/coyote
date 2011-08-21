@@ -1,4 +1,4 @@
-output: coyote.js
 input:
-  - test.js
-  - test.coffee
+  - manifest.js
+
+output: coyote.js

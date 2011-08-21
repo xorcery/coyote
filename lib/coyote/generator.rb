@@ -6,7 +6,7 @@ module Coyote
 			@files_found = []
 		end
 
-		def generate!
+		def generate
 			if config_exists?
         Coyote::Notification.new "This directory is already configured for Coyote.\n", "failure"
 			else
