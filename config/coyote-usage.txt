@@ -11,7 +11,6 @@ Usage :  'coyote Action [Environment] [Options]'
   new       - Create a Coyote configuration in this directory
 
 == Options
-  -c | --compress  - use Google Closure Compiler
-  -q | --quiet     - suppress notifications
-  -v | --verbose   - output log messages
+  -c | --compress  - Use Google Closure Compiler
+  -v | --verbose   - Verbose CLI logging
 

@@ -1,4 +1,6 @@
-input:
-  - manifest.js
-
 output: coyote.js
+input:
+  - coyote.js
+  - manifest.js
+  - test1.js
+  - test2.js

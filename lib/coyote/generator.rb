@@ -16,8 +16,8 @@ module Coyote
 		end
 
 		def discover_files
-			js_files = File.join("**","*#{Coyote::JAVASCRIPT_EXTENSION}")
-      cs_files = File.join("**","*#{Coyote::COFFEESCRIPT_EXTENSION}")
+			js_files = File.join("**","*#{Coyote::JavaScript::EXTENSION}")
+      cs_files = File.join("**","*#{Coyote::CoffeeScript::EXTENSION}")
 			Dir.glob(js_files).each do |file|
 				@files_found.push file
 			end

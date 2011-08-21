@@ -7,15 +7,14 @@ config/coyote-usage.txt
 config/coyote.yaml
 coyote.gemspec
 lib/coyote.rb
-lib/coyote/cli.rb
 lib/coyote/closure_compiler.rb
 lib/coyote/configuration.rb
+lib/coyote/coy_file.rb
 lib/coyote/fs_listener.rb
 lib/coyote/fs_listeners/darwin.rb
 lib/coyote/fs_listeners/linux.rb
 lib/coyote/fs_listeners/polling.rb
 lib/coyote/fs_listeners/windows.rb
 lib/coyote/generator.rb
-lib/coyote/hooks.rb
 lib/coyote/notification.rb
 lib/coyote/output.rb

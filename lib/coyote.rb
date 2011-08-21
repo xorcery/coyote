@@ -12,7 +12,7 @@ include Term::ANSIColor
 
 module Coyote
 	APP_NAME        = "Coyote"
-	VERSION         = "0.4.2"
+	VERSION         = "0.5.0"
 	ROOT_PATH       = Dir.pwd
 	CONFIG_PATH     = File.expand_path(File.dirname(__FILE__) + "/../config")
 	CONFIG_FILENAME = "coyote.yaml"
@@ -23,37 +23,62 @@ module Coyote
     OUTPUT = "coyote.js"
   end
 
+
   module CoffeeScript
     EXTENSION = ".coffee"
     COMMENT = "#"
   end
+
 
   module JavaScript
     EXTENSION = ".js"
     COMMENT = "//"
   end
 
+
 	def self.generate
     Coyote::Generator.new.generate
 	end
 
+
   def self.build(config)
-    output = Coyote::CoyFile.new(config.output)
+    output = Coyote::CoyFile.new config.output
     output.empty!
 
     config.inputs.each do |file|
       input = Coyote::CoyFile.new file
       input.compile! if input.coffee?
       output.append input.contents
+      print "+ Added #{file}\n" if config.options['verbose']
     end
 
     output.compress! if config.should_compress?
     output.save
+    Coyote::Notification.new "Saved #{config.output}\n\n", "success"
   end
 
-	def self.watch(options)
-		puts options
+
+	def self.watch(config)
+    self.build config
+
+    listener = Coyote::FSListener.select_and_init
+
+    listener.on_change do |files|
+      if files.include? config.source
+        Coyote::Notification.new "Config file (#{config.source}) changed. Reading it in.\n", "warning"
+        config.load_from_yaml! config.source
+        self.build config
+      else
+        changed_watched_files = config.inputs & files
+        if changed_watched_files.length > 0
+          self.build config
+        end
+      end
+    end
+
+    listener.start
 	end
+
 
 	def self.usage
 	  file = File.open("#{Coyote::CONFIG_PATH}/#{Coyote::USAGE_FILENAME}", 'r')

@@ -1,7 +1,7 @@
 module Coyote
   class Configuration
 
-		attr_accessor :options, :output
+		attr_accessor :options, :output, :source
 		attr_reader :inputs
 
 		def initialize(options = {})
@@ -42,6 +42,7 @@ module Coyote
             if config['options'] && config['options'].class == Hash
               @options = config['options'].merge(@options)
             end
+            @source = yaml_file
 					else
             Coyote::Notification.new "Coyote configuration exists but has not been defined yet. Configure it in #{yaml_file}\n", "failure"
 						exit(0)
@@ -77,7 +78,7 @@ module Coyote
 			required = []
 			File.open(input_file) do |file|
 				file = file.read
-				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/x)
+				pattern = Regexp.new(/((\/\/|\#)=.*)(require )(.*)$/x)
 				matches = file.scan(pattern)
 				matches.each { |match| required.push match.last.strip }
 			end
