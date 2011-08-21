@@ -64,7 +64,7 @@ module Coyote
 			Dir.glob(input).each do |file|
 				required = find_requires file
 				required.each do |requirement|
-					find_and_add_files "**/#{requirement}.js"
+					find_and_add_files "**/#{requirement}"
 				end
 				if ! @inputs.include? file
 					@inputs.push file
@@ -79,9 +79,7 @@ module Coyote
 				file = file.read
 				pattern = Regexp.new(/(\/\/.*)(require )(.*)$/x)
 				matches = file.scan(pattern)
-				matches.each do |match|
-					required.push match.last.strip.to_s.gsub(/\.js/, '').gsub(/(\"|\')/, '')
-				end
+				matches.each { |match| required.push match.last.strip }
 			end
 			return required
 		end

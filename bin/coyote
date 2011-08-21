@@ -27,6 +27,7 @@ when 'new'
 when 'build'
   config = Coyote::Configuration.new @options
   config.load_from_yaml!
+  puts "inputs: #{config.inputs}"
   Coyote::build config
 when 'watch'
   Coyote::watch @options
