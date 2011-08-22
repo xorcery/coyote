@@ -1,32 +1,39 @@
 COYOTE
 =============
 
-An intelligent command-line tool for combining and compressing JavaScript files.
+An intelligent command-line tool for combining, compressing and compiling your JavaScript and CoffeeScript files.
 
-Coyote selectively concatenates your JS files, combining them into a single file with the option of running the output through the Google Closure Compiler before save. Coyote automatically observes your directories and source files for changes and will recompile and save on the fly for easy development.
+Coyote selectively concatenates your files, combining them into a single file with the option of running the output through the Google Closure Compiler before save. It can be used to observe your source files for changes and will recompile and save on the fly for easy development.
+
+Coyote automatically compiles CoffeeScript files (bare, with no safety closure) before combining them with other source files. You can freely combine JavaScript and CoffeeScript source files in your compilation.
 
 
 Installation
 ------
 	$ gem install coyote
 
-Usage
+Requirements
+------
+- Compiling CoffeeScript files requires that you have nodejs and coffee-script installed
+- Growl notifications require that you have Growl installed
+
+Terminal Usage
 ------
 
 **Configuration**
 
 	$ cd myproject/scripts
-	$ coyote generate
+	$ coyote new
 
-*This will create the configuration file at coyote.yaml and will find any .js files and automatically add them to the input parameter. Open coyote.yaml and modify the input and output configurations to meet your needs. Coyote will combine the input files in the order you define.*
+*This will create the configuration file (coyote.yaml) and will discover any .js and .coffee files in this directory, automatically adding them to the configuration. Open coyote.yaml and modify the input and output configurations to meet your needs. Coyote will combine the input files in the order you define.*
 
-**Running Coyote**
-
-	$ coyote
-
-**Building without watching**
+**Trigger a build**
 
 	$ coyote build
+
+**Trigger the observer**
+
+	$ coyote watch
 
 **Input wildcards**
 
@@ -34,40 +41,36 @@ You can wildcard your input parameters to find files.
 
 	- **/*.js # recursively find all files with the extension '.js'
 	- /jquery/plugins/*.js # find all .js files in the directory
-	
+
 
 **Dependency discovery**
 
-If your JavaScript files depend on other files or libraries to run, you can define those dependencies so Coyote will include them in the compiled output before the files that require them.
+If your files depend on other files or libraries to run, you can define those dependencies so Coyote will include them in the compiled output before the files that require them.
 
-	// require /jquery/jquery.js
-	
+	//= require /jquery/jquery.js
+	#= require /jquery/jquery.js (in CoffeeScript)
+
 or simply
 
-	// require jquery
+	//= require jquery
+	#= require jquery (in CoffeeScript)
 
 Dependencies are relative to the top level of your directory, likely where your coyote.yaml config file is located.
 
 
 Options
 -------
-**Forced compression**
+**Compress output with Google Closure Compiler**
 
-	$ coyote -c
+	$ coyote build -c
+	$ coyote build --compress
 
 or
 
-	$ coyote build -c
+	$ coyote watch -c
+	$ coyote watch --compress
 
-Plan
-----
-
-- Global configuration for logging
-- Support for Growl notifications
-- Configuration options for level of compression
-
-
-License 
+License
 -------
 
 Copyright (C) 2011 by Imulus
