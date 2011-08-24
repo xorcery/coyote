@@ -17,7 +17,7 @@ module Coyote
 
 
     def inputs=(inputs)
-      inputs.each { |input| add_input input }
+      add_input inputs
     end
 
 
