@@ -16,12 +16,12 @@ Echoe.new(Coyote::APP_NAME.downcase, Coyote::VERSION) do |p|
   p.ignore_pattern = ["tmp/*", "script/*", "test/*", "assets/*"]
   
   dependencies = Array.new
-  dependencies << "term-ansicolor >=1.0.5"
   target_os = Config::CONFIG['target_os']
   
   if target_os =~ /darwin/i
     dependencies << "rb-fsevent >=0.4.0"
     dependencies << "rb-appscript >=0.6.1"
+    dependencies << "term-ansicolor >=1.0.5"
   elsif target_os =~ /linux/i
     dependencies << "rb-inotify >=0.8.4"
   elsif target_os =~ /mswin|mingw/i
