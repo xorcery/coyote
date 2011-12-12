@@ -1,9 +1,22 @@
 module Coyote
+  autoload :JavaScript,  'coyote/scripts/java_script'
+
   class Script
 		attr_accessor :filename, :contents
 
+    def self.select_and_init(filename)
+			filetype = File.extname(filename)
+      if filetype == JavaScript::EXTENSION
+        JavaScript.new(filename)
+      else
+				self.new(filename)
+      end
+    end
+
 		def initialize(filename, contents = "")
 		  @filename = filename
+			@directory = File.dirname(@filename)
+
       if contents.empty? and File.exists? @filename
         @contents = File.open(@filename, 'r').read
 		  else
@@ -15,26 +28,21 @@ module Coyote
 		  @contents += "#{content}\n\n"
 		end
 
+
 		def prepend(content)
 		  @contents = "#{content}\n\n" + @contents
 		end
 
-    def type
-      File.extname @filename
-    end
 
-    def coffee?
-      type == Coyote::CoffeeScript::EXTENSION
-    end
-
-    def javascript?
-      type == Coyote::JavaScript::EXTENSION
-    end
-		
 		def requires
 			pattern = Regexp.new(/((\/\/|\#)=.*)(require )(.*)$/x)
 			matches = @contents.scan(pattern)
-			matches.collect { |match| match.last.strip }
+			
+			requires = matches.collect do |match|
+				File.expand_path(match.last.strip, @directory)
+			end
+
+			return requires
 		end
 
 

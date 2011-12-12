@@ -1,3 +1,3 @@
 $(document).ready(function(){
-	console.log("a_plugin");
+	console.log("b_plugin");
 });

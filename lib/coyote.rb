@@ -23,19 +23,6 @@ module Coyote
     OUTPUT = "coyote.js"
   end
 
-
-  module CoffeeScript
-    EXTENSION = ".coffee"
-    COMMENT = "#"
-  end
-
-
-  module JavaScript
-    EXTENSION = ".js"
-    COMMENT = "//"
-  end
-
-
 	def self.generate
     Coyote::Generator.new.generate
 	end
@@ -46,7 +33,7 @@ module Coyote
     output.empty!
 
     config.inputs.each do |file, input|
-      input.compile! if input.coffee?
+      # input.compile! if input.coffee?
       output.append input.contents
       print "+ Added #{file}\n" if config.options['verbose']
     end
