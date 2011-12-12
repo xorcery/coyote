@@ -63,6 +63,8 @@ module Coyote
 
 		def find_and_add_files(input)
 			Dir.glob(input).each do |file|
+				file = File.absolute_path(file)
+
 				required = find_requires file
 				required.each do |requirement|
 					find_and_add_files "**/#{requirement}"
