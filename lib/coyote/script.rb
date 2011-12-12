@@ -30,6 +30,13 @@ module Coyote
     def javascript?
       type == Coyote::JavaScript::EXTENSION
     end
+		
+		def requires
+			pattern = Regexp.new(/((\/\/|\#)=.*)(require )(.*)$/x)
+			matches = @contents.scan(pattern)
+			matches.collect { |match| match.last.strip }
+		end
+
 
     def empty!
       @contents = ""

@@ -45,8 +45,7 @@ module Coyote
     output = Coyote::Script.new config.output
     output.empty!
 
-    config.inputs.each do |file|
-      input = Coyote::Script.new file
+    config.inputs.each do |file, input|
       input.compile! if input.coffee?
       output.append input.contents
       print "+ Added #{file}\n" if config.options['verbose']

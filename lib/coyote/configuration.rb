@@ -6,7 +6,7 @@ module Coyote
 
 		def initialize(options = {})
 			@options = options
-		  @inputs = []
+		  @inputs = {}
       @output = Coyote::Defaults::OUTPUT
 		end
 
@@ -61,31 +61,24 @@ module Coyote
 
 		private
 
-		def find_and_add_files(input)
-			Dir.glob(input).each do |file|
-				file = File.absolute_path(file)
+		def find_and_add_files(path)
+			Dir.glob(path).each do |file|
+				# Grab the absolute path of the file 
+				# so we can ensure we don't have duplicate inputs
+				filename = File.absolute_path(file)
 
-				required = find_requires file
-				required.each do |requirement|
-					find_and_add_files "**/#{requirement}"
-				end
-				if ! @inputs.include? file
-					@inputs.push file
+				script = Coyote::Script.new(filename)
+				
+				script.requires.each { |path| find_and_add_files(path) }
+				
+				if @inputs[filename].nil?
+					@inputs[filename] = script 
 				end
 			end
 		end
 
 
-		def find_requires(input_file)
-			required = []
-			File.open(input_file) do |file|
-				file = file.read
-				pattern = Regexp.new(/((\/\/|\#)=.*)(require )(.*)$/x)
-				matches = file.scan(pattern)
-				matches.each { |match| required.push match.last.strip }
-			end
-			return required
-		end
+
 
   end
 end
