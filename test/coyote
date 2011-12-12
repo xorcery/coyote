@@ -23,7 +23,16 @@ when 'new'
   Coyote::generate
 when 'build'
   config = Coyote::Configuration.new @options
-  config.load_from_yaml!
+	ARGV.shift
+	
+	if ARGV.empty?
+  	config.load_from_yaml!
+	else
+    input, output = ARGV[0].split(':', 2)
+	  config.inputs = input
+	  config.output = output
+	end
+
   Coyote::build config
 when 'watch'
   config = Coyote::Configuration.new @options
