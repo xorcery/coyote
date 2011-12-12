@@ -1,56 +1,63 @@
 module Coyote
-  autoload :JavaScript,  'coyote/scripts/java_script'
+  autoload :JavaScript,  		'coyote/scripts/javascript'
+  autoload :CoffeeScript, 	'coyote/scripts/coffeescript'
+  autoload :Combine, 				'coyote/scripts/combine'
 
   class Script
-		attr_accessor :filename, :contents
+    attr_accessor :filename, :contents
+
 
     def self.select_and_init(filename)
-			filetype = File.extname(filename)
-      if filetype == JavaScript::EXTENSION
-        JavaScript.new(filename)
-      else
-				self.new(filename)
+      case File.extname(filename)
+      when /\.js/i			; JavaScript.new(filename)
+      when /\.coffee/i	; CoffeeScript.new(filename)
+      when /\.combine/i	; Combine.new(filename)	
+      else							; self.new(filename)
       end
     end
 
-		def initialize(filename, contents = "")
-		  @filename = filename
-			@directory = File.dirname(@filename)
+
+    def initialize(filename, contents = "")
+      @filename = filename
+      @directory = File.dirname(@filename)
 
       if contents.empty? and File.exists? @filename
         @contents = File.open(@filename, 'r').read
-		  else
-		    @contents = contents
-		  end
-		end
-
-		def append(content)
-		  @contents += "#{content}\n\n"
-		end
+      else
+        @contents = contents
+      end
+    end
 
 
-		def prepend(content)
-		  @contents = "#{content}\n\n" + @contents
-		end
+    def append(content)
+      @contents += "#{content}\n\n"
+    end
 
 
-		def requires
-			pattern = Regexp.new(/((\/\/|\#)=.*)(require )(.*)$/x)
-			matches = @contents.scan(pattern)
-			
-			requires = matches.collect do |match|
+    def prepend(content)
+      @contents = "#{content}\n\n" + @contents
+    end
+
+
+    def require_pattern
+      Regexp.new(/\/\/=\s*require\s*(.*)$/i)
+    end
+
+
+    def requires
+      matches = @contents.scan(require_pattern)
+      matches.collect do |match|
 				File.expand_path(match.last.strip, @directory)
-			end
-
-			return requires
-		end
+      end
+    end
 
 
     def empty!
       @contents = ""
     end
 
-		def compress!
+
+    def compress!
       Coyote::Notification.new "Compiling #{@filename}...\n", "warning"
       compiler = ClosureCompiler.new.compile(@contents)
       if compiler.success?
@@ -62,18 +69,17 @@ module Coyote
         Coyote::Notification.new "Errors: \n", "failure"
         Coyote::Notification.new "#{compiler.errors.to_s}\n\n", "failure"
       end
-		end
-
-    def compile!
-      @contents = `cat #{@filename} | coffee -scb`
     end
 
-		def save
+
+    def save
       output = File.open @filename, 'w+'
       output.write @contents
       output.close
-		end
-	end
+    end
+
+
+  end
 end
 
 

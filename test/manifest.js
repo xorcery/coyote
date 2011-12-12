@@ -1,1 +1,1 @@
-//= require plugins/a_plugin.js
+//= require plugins/a_plugin.coffee

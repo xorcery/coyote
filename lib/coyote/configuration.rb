@@ -1,19 +1,19 @@
 module Coyote
   class Configuration
 
-		attr_accessor :options, :output, :source
-		attr_reader :inputs
+    attr_accessor :options, :output, :source
+    attr_reader :inputs
 
-		def initialize(options = {})
-			@options = options
-		  @inputs = {}
+    def initialize(options = {})
+      @options = options
+      @inputs = {}
       @output = Coyote::Defaults::OUTPUT
-		end
+    end
 
 
-		def should_compress?
+    def should_compress?
       @options['compress'] || false
-		end
+    end
 
 
     def inputs=(inputs)
@@ -21,63 +21,62 @@ module Coyote
     end
 
 
-		def add_input(input)
-			if input.class == Array
-				input.each do |input|
-					find_and_add_files input
-				end
-			elsif input.class == String and @output != input
-				find_and_add_files input
-			end
-		end
+    def add_input(input)
+      if input.class == Array
+        input.each do |input|
+          find_and_add_files input
+        end
+      elsif input.class == String and @output != input
+        find_and_add_files input
+      end
+    end
 
 
-		def load_from_yaml!(yaml_file = Coyote::CONFIG_FILENAME)
-			if File.exists?(yaml_file)
-				begin
-					config = YAML.load(File.open(yaml_file))
-					if config.class == Hash && ! config.empty?
+    def load_from_yaml!(yaml_file = Coyote::CONFIG_FILENAME)
+      if File.exists?(yaml_file)
+        begin
+          config = YAML.load(File.open(yaml_file))
+          if config.class == Hash && ! config.empty?
             self.inputs = config['input']
             @output = config['output']
             if config['options'] && config['options'].class == Hash
               @options = config['options'].merge(@options)
             end
             @source = yaml_file
-					else
+          else
             Coyote::Notification.new "Coyote configuration exists but has not been defined yet. Configure it in #{yaml_file}\n", "failure"
-						exit(0)
-					end
-				rescue ArgumentError => e
+            exit(0)
+          end
+        rescue ArgumentError => e
           Coyote::Notification.new "Could not parse YAML: #{e.message}\n", "failure"
-				  exit
-				end
-			else
+          exit
+        end
+      else
         Coyote::Notification.new "Could not find a Coyote configuration file #{yaml_file}. Use 'coyote new' to create one.\n", "failure"
-				exit
-			end
-		end
+        exit
+      end
+    end
 
 
 
-		private
+    private
 
-		def find_and_add_files(path)
-			Dir.glob(path).each do |file|
-				# Grab the absolute path of the file 
-				# so we can ensure we don't have duplicate inputs
-				filename = File.absolute_path(file)
-				
-				script = Coyote::Script.select_and_init(filename)
-				
-				script.requires.each { |path| find_and_add_files(path) }
-				
-				# Check to see if the file already exists in the inputs hash
-				# If not, add it with the full file path as the key
-				if @inputs[filename].nil?
-					@inputs[filename] = script 
-				end
-			end
-		end
+    def find_and_add_files(path)
+      Dir.glob(path).each do |file|
+        # Grab the absolute path of the file
+        # so we can ensure we don't have duplicate inputs
+        filename = File.absolute_path(file)
+
+        script = Coyote::Script.select_and_init(filename)
+        script.requires.each { |path| find_and_add_files(path) }
+
+        # Check to see if the file already exists in the inputs hash
+        # If not, add it with the full file path as the key
+        if @inputs[filename].nil?
+          @inputs[filename] = script
+        end
+      end
+    end
 
 
 

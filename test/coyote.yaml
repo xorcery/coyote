@@ -1,3 +1,3 @@
-output: coyote.js
+output: scripts.js
 input:
-  - manifest.js
+  - scripts.combine

@@ -1,12 +1,23 @@
-$(document).ready(function(){
-	console.log("b_plugin");
-});
+(function() {
+  $(document).ready(function() {
+    return console.log("c_plugin");
+  });
+}).call(this);
 
-//= require more_plugins/b_plugin.js
 
-$(document).ready(function(){
-	console.log("a_plugin");
-});
+(function() {
+  $(document).ready(function() {
+    return console.log("b_plugin");
+  });
+}).call(this);
 
-//= require plugins/a_plugin.js
+
+(function() {
+  $(document).ready(function() {
+    return console.log("a_plugin");
+  });
+}).call(this);
+
+
+//= require plugins/a_plugin.coffee
 
