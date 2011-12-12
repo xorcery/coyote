@@ -1,1 +1,34 @@
-/Users/caseyohara/Projects/Imulus/internal/coyote/bin/coyote
+#!/usr/bin/env ruby
+
+$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+require 'fileutils'
+require 'rubygems'
+require 'optparse'
+require 'coyote'
+
+
+@options = {}
+OptionParser.new do |opts|
+  opts.on("-c", "--compress", "Compress") do |option|
+  	@options['compress'] = option
+  end
+  opts.on("-v", "--verbose", "Verbose") do |option|
+  	@options['verbose'] = option
+  end
+end.parse!
+
+
+case ARGV.first
+when 'new'
+  Coyote::generate
+when 'build'
+  config = Coyote::Configuration.new @options
+  config.load_from_yaml!
+  Coyote::build config
+when 'watch'
+  config = Coyote::Configuration.new @options
+  config.load_from_yaml!
+  Coyote::watch config
+else
+  Coyote::usage
+end

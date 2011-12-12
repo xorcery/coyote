@@ -1,6 +1,6 @@
 require 'yaml'
 require 'term/ansicolor'
-require 'coyote/coy_file'
+require 'coyote/script'
 require 'coyote/configuration'
 require 'coyote/fs_listener'
 require 'coyote/generator'
@@ -42,11 +42,11 @@ module Coyote
 
 
   def self.build(config)
-    output = Coyote::CoyFile.new config.output
+    output = Coyote::Script.new config.output
     output.empty!
 
     config.inputs.each do |file|
-      input = Coyote::CoyFile.new file
+      input = Coyote::Script.new file
       input.compile! if input.coffee?
       output.append input.contents
       print "+ Added #{file}\n" if config.options['verbose']

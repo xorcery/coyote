@@ -1,5 +1,5 @@
 module Coyote
-  class CoyFile
+  class Script
 		attr_accessor :filename, :contents
 
 		def initialize(filename, contents = "")
