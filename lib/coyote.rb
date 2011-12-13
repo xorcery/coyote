@@ -4,7 +4,6 @@ require 'coyote/script'
 require 'coyote/configuration'
 require 'coyote/fs_listener'
 require 'coyote/generator'
-require 'coyote/output'
 require 'coyote/closure_compiler'
 require 'coyote/notification'
 

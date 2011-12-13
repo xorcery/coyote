@@ -2,21 +2,22 @@
 
 Gem::Specification.new do |s|
   s.name = %q{coyote}
-  s.version = "0.5.2"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
-  s.authors = [%q{Imulus}]
-  s.date = %q{2011-10-03}
+  s.authors = ["Imulus"]
+  s.date = %q{2011-12-12}
+  s.default_executable = %q{coyote}
   s.description = %q{An intelligent command-line tool for combining, compressing and compiling your JavaScript and CoffeeScript files.}
   s.email = %q{developer@imulus.com}
-  s.executables = [%q{coyote}]
-  s.extra_rdoc_files = [%q{README.md}, %q{bin/coyote}, %q{lib/coyote.rb}, %q{lib/coyote/closure_compiler.rb}, %q{lib/coyote/configuration.rb}, %q{lib/coyote/coy_file.rb}, %q{lib/coyote/fs_listener.rb}, %q{lib/coyote/fs_listeners/darwin.rb}, %q{lib/coyote/fs_listeners/linux.rb}, %q{lib/coyote/fs_listeners/polling.rb}, %q{lib/coyote/fs_listeners/windows.rb}, %q{lib/coyote/generator.rb}, %q{lib/coyote/notification.rb}, %q{lib/coyote/output.rb}]
-  s.files = [%q{README.md}, %q{Rakefile}, %q{bin/coyote}, %q{config/coyote-icon.png}, %q{config/coyote-usage.txt}, %q{config/coyote.yaml}, %q{coyote.gemspec}, %q{lib/coyote.rb}, %q{lib/coyote/closure_compiler.rb}, %q{lib/coyote/configuration.rb}, %q{lib/coyote/coy_file.rb}, %q{lib/coyote/fs_listener.rb}, %q{lib/coyote/fs_listeners/darwin.rb}, %q{lib/coyote/fs_listeners/linux.rb}, %q{lib/coyote/fs_listeners/polling.rb}, %q{lib/coyote/fs_listeners/windows.rb}, %q{lib/coyote/generator.rb}, %q{lib/coyote/notification.rb}, %q{lib/coyote/output.rb}, %q{Manifest}]
+  s.executables = ["coyote"]
+  s.extra_rdoc_files = ["README.md", "bin/coyote", "lib/coyote.rb", "lib/coyote/closure_compiler.rb", "lib/coyote/configuration.rb", "lib/coyote/fs_listener.rb", "lib/coyote/fs_listeners/darwin.rb", "lib/coyote/fs_listeners/linux.rb", "lib/coyote/fs_listeners/polling.rb", "lib/coyote/fs_listeners/windows.rb", "lib/coyote/generator.rb", "lib/coyote/notification.rb", "lib/coyote/script.rb", "lib/coyote/scripts/coffeescript.rb", "lib/coyote/scripts/combine.rb", "lib/coyote/scripts/javascript.rb"]
+  s.files = ["README.md", "Rakefile", "bin/coyote", "config/coyote-icon.png", "config/coyote-usage.txt", "config/coyote.yaml", "coyote.gemspec", "lib/coyote.rb", "lib/coyote/closure_compiler.rb", "lib/coyote/configuration.rb", "lib/coyote/fs_listener.rb", "lib/coyote/fs_listeners/darwin.rb", "lib/coyote/fs_listeners/linux.rb", "lib/coyote/fs_listeners/polling.rb", "lib/coyote/fs_listeners/windows.rb", "lib/coyote/generator.rb", "lib/coyote/notification.rb", "lib/coyote/script.rb", "lib/coyote/scripts/coffeescript.rb", "lib/coyote/scripts/combine.rb", "lib/coyote/scripts/javascript.rb", "test/plugins/a_plugin.coffee", "test/plugins/a_plugin.js", "test/plugins/more_plugins/b_plugin.coffee", "test/plugins/more_plugins/even_more_plugins/c_plugin.coffee", "Manifest"]
   s.homepage = %q{http://github.com/imulus/coyote}
-  s.rdoc_options = [%q{--line-numbers}, %q{--inline-source}, %q{--title}, %q{Coyote}, %q{--main}, %q{README.md}]
-  s.require_paths = [%q{lib}]
+  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Coyote", "--main", "README.md"]
+  s.require_paths = ["lib"]
   s.rubyforge_project = %q{coyote}
-  s.rubygems_version = %q{1.8.5}
+  s.rubygems_version = %q{1.6.2}
   s.summary = %q{Coyote selectively concatenates your files, combining them into a single file with the option of running the output through the Google Closure Compiler before save. It can be used to observe your source files for changes and will recompile and save on the fly for easy development.}
 
   if s.respond_to? :specification_version then
