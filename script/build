@@ -2,4 +2,5 @@
 
 rake manifest
 rake build_gemspec
-rake install coyote.gemspec
+gem build coyote.gemspec
+gem install coyote-0.6.1.gem
