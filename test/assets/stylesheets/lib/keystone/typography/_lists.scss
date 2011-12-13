@@ -1,0 +1,38 @@
+@mixin no-bullets {
+  list-style: none;
+  margin-left: 0;
+
+  ul, ol {
+    list-style: none;
+    margin-left: 0;
+  }
+}
+
+@mixin inline-list {
+  @include no-bullets;
+  float: left;
+
+  li {
+    float: left;
+  }
+}
+
+@mixin fancy-lists {
+  ul {
+    padding: 0 0 10px 15px;
+
+    li {
+      padding: 0 0 5px 15px;
+      background: url("/images/icons/bullet.png") left 5px no-repeat;
+    }
+
+    ul {
+      padding-bottom: 0;
+      padding-top: 5px;
+
+      li {
+        background-image: url("/images/icons/bullet-inner.png");
+      }
+    }
+  }
+}

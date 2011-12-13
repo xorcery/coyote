@@ -1,0 +1,12 @@
+@mixin hide-text {
+  text-indent: -9999px;
+  overflow: hidden;
+  text-align: left;
+}
+
+@mixin image-replacement($image, $width, $height, $x: 0, $y: 0) {
+  @include hide-text;
+  background: url($image) $x $y no-repeat;
+  width: $width;
+  height: $height;
+}

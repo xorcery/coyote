@@ -1,0 +1,129 @@
+/* =Print
+---------------------------------------------------------------------------- */
+
+@media print {
+  body {
+    font: 10pt/1.5 Georgia, "Times New Roman", Times, serif;
+    color: #000;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #nav,
+  #search,
+  #sidebar,
+  #footer ul {
+    display: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: normal;
+  }
+
+  h1 {
+    font-size: 20pt;
+    color: #55251F;
+  }
+
+  h2 {
+    font-size: 18pt;
+    color: #35551C;
+  }
+
+  h3 {
+    font-size: 16pt;
+    color: #184C99;
+  }
+
+  h4 {
+    font-size: 14pt;
+    font-weight: 700;
+  }
+
+  h5 {
+    font-size: 12pt;
+    font-weight: 700;
+  }
+
+  h6 {
+    font-size: 12pt;
+    font-weight: 700;
+  }
+
+  blockquote {
+    margin: 1.5em;
+    padding: 1em;
+    font-size: 10pt;
+  }
+
+  img,
+  img.left {
+    float: left;
+    margin: 1em 1.5em 1.5em 0;
+  }
+
+  img.right {
+    float: right;
+    margin: 1em 0 1.5em 1.5em;
+  }
+
+  a img {
+    border: none;
+  }
+
+  a:link,
+  a:visited {
+    color: #00f;
+    font-weight: 700;
+    text-decoration: underline;
+    background: transparent;
+  }
+
+  a:link[href^="http://"]:after,
+  a[href^="http://"]:visited:after {
+    content: " (" attr(href) ") ";
+    font-size: 90%;
+  }
+
+  a[href^="http://"] {
+    color: #00f;
+  }
+
+  table {
+    margin: 1px;
+    text-align: left;
+    
+    th {
+      border-bottom: 1px solid #333;
+      font-weight: 700;
+    }
+
+    td {
+      border-bottom: 1px solid #333;
+    }
+
+    th, td {
+      padding: 4px 10px 4px 0;
+    }
+
+    tfoot {
+      font-style: italic;
+    }
+
+    caption {
+      background: #fff;
+      margin-bottom: 2em;
+      text-align: left;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tr {
+      page-break-inside: avoid;
+    }
+  }
+}

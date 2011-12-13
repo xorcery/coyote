@@ -77,6 +77,24 @@ module Coyote
       output.write @contents
       output.close
     end
+    
+
+
+    protected
+    
+    
+    def convert_js_path_to_coffee(path)
+      directory, basename = File.split(path)
+      basename = File.basename(basename, '.js')
+      "#{directory}/#{basename}.coffee"
+    end
+
+    def convert_coffee_path_to_js(path)
+      directory, basename = File.split(path)
+      basename = File.basename(basename, '.coffee')
+      "#{directory}/#{basename}.js"
+    end    
+
 
 
   end
