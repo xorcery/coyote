@@ -26,8 +26,15 @@ module Coyote
     Coyote::Generator.new.generate
   end
 
+  
+
 
   def self.build(config)
+    if config.inputs == config.output
+      Coyote::Notification.new "Input path cannot be the same as output path\n\n", "Failure"    
+      exit 0
+    end
+    
     output = Coyote::Script.select_and_init(config.output)
     output.empty!
 
