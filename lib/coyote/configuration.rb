@@ -66,10 +66,10 @@ module Coyote
         # Grab the absolute path of the file
         # so we can ensure we don't have duplicate inputs
         filename = File.absolute_path(file)
-        
+
         script = Coyote::Script.select_and_init(filename)
         script.requires.each { |path| find_and_add_files(path) }
-        
+
         # Check to see if the file already exists in the inputs hash
         # If not, add it with the full file path as the key
         if @inputs[filename].nil?

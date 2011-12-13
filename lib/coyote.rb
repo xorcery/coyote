@@ -10,21 +10,21 @@ require 'coyote/notification'
 include Term::ANSIColor
 
 module Coyote
-	APP_NAME        = "Coyote"
-	VERSION         = "0.6.1"
-	ROOT_PATH       = Dir.pwd
-	CONFIG_PATH     = File.expand_path(File.dirname(__FILE__) + "/../config")
-	CONFIG_FILENAME = "coyote.yaml"
-	CONFIG_ICON     = "coyote-icon.png"
-  USAGE_FILENAME 	= "coyote-usage.txt"
+  APP_NAME        = "Coyote"
+  VERSION         = "0.6.1"
+  ROOT_PATH       = Dir.pwd
+  CONFIG_PATH     = File.expand_path(File.dirname(__FILE__) + "/../config")
+  CONFIG_FILENAME = "coyote.yaml"
+  CONFIG_ICON     = "coyote-icon.png"
+  USAGE_FILENAME  = "coyote-usage.txt"
 
   module Defaults
     OUTPUT = "coyote.js"
   end
 
-	def self.generate
+  def self.generate
     Coyote::Generator.new.generate
-	end
+  end
 
 
   def self.build(config)
@@ -42,7 +42,7 @@ module Coyote
   end
 
 
-	def self.watch(config)
+  def self.watch(config)
     self.build config
 
     listener = Coyote::FSListener.select_and_init
@@ -61,12 +61,12 @@ module Coyote
     end
 
     listener.start
-	end
+  end
 
 
-	def self.usage
-	  file = File.open("#{Coyote::CONFIG_PATH}/#{Coyote::USAGE_FILENAME}", 'r')
-		puts file.read
-		file.close
-	end
+  def self.usage
+    file = File.open("#{Coyote::CONFIG_PATH}/#{Coyote::USAGE_FILENAME}", 'r')
+    puts file.read
+    file.close
+  end
 end
