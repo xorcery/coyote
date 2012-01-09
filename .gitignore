@@ -8,5 +8,5 @@ Thumbs.db
 
 /pkg/*
 Manifest
-.gemspec
-.gem
+*.gemspec
+*.gem
