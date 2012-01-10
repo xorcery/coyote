@@ -65,7 +65,9 @@ module Coyote
       Dir.glob(path).each do |file|
         # Grab the absolute path of the file
         # so we can ensure we don't have duplicate inputs
-        filename = File.absolute_path(file)
+
+        # filename = File.absolute_path(file)
+        filename = file
 
         script = Coyote::Script.select_and_init(filename)
         script.requires.each { |path| find_and_add_files(path) }

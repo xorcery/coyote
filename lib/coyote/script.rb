@@ -59,7 +59,8 @@ module Coyote
     def requires(pattern = require_pattern)
       matches = @contents.scan(pattern)
       matches.collect do |match|
-        File.expand_path(match.last.strip, @directory)
+        # File.expand_path(match.last.strip, @directory)
+        match.last.strip
       end
     end
 
