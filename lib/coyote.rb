@@ -54,13 +54,17 @@ module Coyote
 
     listener = Coyote::FSListener.select_and_init
 
+    inputs = config.inputs.values.collect do |script|
+      script.relative_path
+    end
+
     listener.on_change do |files|
       if files.include? config.source
         Coyote::Notification.new "Config file (#{config.source}) changed. Reading it in.\n", "warning"
         config.load_from_yaml! config.source
         self.build config
       else
-        changed_watched_files = config.inputs & files
+        changed_watched_files = inputs & files
         if changed_watched_files.length > 0
           self.build config
         end

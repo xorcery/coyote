@@ -4,7 +4,8 @@ module Coyote
   autoload :Combine, 				'coyote/scripts/combine'
 
   class Script
-    attr_accessor :filename, :contents
+    attr_reader :filename, :relative_path
+    attr_accessor :contents
 
     # Class method
     # Determine the type of file base on the file extension
@@ -21,6 +22,7 @@ module Coyote
 
     def initialize(filename, contents = "")
       @filename = filename
+      @relative_path = @filename.gsub("#{Dir.pwd}/", '')
       @directory = File.dirname(@filename)
 
       if contents.empty? and File.exists? @filename

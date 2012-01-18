@@ -1,2 +1,0 @@
-$ ->
-  ClientName.main()
