@@ -22,19 +22,23 @@ module Coyote
     OUTPUT = "coyote.js"
   end
 
+
   def self.generate
     Coyote::Generator.new.generate
   end
 
-  
-
 
   def self.build(config)
     if config.inputs == config.output
-      Coyote::Notification.new "Input path cannot be the same as output path\n\n", "Failure"    
+      Coyote::Notification.new "Input path cannot be the same as output path\n\n", "Failure"
       exit 0
     end
-    
+
+    if config.inputs.nil? or config.output.nil?
+      Coyote::Notification.new "Input path and output path are both required\n\n", "Failure"
+      exit 0
+    end
+
     output = Coyote::Script.select_and_init(config.output)
     output.empty!
 
