@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+require 'rubygems'
+require 'fileutils'
+require 'coyote'
+
+
+input_path, output_path = ARGV[0].split(':', 2)
+
+# TODO
+# 1. Check that both input and output paths exist
+# 2. Check that input path is not the same as output path
+
+Coyote::build(input_path, output_path)
+
+
+
+
+
