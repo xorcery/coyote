@@ -1,11 +1,7 @@
 module Coyote
  	class CoffeeScript < Asset
 
-    # Defines the regex pattern for scanning the contents of the
-    # file to look for require directives
-    def require_pattern
-      Regexp.new(/#=\s*require\s(.*)$/i)  # '#= require a/b/c.coffee' => 'a/b/c.coffee'
-    end
+
 
     # We're defining setters and getters here
     # for the contents of the script file
@@ -19,6 +15,20 @@ module Coyote
       compile!
       @contents
     end
+
+    
+    
+    protected
+
+    # Defines the regex pattern for scanning the contents of the
+    # file to look for require directives
+    def require_pattern
+      Regexp.new(/#=\s*require\s(.*)$/i)  # '#= require a/b/c.coffee' => 'a/b/c.coffee'
+    end
+    
+    
+    
+    private
 
     # Run the contents of the script through the CoffeeScript compile
     # Changes the content of the script in-place

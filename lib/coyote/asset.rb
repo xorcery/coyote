@@ -27,9 +27,20 @@ module Coyote
     end
 
     def dependencies
-      matches = @contents.scan(Regexp.new(/\/\/=\s*require\s*(.*)$/i))
+      matches = @contents.scan(require_pattern)
       matches.reverse.collect { |match| "#{@relative_directory}/#{match.last.strip}" }
+    end   
+    
+
+    protected
+
+    # Defines the regex pattern for scanning the contents of the
+    # file to look for require directives
+    def require_pattern
+      Regexp.new(/\/\/=\s*require\s*(.*)$/i) # '//= require a/b/c.js' => 'a/b/c.js'
     end
+    
+
 
   end
 end
