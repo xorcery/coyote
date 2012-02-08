@@ -5,6 +5,8 @@ include Coyote::Notifications
 
 
 module Coyote
+  
+  VERSION = '1.0.1.beta'
 
   def self.run(input_path, output_path, options = {})
     @@options = options

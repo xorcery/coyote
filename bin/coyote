@@ -9,7 +9,7 @@ require 'coyote'
 
 options = {}
 OptionParser.new do |opts|
-  opts.on("-c", "--compress", "Compress") do |option|
+  opts.on("-c", "--compressed", "Compress") do |option|
     options[:compress] = option
   end
   opts.on("-w", "--watch", "Watch") do |option|
@@ -17,6 +17,9 @@ OptionParser.new do |opts|
   end
   opts.on("-q", "--quiet", "Quiet") do |option|
     options[:quiet] = option
+  end
+  opts.on("-v", "--verbose", "Verbose") do |option|
+    options[:verbose] = option
   end  
 end.parse!
 
