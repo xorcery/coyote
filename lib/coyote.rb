@@ -5,9 +5,10 @@ require 'coyote/runner'
 module Coyote
   def self.build(input_path, output_path)
     runner = Coyote::Runner.new(input_path)
-    runner.assets.each do |path, asset|
-      puts path
-    end
+    puts runner.files
+    # runner.assets.each do |path, asset|
+    #   puts path
+    # end
   end
 end
 

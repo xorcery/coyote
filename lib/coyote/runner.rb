@@ -19,10 +19,15 @@ module Coyote
 
     def add_dependencies_to_manifest(asset)
       asset.dependencies.each do |dependency|
-        @assets[dependency.absolute_path] = dependency
+        @assets[dependency.absolute_path] = @assets.delete(dependency.absolute_path)
         add_dependencies_to_manifest(dependency)
       end
     end
+    
+    def files
+      @assets.collect { |path, asset| path }.reverse
+    end
+    
 
   end
 end
