@@ -1,3 +1,4 @@
+//= require scripts/lib
 //= require scripts/input1.js
 //= require scripts/input2.js
 //= require scripts/input3.js

@@ -13,9 +13,7 @@ module Coyote
 
     def dependencies
       matches = @contents.scan(Regexp.new(/\/\/=\s*require\s*(.*)$/i))
-      matches.collect do |match|
-        self.class.new("#{@relative_directory}/#{match.last.strip}")
-      end
+      matches.reverse.collect { |match| "#{@relative_directory}/#{match.last.strip}" }
     end
 
   end
