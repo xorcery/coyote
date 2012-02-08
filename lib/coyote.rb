@@ -5,10 +5,11 @@ require 'coyote/bundle'
 module Coyote
   def self.build(input_path, output_path)
     bundle = Coyote::Bundle.new(input_path)
-    puts bundle.files
-    # bundle.assets.each do |path, asset|
-    #   puts path
-    # end
+
+    output = File.open output_path, 'w+'
+    output.write bundle.contents
+    output.close
+
   end
 end
 

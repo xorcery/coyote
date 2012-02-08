@@ -8,12 +8,14 @@ module Coyote
   autoload :Asset, 'coyote/asset'
 
   class Bundle
-    attr_reader :assets
 
+    attr_reader :contents
 
     def initialize(entry_point)
       @assets = {}
+      @contents = ""
       add entry_point
+      update!
     end
 
 
@@ -32,6 +34,14 @@ module Coyote
       end      
     end
 
+
+    def update!
+      @contents = "" 
+      files.each { |path| @contents += "#{@assets[path].contents} \n\n" }
+    end    
+
+
+    private
 
     def add_asset(path)
       asset = Asset.select_and_init(path)

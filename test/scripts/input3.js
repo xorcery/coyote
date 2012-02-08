@@ -1,1 +1,1 @@
-/* Input3.js */
+console.log('Input3.js');

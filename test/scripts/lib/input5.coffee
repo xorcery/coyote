@@ -1,3 +1,3 @@
-#= require input6.js
+#= require ../vendor/input8.coffee
 
-# Input5.js
+console.log 'Input5.coffee'
