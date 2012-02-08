@@ -1,8 +1,4 @@
-# = root ../assets/javascripts
-# = require vendor/jquery
-# = require vendor/fancybox
-# = require lib/keystone
-# = require app/confio
+require 'coyote/closure_compiler'
 
 module Coyote
   autoload :Asset, 'coyote/asset'
@@ -31,14 +27,29 @@ module Coyote
         add_asset path
       else
         puts "Could not find #{path}"
-      end      
+      end
     end
 
 
     def update!
-      @contents = "" 
+      @contents = ""
       files.each { |path| @contents += "#{@assets[path].contents} \n\n" }
-    end    
+    end
+
+
+    def compress!
+      puts "Compiling bundle...\n"
+      compiler = ClosureCompiler.new.compile(@contents)
+      if compiler.success?
+        @contents = compiler.compiled_code
+      elsif compiler.file_too_big?
+        puts "Input code too big for API, creating uncompiled file\n"
+      elsif compiler.errors
+        puts "Google closure API failed to compile, creating uncompiled file\n"
+        puts "Errors: \n"
+        puts "#{compiler.errors.to_s}\n\n"
+      end
+    end
 
 
     private
@@ -56,7 +67,7 @@ module Coyote
 
 
     def add_directory(dir_path)
-      Dir.foreach(dir_path) do |path| 
+      Dir.foreach(dir_path) do |path|
         next if path == '.' or path == '..'
         add "#{dir_path}/#{path}"
       end

@@ -5,10 +5,12 @@ require 'coyote/bundle'
 module Coyote
   def self.build(input_path, output_path)
     bundle = Coyote::Bundle.new(input_path)
+    bundle.compress!
 
     output = File.open output_path, 'w+'
     output.write bundle.contents
     output.close
+    puts "Saved #{output_path}"
 
   end
 end
