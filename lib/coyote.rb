@@ -1,10 +1,15 @@
-require 'coyote/asset'
+require 'coyote/runner'
+
+# 1. Get a hash of all files in the manifest in the order they should be compiled
 
 module Coyote
   def self.build(input_path, output_path)
-    manifest  = Coyote::Asset.new input_path    
-    output    = Coyote::Asset.new output_path
-    output.contents = manifest.contents
-    output.save
+    runner = Coyote::Runner.new(input_path)
+    runner.assets.each do |path, asset|
+      puts path
+    end
   end
 end
+
+
+
