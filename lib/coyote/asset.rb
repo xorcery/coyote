@@ -32,6 +32,7 @@ module Coyote
       find_dependencies
     end
 
+
     protected
 
     # Defines the regex pattern for scanning the contents of the

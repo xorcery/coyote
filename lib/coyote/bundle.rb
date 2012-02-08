@@ -36,10 +36,8 @@ module Coyote
 
 
     def update!
-      @contents = ""
-      files.each do |path|
-        @contents += "#{@assets[path].contents} \n"
-      end            
+      @contents = "" 
+      files.each { |path| @contents += "#{@assets[path].contents} \n\n" }
     end    
 
 
