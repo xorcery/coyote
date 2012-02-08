@@ -21,6 +21,15 @@ OptionParser.new do |opts|
 end.parse!
 
 
+
+case ARGV.first
+when 'build'
+  ARGV.shift
+when 'watch'
+  ARGV.shift
+  options[:watch] = true  
+end
+
 input_path, output_path = ARGV[0].split(':', 2)
 
 Coyote::run(input_path, output_path, options)
