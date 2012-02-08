@@ -34,7 +34,7 @@ module Coyote
 
 
     def add_asset(path)
-      asset = Asset.new(path)
+      asset = Asset.select_and_init(path)
 
       unless @assets[asset.absolute_path].nil?
         @assets.delete(asset.absolute_path)

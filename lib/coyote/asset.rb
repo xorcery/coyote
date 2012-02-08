@@ -1,7 +1,22 @@
 module Coyote
+  autoload :JavaScript,   'coyote/assets/javascript'
+  autoload :CoffeeScript, 'coyote/assets/coffeescript'
+
   class Asset
 
     attr_reader :relative_path, :absolute_path, :relative_directory, :absolute_directory
+    attr_accessor :contents
+
+    # Determine the type of file based on the file extension
+    # and return an instance of the proper asset class
+    def self.select_and_init(path)
+      case File.extname(path)
+      when /\.js/i      ; JavaScript.new(path)
+      when /\.coffee/i  ; CoffeeScript.new(path)
+      else              ; self.new(path)
+      end
+    end
+
 
     def initialize(relative_path)
       @relative_path      = relative_path
