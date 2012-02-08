@@ -16,8 +16,10 @@ module Coyote
     end
 
 
-    def files
-      @assets.collect { |path, asset| path }.reverse
+    def files(absolute = false)
+      @assets.collect do |path, asset| 
+        absolute ? asset.absolute_path : asset.relative_path
+      end.reverse
     end
 
 
@@ -32,9 +34,16 @@ module Coyote
     end
 
 
-    def update!
+    def update!(changed_files = [])
       @contents = ""
-      files.each { |path| @contents += "#{@assets[path].contents} \n\n" }
+      
+      unless changed_files.empty?
+        changed_files.each do |path|
+          @assets["#{Dir.pwd}/#{path}"].update!
+        end
+      end
+
+      files(true).each { |path| @contents += "#{@assets[path].contents} \n\n" }
     end
 
 
