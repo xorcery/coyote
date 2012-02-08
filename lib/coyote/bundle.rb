@@ -17,7 +17,7 @@ module Coyote
 
 
     def files(absolute = false)
-      @assets.collect do |path, asset| 
+      @assets.collect do |path, asset|
         absolute ? asset.absolute_path : asset.relative_path
       end.reverse
     end
@@ -29,14 +29,14 @@ module Coyote
       elsif File.exists? path
         add_asset path
       else
-        puts "Could not find #{path}"
+        notify "Could not find #{path}", :failure
       end
     end
 
 
     def update!(changed_files = [])
       @contents = ""
-      
+
       unless changed_files.empty?
         changed_files.each do |path|
           @assets["#{Dir.pwd}/#{path}"].update!
@@ -48,16 +48,16 @@ module Coyote
 
 
     def compress!
-      puts "Compiling bundle...\n"
+      notify "Compressing bundle...", :warning
       compiler = ClosureCompiler.new.compile(@contents)
       if compiler.success?
         @contents = compiler.compiled_code
       elsif compiler.file_too_big?
-        puts "Input code too big for API, creating uncompiled file\n"
+        notify "Input code too big for API, creating uncompressed file\n", :failure
       elsif compiler.errors
-        puts "Google closure API failed to compile, creating uncompiled file\n"
-        puts "Errors: \n"
-        puts "#{compiler.errors.to_s}\n\n"
+        notify "Google closure API failed to compile, creating uncompressed file\n", :failure
+        notify "Errors:", :failure
+        notify "#{compiler.errors.to_s}", :failure
       end
     end
 
@@ -65,12 +65,14 @@ module Coyote
     def save
       output = File.open @output_path, 'w+'
       output.write @contents
-      output.close      
-      puts "Saved #{@output_path}"
+      output.close
+      notify "Saved #{@output_path} at #{Time.new.strftime("%I:%M:%S")}\n", :success
     end
 
     def log
-      # TODO: add verbose logging feature
+      manifest = ""
+      files.each { |file| manifest += "\n + #{file}" }
+      notify manifest
     end
 
     private

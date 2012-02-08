@@ -19,7 +19,7 @@ module Coyote
 
 
     def initialize(relative_path)
-      @relative_path      = relative_path
+      @relative_path      = File.expand_path(relative_path).gsub("#{Dir.pwd}/", '')
       @absolute_path      = File.expand_path(@relative_path)
       @relative_directory = File.dirname(@relative_path)
       @absolute_directory = File.expand_path("#{Dir.pwd}/#{@relative_directory}")

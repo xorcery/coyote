@@ -1,5 +1,8 @@
 require 'coyote/bundle'
 require 'coyote/fs_listener'
+require 'coyote/notifications'
+include Coyote::Notifications
+
 
 module Coyote
 
@@ -10,9 +13,10 @@ module Coyote
     watch bundle if @@options[:watch]
   end
 
+
   def self.build(bundle)
-    bundle.compress! if @@options[:compress]
     bundle.log unless @@options[:quiet]
+    bundle.compress! if @@options[:compress]
     bundle.save
   end
 
@@ -24,17 +28,15 @@ module Coyote
       changed_files = bundle.files & changed_files
 
       if changed_files.length > 0
-        puts "#{Time.new.strftime("%I:%M:%S")}  Detected change to #{changed_files}, recompiling...\n"
+        notify "#{Time.new.strftime("%I:%M:%S")}  Detected change to #{changed_files}, recompiling...", :warning
         bundle.update! changed_files
         build bundle
       end
     end
 
-
-    puts "\nWatching for changes to your bundle. CTRL+C to stop.\n\n"
+    notify "Watching for changes to your bundle. CTRL+C to stop."
     listener.start
   end
-
 
 end
 
