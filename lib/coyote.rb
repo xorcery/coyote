@@ -16,6 +16,7 @@ module Coyote
     bundle.save
   end
 
+
   def self.watch(bundle)
     listener = Coyote::FSListener.select_and_init
 
@@ -23,12 +24,14 @@ module Coyote
       changed_files = bundle.files & changed_files
 
       if changed_files.length > 0
-        puts "Detected change to #{changed_files}, recompiling...\n"
+        puts "#{Time.new.strftime("%I:%M:%S")}  Detected change to #{changed_files}, recompiling...\n"
         bundle.update! changed_files
         build bundle
       end
     end
 
+
+    puts "\nWatching for changes to your bundle. CTRL+C to stop.\n\n"
     listener.start
   end
 
