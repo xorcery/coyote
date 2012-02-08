@@ -2,22 +2,12 @@ module Coyote
  	class CoffeeScript < Asset
 
 
-
-    # We're defining setters and getters here
-    # for the contents of the script file
-    # because we need to compile the CoffeeScript to JavaScript
-    # on the way out
-    def contents=(string)
-      @contents = string
-    end
-
-    def contents
+    def update!
+      super
       compile!
-      @contents
     end
 
-    
-    
+
     protected
 
     # Defines the regex pattern for scanning the contents of the
@@ -25,16 +15,15 @@ module Coyote
     def require_pattern
       Regexp.new(/#=\s*require\s(.*)$/i)  # '#= require a/b/c.coffee' => 'a/b/c.coffee'
     end
-    
-    
-    
+
+
     private
 
-    # Run the contents of the script through the CoffeeScript compile
-    # Changes the content of the script in-place
     def compile!
-      @contents = `cat #{@filename} | coffee -sc`
+      @contents = `cat #{@absolute_path} | coffee -sc`
     end
+
+
 
   end
 end

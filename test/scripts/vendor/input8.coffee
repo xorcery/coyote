@@ -1,1 +1,1 @@
-# Input8.coffee
+console.log 'Input8.coffee'
