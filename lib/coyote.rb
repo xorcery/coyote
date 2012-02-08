@@ -22,7 +22,7 @@ module Coyote
     listener.on_change do |changed_files|
       changed_files = bundle.files & changed_files
 
-      unless changed_files.length <= 0
+      if changed_files.length > 0
         puts "Detected change to #{changed_files}, recompiling...\n"
         bundle.update! changed_files
         build bundle
