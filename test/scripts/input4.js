@@ -1,0 +1,1 @@
+console.log('Input4.js');
