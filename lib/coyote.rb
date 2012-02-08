@@ -3,16 +3,24 @@ require 'coyote/bundle'
 # 1. Get a hash of all files in the manifest in the order they should be compiled
 
 module Coyote
-  def self.build(input_path, output_path)
-    bundle = Coyote::Bundle.new(input_path)
-    bundle.compress!
-
-    output = File.open output_path, 'w+'
-    output.write bundle.contents
-    output.close
-    puts "Saved #{output_path}"
-
+    
+  def self.run(input_path, output_path, options = {})
+    @@options = options
+    bundle = Coyote::Bundle.new(input_path, output_path)
+    build bundle
+    watch bundle if @@options[:watch]
   end
+  
+  def self.build(bundle)
+    bundle.compress! if @@options[:compress]
+    bundle.log unless @@options[:quiet]
+    bundle.save
+  end
+
+  def self.watch(bundle)
+    build bundle
+  end
+
 end
 
 

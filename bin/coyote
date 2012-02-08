@@ -3,18 +3,25 @@
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'rubygems'
 require 'fileutils'
+require 'optparse'
 require 'coyote'
+
+
+options = {}
+OptionParser.new do |opts|
+  opts.on("-c", "--compress", "Compress") do |option|
+    options[:compress] = option
+  end
+  opts.on("-w", "--watch", "Watch") do |option|
+    options[:watch] = option
+  end
+  opts.on("-q", "--quiet", "Quiet") do |option|
+    options[:quiet] = option
+  end  
+end.parse!
 
 
 input_path, output_path = ARGV[0].split(':', 2)
 
-# TODO
-# 1. Check that both input and output paths exist
-# 2. Check that input path is not the same as output path
-
-Coyote::build(input_path, output_path)
-
-
-
-
+Coyote::run(input_path, output_path, options)
 

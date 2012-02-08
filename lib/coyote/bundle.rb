@@ -7,7 +7,8 @@ module Coyote
 
     attr_reader :contents
 
-    def initialize(entry_point)
+    def initialize(entry_point, output_path)
+      @output_path = output_path
       @assets = {}
       @contents = ""
       add entry_point
@@ -51,6 +52,17 @@ module Coyote
       end
     end
 
+
+    def save
+      output = File.open @output_path, 'w+'
+      output.write @contents
+      output.close      
+      puts "Saved #{@output_path}"
+    end
+
+    def log
+      # TODO: add verbose logging feature
+    end
 
     private
 
