@@ -1,4 +1,3 @@
-require 'benchmark'
 require 'coyote/bundle'
 require 'coyote/fs_listener'
 require 'coyote/notifications'
@@ -7,7 +6,7 @@ include Coyote::Notifications
 
 module Coyote
   
-  VERSION = '1.0.1.beta'
+  VERSION = '1.0.0.beta1'
 
   def self.run(input_path, output_path, options = {})
     @@input_path  = input_path
