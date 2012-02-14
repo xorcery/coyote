@@ -20,7 +20,7 @@ module Coyote
 
 
   def self.build(bundle)
-    notify bundle.manifest if @@options[:verbose]
+    notify bundle.manifest unless @@options[:quiet]
     bundle.compress! if @@options[:compress]
     bundle.save
     notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{bundle.files.length} files]", :success    
