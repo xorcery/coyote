@@ -43,7 +43,7 @@ module Coyote
       end
     end
 
-    notify "Watching for changes to your bundle. CTRL+C to stop."
+    notify "#{Time.new.strftime("%I:%M:%S")}   Watching for changes to your bundle. CTRL+C to stop."
     listener.start
   end
 end
