@@ -36,4 +36,3 @@ end
 input_path, output_path = ARGV[0].split(':', 2)
 
 Coyote::run(input_path, output_path, options)
-

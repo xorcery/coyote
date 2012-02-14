@@ -1,3 +1,4 @@
+require 'benchmark'
 require 'coyote/bundle'
 require 'coyote/fs_listener'
 require 'coyote/notifications'
@@ -9,7 +10,9 @@ module Coyote
   VERSION = '1.0.1.beta'
 
   def self.run(input_path, output_path, options = {})
-    @@options = options
+    @@input_path  = input_path
+    @@output_path = output_path
+    @@options     = options
     bundle = Coyote::Bundle.new(input_path, output_path)
     build bundle
     watch bundle if @@options[:watch]
@@ -17,9 +20,10 @@ module Coyote
 
 
   def self.build(bundle)
-    bundle.log unless @@options[:quiet]
+    notify bundle.manifest unless @@options[:quiet]
     bundle.compress! if @@options[:compress]
     bundle.save
+    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{bundle.files.length} files]", :success    
   end
 
 
@@ -30,7 +34,7 @@ module Coyote
       changed_files = bundle.files & changed_files
 
       if changed_files.length > 0
-        notify "#{Time.new.strftime("%I:%M:%S")}  Detected change to #{changed_files}, recompiling...", :warning
+        notify "#{Time.new.strftime("%I:%M:%S")}   Detected change, recompiling...", :warning
         bundle.update! changed_files
         build bundle
       end

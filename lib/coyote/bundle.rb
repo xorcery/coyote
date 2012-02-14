@@ -48,7 +48,7 @@ module Coyote
 
 
     def compress!
-      notify "Compressing bundle...", :warning
+      notify "#{Time.new.strftime("%I:%M:%S")}   Compressing bundle...", :warning
       compiler = ClosureCompiler.new.compile(@contents)
       if compiler.success?
         @contents = compiler.compiled_code
@@ -61,18 +61,14 @@ module Coyote
       end
     end
 
-
     def save
       output = File.open @output_path, 'w+'
       output.write @contents
       output.close
-      notify "Saved #{@output_path} at #{Time.new.strftime("%I:%M:%S")}\n", :success
     end
 
-    def log
-      manifest = ""
-      files.each { |file| manifest += "\n + #{file}" }
-      notify manifest
+    def manifest
+      files.inject("") { |result, file| result + "\n + #{file}" }
     end
 
     private
