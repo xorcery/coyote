@@ -1,5 +1,0 @@
-#!/bin/bash
-
-rake manifest
-rake build_gemspec
-gem build coyote.gemspec

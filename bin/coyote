@@ -1,46 +1,23 @@
 #!/usr/bin/env ruby
 
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
-require 'fileutils'
 require 'rubygems'
+require 'fileutils'
 require 'optparse'
 require 'coyote'
 
 
-@options = {}
+options = {}
 OptionParser.new do |opts|
-  opts.on("-c", "--compress", "Compress") do |option|
-  	@options['compress'] = option
-  end
-  opts.on("-v", "--verbose", "Verbose") do |option|
-  	@options['verbose'] = option
+  Coyote::options.each do |name|
+    opts.on("-#{name[0]}", "--#{name}", "#{name.capitalize}") { |o| options[name.to_sym] = o }
   end
 end.parse!
 
+input, output = ARGV[0].split(':', 2)
 
-def config
-  config = Coyote::Configuration.new @options
-	ARGV.shift
-	
-	if ARGV.empty?
-  	config.load_from_yaml!
-	else
-    input, output = ARGV[0].split(':', 2)
-	  config.inputs = input
-	  config.output = output
-	end
-
-  return config
-end  
-  
-
-case ARGV.first
-when 'new'
-  Coyote::generate
-when 'build'
-  Coyote::build config
-when 'watch'
-  Coyote::watch config
-else
-  Coyote::usage
+coyote :build do |config|
+  config.input    = input
+  config.output   = output
+  config.options  = options
 end

@@ -1,87 +1,49 @@
-require 'yaml'
-require 'term/ansicolor'
-require 'coyote/script'
 require 'coyote/configuration'
+require 'coyote/bundle'
 require 'coyote/fs_listener'
-require 'coyote/generator'
-require 'coyote/closure_compiler'
-require 'coyote/notification'
+require 'coyote/notifications'
+include Coyote::Notifications
 
-include Term::ANSIColor
 
 module Coyote
-  APP_NAME        = "Coyote"
-  VERSION         = "0.7.0"
-  ROOT_PATH       = Dir.pwd
-  CONFIG_PATH     = File.expand_path(File.dirname(__FILE__) + "/../config")
-  CONFIG_FILENAME = "coyote.yaml"
-  CONFIG_ICON     = "coyote-icon.png"
-  USAGE_FILENAME  = "coyote-usage.txt"
+  
+  VERSION = '1.0.0'
+  
+  def self.run(input_path, output_path, options = {})
+    @@input_path  = input_path
+    @@output_path = output_path
+    @@options     = options
+    bundle = Coyote::Bundle.new(input_path, output_path)
+    build bundle
+    watch bundle if @@options[:watch]
+  end
 
-  module Defaults
-    OUTPUT = "coyote.js"
+  def self.options
+    ['compress', 'watch', 'quiet']
+  end
+
+  def self.build(bundle)
+    notify bundle.manifest unless @@options[:quiet]
+    bundle.compress! if @@options[:compress]
+    bundle.save
+    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{bundle.files.length} files]", :success    
   end
 
 
-  def self.generate
-    Coyote::Generator.new.generate
-  end
-
-
-  def self.build(config)
-    if config.inputs == config.output
-      Coyote::Notification.new "Input path cannot be the same as output path\n\n", "Failure"
-      exit 0
-    end
-
-    if config.inputs.nil? or config.output.nil?
-      Coyote::Notification.new "Input path and output path are both required\n\n", "Failure"
-      exit 0
-    end
-
-    output = Coyote::Script.select_and_init(config.output)
-    output.empty!
-
-    config.inputs.each do |file, input|
-      output.append input.contents
-      print "+ Added #{file}\n" if config.options['verbose']
-    end
-
-    output.compress! if config.should_compress?
-    output.save
-    Coyote::Notification.new "Saved #{config.output}\n\n", "success"
-  end
-
-
-  def self.watch(config)
-    self.build config
-
+  def self.watch(bundle)
     listener = Coyote::FSListener.select_and_init
 
-    inputs = config.inputs.values.collect do |script|
-      script.relative_path
-    end
+    listener.on_change do |changed_files|
+      changed_files = bundle.files & changed_files
 
-    listener.on_change do |files|
-      if files.include? config.source
-        Coyote::Notification.new "Config file (#{config.source}) changed. Reading it in.\n", "warning"
-        config.load_from_yaml! config.source
-        self.build config
-      else
-        changed_watched_files = inputs & files
-        if changed_watched_files.length > 0
-          self.build config
-        end
+      if changed_files.length > 0
+        notify "#{Time.new.strftime("%I:%M:%S")}   Detected change, recompiling...", :warning
+        bundle.update! changed_files
+        build bundle
       end
     end
 
+    notify "#{Time.new.strftime("%I:%M:%S")}   Watching for changes to your bundle. CTRL+C to stop."
     listener.start
-  end
-
-
-  def self.usage
-    file = File.open("#{Coyote::CONFIG_PATH}/#{Coyote::USAGE_FILENAME}", 'r')
-    puts file.read
-    file.close
   end
 end
