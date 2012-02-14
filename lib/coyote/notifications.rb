@@ -13,7 +13,7 @@ module Coyote
       case type
       when :success           ; print msg.green
       when :warning           ; print msg.yellow
-      when :failure           ; print msg.white.on_red.blink
+      when :failure           ; print msg.red
       else                    ; print msg.white
       end
     end

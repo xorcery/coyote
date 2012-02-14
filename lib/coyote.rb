@@ -1,3 +1,4 @@
+require 'coyote/configuration'
 require 'coyote/bundle'
 require 'coyote/fs_listener'
 require 'coyote/notifications'
@@ -7,7 +8,7 @@ include Coyote::Notifications
 module Coyote
   
   VERSION = '1.0.0.beta1'
-
+  
   def self.run(input_path, output_path, options = {})
     @@input_path  = input_path
     @@output_path = output_path
@@ -17,6 +18,9 @@ module Coyote
     watch bundle if @@options[:watch]
   end
 
+  def self.options
+    ['compress', 'watch', 'quiet']
+  end
 
   def self.build(bundle)
     notify bundle.manifest unless @@options[:quiet]
@@ -42,8 +46,4 @@ module Coyote
     notify "Watching for changes to your bundle. CTRL+C to stop."
     listener.start
   end
-
 end
-
-
-

@@ -9,21 +9,15 @@ require 'coyote'
 
 options = {}
 OptionParser.new do |opts|
-  opts.on("-c", "--compressed", "Compress") do |option|
-    options[:compress] = option
+  Coyote::options.each do |name|
+    opts.on("-#{name[0]}", "--#{name}", "#{name.capitalize}") { |o| options[name.to_sym] = o }
   end
-  opts.on("-w", "--watch", "Watch") do |option|
-    options[:watch] = option
-  end
-  opts.on("-q", "--quiet", "Quiet") do |option|
-    options[:quiet] = option
-  end
-  opts.on("-v", "--verbose", "Verbose") do |option|
-    options[:verbose] = option
-  end  
 end.parse!
 
+input, output = ARGV[0].split(':', 2)
 
-input_path, output_path = ARGV[0].split(':', 2)
-
-Coyote::run(input_path, output_path, options)
+coyote :build do |config|
+  config.input    = input
+  config.output   = output
+  config.options  = options
+end
