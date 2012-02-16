@@ -1,3 +1,4 @@
+require 'benchmark'
 require 'fileutils'
 require 'coyote/bundle'
 require 'coyote/fs_listener'
@@ -12,33 +13,38 @@ module Coyote
     @@input_path  = input_path
     @@output_path = output_path
     @@options     = options
-    bundle = Coyote::Bundle.new(input_path, output_path)
-    build bundle
-    watch bundle if @@options[:watch]
+    @@bundle      = Coyote::Bundle.new(input_path, output_path)
+    build { |bundle| bundle.update! }
+    watch if @@options[:watch]
   end
+
 
   def self.options
     ['compress', 'watch', 'quiet', 'version']
   end
 
-  def self.build(bundle)
-    notify bundle.manifest unless @@options[:quiet]
-    bundle.compress! if @@options[:compress]
-    bundle.save
-    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{bundle.files.length} files]", :success    
+
+  def self.build(&block)
+    time = Benchmark.realtime do
+      yield @@bundle unless block.nil?
+      notify @@bundle.manifest unless @@options[:quiet]
+      @@bundle.compress! if @@options[:compress]
+      @@bundle.save
+    end
+
+    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{@@bundle.files.length} files in #{(time * 1000).round(4)}ms]", :success    
   end
 
 
-  def self.watch(bundle)
+  def self.watch
     listener = Coyote::FSListener.select_and_init
 
     listener.on_change do |changed_files|
-      changed_files = bundle.files & changed_files
+      changed_files = @@bundle.files & changed_files
 
       if changed_files.length > 0
         notify "#{Time.new.strftime("%I:%M:%S")}   Detected change, recompiling...", :warning
-        bundle.update! changed_files
-        build bundle
+        build { |bundle| bundle.update! changed_files }
       end
     end
 
