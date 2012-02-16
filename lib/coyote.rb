@@ -32,7 +32,7 @@ module Coyote
       @@bundle.save
     end
 
-    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{@@bundle.files.length} files in #{time.round(5)} seconds]", :success    
+    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{@@bundle.files.length} files in #{(time * 1000).round(4)}ms]", :success    
   end
 
 
