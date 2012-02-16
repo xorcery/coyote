@@ -12,7 +12,6 @@ module Coyote
       @assets = {}
       @contents = ""
       add entry_point
-      update!
     end
 
 
