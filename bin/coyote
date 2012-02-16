@@ -14,6 +14,11 @@ OptionParser.new do |opts|
   end
 end.parse!
 
+if options[:version]
+  puts "coyote #{Coyote::VERSION}"
+  exit 0
+end
+
 input, output = ARGV[0].split(':', 2)
 
 coyote :build do |config|
