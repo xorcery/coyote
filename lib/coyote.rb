@@ -19,7 +19,7 @@ module Coyote
   end
 
   def self.options
-    ['compress', 'watch', 'quiet']
+    ['compress', 'watch', 'quiet', 'version']
   end
 
   def self.build(bundle)
