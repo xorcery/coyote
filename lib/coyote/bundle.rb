@@ -8,10 +8,9 @@ module Coyote
     attr_reader :contents
 
     def initialize(entry_point, output_path)
+      @entry_point = entry_point
       @output_path = output_path
-      @assets = {}
-      @contents = ""
-      add entry_point
+      build
     end
 
 
@@ -34,15 +33,42 @@ module Coyote
 
 
     def update!(changed_files = [])
-      @contents = ""
+      bundle_should_rebuild = false
 
       unless changed_files.empty?
         changed_files.each do |path|
-          @assets["#{Dir.pwd}/#{path}"].update!
+          asset = @assets["#{Dir.pwd}/#{path}"]
+          asset.update!
+          if asset.dependencies_have_changed?
+            bundle_should_rebuild = true
+          end
         end
       end
 
-      files(true).each { |path| @contents += "#{@assets[path].contents} \n\n" }
+      if bundle_should_rebuild
+        notify "#{Time.new.strftime("%I:%M:%S")}   Dependencies have changed. Refreshing bundle and recompiling...", :failure
+        build
+      else
+        refresh
+      end
+    end
+
+        
+    def refresh
+      @contents = ""
+      files(true).each { |path| @contents += "#{@assets[path].contents} \n\n" }      
+    end
+
+
+    def build
+      empty!
+      add @entry_point      
+    end
+
+
+    def empty!
+      @assets = {}
+      @contents = ""    
     end
 
 

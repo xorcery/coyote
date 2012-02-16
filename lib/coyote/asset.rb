@@ -31,7 +31,10 @@ module Coyote
       @contents = File.exists?(@absolute_path) ? File.open(@absolute_path, 'r').read : ""
       find_dependencies
     end
-
+    
+    def dependencies_have_changed?
+      @last_dependencies != @dependencies
+    end
 
     protected
 
@@ -42,6 +45,7 @@ module Coyote
     end
 
     def find_dependencies
+      @last_dependencies = @dependencies
       matches = @contents.scan(require_pattern)
       @dependencies = matches.reverse.collect { |match| "#{@relative_directory}/#{match.last.strip}" }
     end
