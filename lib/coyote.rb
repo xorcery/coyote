@@ -7,7 +7,7 @@ include Coyote::Notifications
 
 module Coyote
   
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
   
   def self.run(input_path, output_path, options = {})
     @@input_path  = input_path
@@ -19,7 +19,7 @@ module Coyote
   end
 
   def self.options
-    ['compress', 'watch', 'quiet']
+    ['compress', 'watch', 'quiet', 'version']
   end
 
   def self.build(bundle)
