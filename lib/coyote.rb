@@ -1,9 +1,8 @@
-require 'coyote/configuration'
+require 'fileutils'
 require 'coyote/bundle'
 require 'coyote/fs_listener'
 require 'coyote/notifications'
 include Coyote::Notifications
-
 
 module Coyote
   

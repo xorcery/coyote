@@ -2,27 +2,4 @@
 
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'rubygems'
-require 'fileutils'
-require 'optparse'
-require 'coyote'
-
-
-options = {}
-OptionParser.new do |opts|
-  Coyote::options.each do |name|
-    opts.on("-#{name[0]}", "--#{name}", "#{name.capitalize}") { |o| options[name.to_sym] = o }
-  end
-end.parse!
-
-if options[:version]
-  puts "coyote #{Coyote::VERSION}"
-  exit 0
-end
-
-input, output = ARGV[0].split(':', 2)
-
-coyote :build do |config|
-  config.input    = input
-  config.output   = output
-  config.options  = options
-end
+require 'coyote/cli'
