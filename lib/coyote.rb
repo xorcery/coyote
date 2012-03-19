@@ -6,9 +6,8 @@ require 'coyote/notifications'
 include Coyote::Notifications
 
 module Coyote
-  
   VERSION = '1.1.0'
-  
+
   def self.run(input_path, output_path, options = {})
     @@input_path  = input_path
     @@output_path = output_path
@@ -18,11 +17,9 @@ module Coyote
     watch if @@options[:watch]
   end
 
-
   def self.options
     ['compress', 'watch', 'quiet', 'version']
   end
-
 
   def self.build(&block)
     time = Benchmark.realtime do
@@ -32,9 +29,8 @@ module Coyote
       @@bundle.save
     end
 
-    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{@@bundle.files.length} files in #{(time).round(5)}s]", :success    
+    notify "#{Time.new.strftime("%I:%M:%S")}   Saved bundle to #{@@output_path}   [#{@@bundle.files.length} files in #{(time).round(5)}s]", :success
   end
-
 
   def self.watch
     listener = Coyote::FSListener.select_and_init

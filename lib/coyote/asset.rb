@@ -19,7 +19,6 @@ module Coyote
       end
     end
 
-
     def initialize(relative_path)
       @relative_path      = File.expand_path(relative_path).gsub("#{Dir.pwd}/", '')
       @absolute_path      = File.expand_path(@relative_path)
@@ -28,12 +27,11 @@ module Coyote
       update!
     end
 
-
     def update!
       @contents = File.exists?(@absolute_path) ? File.open(@absolute_path, 'r').read : ""
       find_dependencies
     end
-    
+
     def dependencies_have_changed?
       @last_dependencies != @dependencies
     end
@@ -51,7 +49,5 @@ module Coyote
       matches = @contents.scan(require_pattern)
       @dependencies = matches.reverse.collect { |match| "#{@relative_directory}/#{match.last.strip}" }
     end
-
-
   end
 end

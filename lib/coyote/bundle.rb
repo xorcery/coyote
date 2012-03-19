@@ -53,22 +53,22 @@ module Coyote
       end
     end
 
-        
+
     def refresh
       @contents = ""
-      files(true).each { |path| @contents += "#{@assets[path].contents} \n\n" }      
+      files(true).each { |path| @contents += "#{@assets[path].contents} \n\n" }
     end
 
 
     def build
       empty!
-      add @entry_point      
+      add @entry_point
     end
 
 
     def empty!
       @assets = {}
-      @contents = ""    
+      @contents = ""
     end
 
 
