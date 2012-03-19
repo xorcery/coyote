@@ -5,7 +5,7 @@ module Coyote
   autoload :Linux,   'coyote/fs_listeners/linux'
   autoload :Windows, 'coyote/fs_listeners/windows'
   autoload :Polling, 'coyote/fs_listeners/polling'
-  
+
   class FSListener
     attr_reader :last_event, :sha1_checksums_hash
 
