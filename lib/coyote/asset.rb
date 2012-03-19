@@ -1,6 +1,7 @@
 module Coyote
   autoload :JavaScript,   'coyote/assets/javascript'
   autoload :CoffeeScript, 'coyote/assets/coffeescript'
+  autoload :Less,         'coyote/assets/less'
 
   class Asset
 
@@ -13,6 +14,7 @@ module Coyote
       case File.extname(path)
       when /\.js/i      ; JavaScript.new(path)
       when /\.coffee/i  ; CoffeeScript.new(path)
+      when /\.less/i    ; Less.new(path)
       else              ; self.new(path)
       end
     end

@@ -6,7 +6,7 @@ require 'coyote/notifications'
 include Coyote::Notifications
 
 module Coyote
-  VERSION = '1.0.3'
+  VERSION = '1.1.0'
 
   def self.run(input_path, output_path, options = {})
     @@input_path  = input_path
