@@ -6,7 +6,7 @@ module Coyote
 
     def self.notify(msg, type = "message")
       notify msg, type
-    end  
+    end
 
     def notify(msg, type = :message)
       msg = "#{msg}\n"
@@ -17,6 +17,6 @@ module Coyote
       else                    ; print msg.white
       end
     end
-    
+
   end
 end
