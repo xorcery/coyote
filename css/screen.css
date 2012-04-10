@@ -81,6 +81,12 @@ strong {
   -webkit-box-shadow: inset 0 -5px 36px rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
+#header .right > p {
+  margin-right: 85px;
+}
+#header .right > p a {
+  color: #ccc;
+}
 #header .inner {
   padding: 0 18px;
 }
@@ -108,10 +114,81 @@ code {
   box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
+code i {
+  color: #666;
+  font-style: italic;
+  line-height: inherit;
+}
 code b {
+  color: #969696;
+}
+code b.keyword {
+  color: #2ea8bb;
+}
+code b.string {
   color: #dfff9f;
 }
-code i {
+code b.variable {
+  color: #b47ec6;
+}
+code b.method {
+  color: #2ea8bb;
+}
+code b.boolean {
+  color: #8ac6d5;
+}
+code b.constant,
+code b.hash,
+code b.array {
+  color: #969696;
+}
+code b.symbol {
+  color: #caac8d;
+}
+code b.number {
+  color: #87a485;
+}
+code b.yield {
+  color: #969696;
+}
+table {
+  display: block;
+  padding: 8px 20px;
+  background: #0a1721;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -moz-box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 5px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+table th,
+table td {
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+table thead th,
+table thead td {
+  font-weight: bold;
+  text-align: left;
+}
+table tbody th,
+table tbody td {
+  font-family: 'monaco', monospace;
+  text-align: left;
+}
+table tbody th {
+  width: 100px;
+}
+table tbody tr:last-child td,
+table tbody tr:last-child th {
+  border-bottom: none;
+}
+table b {
+  color: #dfff9f;
+}
+table i {
   color: #666;
   font-style: italic;
   line-height: inherit;
@@ -128,3 +205,5 @@ code i {
   height: auto;
   margin: auto;
 }
+ 
+

@@ -2,148 +2,174 @@
 <html>
 <head>
   <meta charset='utf-8'>
-  <title>Coyote | An intelligent command-line tool for combining and compressing your JavaScript files</title>
-	<meta name="description" content="An intelligent command-line tool for combining and compressing your JavaScript files" />
-	<meta name="keywords" content="Coyote, JavaScript, compressor, Imulus" />
+  <title>Coyote | A speedy tool for combining and compressing your JavaScript and CoffeeScript source files.</title>
+  <meta name="description" content="An intelligent command-line tool for combining and compressing your JavaScript files" />
+  <meta name="keywords" content="Coyote, JavaScript, compressor, Imulus" />
 
-	<link rel="stylesheet" href="./css/reset.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="./css/fonts.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="./css/reset.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="./css/fonts.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="./css/screen.css" type="text/css" media="screen" />
 </head>
 
 <body>
 
 <div id="header">
-	<div class="inner autoclear">
+  <div class="inner autoclear">
 
-		<div class="left">
-			<h1><a href="http://github.com/imulus/coyote">Coyote</a></h1>
-		</div>
+    <div class="left">
+      <h1><a href="http://github.com/imulus/coyote">Coyote</a></h1>
+    </div>
 
-		<div class="right">
-			<h2>An command-line tool for combining, compressing and compiling your JavaScript and CoffeeScript files.</h2>
-			<p>Coyote selectively concatenates your files, combining them into a single file with the option of running the output through the Google Closure Compiler before save. It can be used to observe your source files for changes and will recompile and save on the fly for easy development. Coyote automatically compiles CoffeeScript files (bare, with no safety closure) before combining them with other source files. You can freely combine JavaScript and CoffeeScript source files in your compilation.</p>
-		</div>
+    <div class="right">
+      <h2 class="light">A speedy tool for combining and compressing your JavaScript and CoffeeScript source files.</h2>
+      <p>Coyote combines your source files into a single script to reduce HTTP overhead and make development easier. It has built-in support for <a href="https://github.com/sstephenson/sprockets">Sprockets-style</a> dependency syntax (`#= require x`) and a lightning-fast, built-in watch mechanism to detect changes to your source files and recompile on the fly. For increased optimization, you can optionally run the final compilation through the Google Closure Compiler before save.</p>
+    </div>
 
-	</div>
+  </div>
 </div>
 
 
 
 <div id="container">
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Installation</h3>
-		</div>
-		<div class="right">
-			<code><b>$</b> gem install coyote</code>
-		</div>
-	</div>
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Installation</h3>
+    </div>
+    <div class="right">
+      <code><b>$</b> gem install coyote</code>
+    </div>
+  </div>
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Configuration</h3>
-		</div>
-		<div class="right">
-			<code><b>$</b> cd myproject/scripts <br /> <b>$</b> coyote new</code>
-			<p class="description">This will create the configuration file (coyote.yaml) and will discover any .js and .coffee files in this directory, automatically adding them to the configuration. Open coyote.yaml and modify the input and output configurations to meet your needs. Coyote will combine the input files in the order you define.</p>
-		</div>
-	</div>
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Command Line Interface</h3>
+    </div>
+    <div class="right">
+      <p><strong>Syntax:</strong></p>
+      <code><b>$</b> coyote [input_filepath]:[output_filepath]</code>
+      <br />
+      <p><strong>Example:</strong></p>
+      <code><b>$</b> coyote src/application.coffee:build/application.min.js</code>
+    </div>
+  </div>
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Trigger a Build</h3>
-		</div>
-		<div class="right">
-			<code><b>$</b> coyote build</code>
-			<p class="description">This will trigger the compiler without the "server" for a one-time build and save.</p>
-		</div>
-	</div>
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Options</h3>
+    </div>
+    <div class="right">
+      <table>
+        <thead>
+          <th>Option</th>
+          <th>Description</th>
+        </thead>
+        <tbody>
+          <tr>
+            <th>-c, --compress</th>
+            <td>Compress the final compilation with the Google Closure Compiler</td>
+          </tr>
+          <tr>
+            <th>-w, --watch</th>
+            <td>Use the built-in watch mechanism to observe your source files and re-compile when something changes</td>
+          </tr>
+          <tr>
+            <th>-q, --quiet</th>
+            <td>Quiet the command-line output</td>
+          </tr>
+          <tr>
+            <th>-v, --version</th>
+            <td>Get the version of your Coyote gem</td>
+          </tr>
+        </tbody>
+      </table>            
+    </div>
+  </div>
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Start the Observer</h3>
-		</div>
-		<div class="right">
-			<code><b>$</b> coyote watch</code>
-			<p class="description">This will start the Coyote "server" -- the directory watcher mechanism. Once started, any changes made to your source files will automatically trigger the compiler.</p>
-		</div>
-	</div>
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Requiring Source Files</h3>
+    </div>
+    <div class="right">
+      <p class="description">Coyote has support for <a href="https://github.com/sstephenson/sprockets">Sprockets-style</a> requires, with one exception. Instead of using `require_tree`, you can simply use `require` and Coyote will automatically detect if the path is a source file or a directory.</p>
+      <br />
+      <p><strong>Syntax:</strong> (JavaScript)</p>
+      <br />
+      <code><i>//= require other_file.js</i><br /><i>//= require some_directory</i></code>
+      <br />
+      <p><strong>Syntax:</strong> (CoffeeScript)</p>
+      <br />
+      <code><i>#= require other_file.coffee</i><br /><i>#= require some_directory</i></code>
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Input Wildcards</h3>
-		</div>
-		<div class="right">
-			<p>You can wildcard your input parameters to find files.</p>
-			<code>- **/*.js <i># recursively find all files with the extension '.js'</i><br />- /jquery/plugins/*.js <i># find all .js files in the directory</i></code>
-			<p class="description">This will trigger the compiler without the "server" for a one-time build and save.</p>
-		</div>
-	</div>
-
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Dependency Discovery</h3>
-		</div>
-		<div class="right">
-			<p><strong>To include a dependency, put a require comment in the top of your JS or CS file</strong></p>
-			<p>If your script files depend on other files or libraries to run, you can define those dependencies so Coyote will include them in the compiled output before the files that require them.</p>
-			<code>//= require /jquery/jquery.js<br />#= require /jquery/jquery.js (in CoffeeScript)</code>
-			<br />
-			<code>//= require jquery<br />#= require jquery (in CoffeeScript)</code>
-			<br />
-			<p>When you don't define an explicit path to the file, as in the example above, Coyote will recursively search for a file of that name. "//= require jquery" will search the entire directory for the file "jquery.js"</p>
-			<p class="description">Dependencies are searched for relative to the top level of your directory -- where your coyote.yaml config file is located.</p>
-		</div>
-	</div>
-
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Options</h3>
-		</div>
-		<div class="right">
-			<p><strong>Compress output with Google Closure Compiler</strong></p>
-			<code><b>$</b> coyote build --compress</code>
-			<br />
-			<code><b>$</b> coyote watch --compress</code>
-		</div>
-	</div>
+      <p class="description">Paths used in `require` statements are evaluated relative to the file which contains them.</p>
+    </div>
+  </div>
 
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Contribute</h3>
-		</div>
-		<div class="right">
-			<p><strong>We'd love your help. Fork us so we can make Coyote better.</strong></p>
-			<code><b>$</b> git clone git://github.com/imulus/coyote</code>
-		</div>
-	</div>
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Using with Rake</h3>
+    </div>
+    <div class="right">
+      <p class="description">Coyote ships with convenience methods for neatly defining tasks in your Rakefile</p>
+      <br />
+      <code>
+        <b class="keyword">require</b> <b class="string>">'coyote/rake'</b><br /><br />
+        <b class="method">coyote</b> <b class="symbol">:build</b> <b class="keyword">do</b> <b class="yield">|<b class="variable">config</b>|</b><br />
+        &nbsp;&nbsp;<b class="variable">config.input</b> = <b class="string">"src/application.coffee"</b><br />
+        &nbsp;&nbsp;<b class="variable">config.output</b> = <b class="string">"build/application.min.js"</b><br />
+        &nbsp;&nbsp;<b class="variable">config.options</b> = <b class="hash">{ <b class="symbol">:compress</b> => <b class="boolean">true</b> }</b><br />        
+        <b class="keyword">end</b>
+        <br /><br />
+        <b class="method">coyote</b> <b class="symbol">:watch</b> <b class="keyword">do</b> <b class="yield">|<b class="variable">config</b>|</b><br />
+        &nbsp;&nbsp;<b class="variable">config.input</b> = <b class="string">"src/application.coffee"</b><br />
+        &nbsp;&nbsp;<b class="variable">config.output</b> = <b class="string">"build/application.min.js"</b><br />
+        &nbsp;&nbsp;<b class="variable">config.options</b> = <b class="hash">{ <b class="symbol">:quiet</b> => <b class="boolean">true</b> }</b><br />        
+        <b class="keyword">end</b>
+      </code>
 
-	<div class="section autoclear">
-		<div class="left">
-			<h3>Download</h3>
-		</div>
-		<div class="right">
-		  <p>
-		    You can download this project in either
-		    <a href="http://github.com/imulus/coyote/zipball/master">zip</a> or
-		    <a href="http://github.com/imulus/coyote/tarball/master">tar</a> formats.
-		  </p>
-			<p class="description">or get the source code on GitHub : <a href="http://github.com/imulus/coyote">imulus/coyote</a></p>
-		</div>
-	</div>
+      <p class="description">This will create two Rake tasks, `build` and `watch`, which you can run as standard tasks: `rake build` and `rake watch`</p>
+    </div>
+  </div>
+
+
+
+
+
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Contribute</h3>
+    </div>
+    <div class="right">
+      <p><strong>We'd love your help. Fork us so we can make Coyote better.</strong></p>
+      <code><b>$</b> git clone git://github.com/imulus/coyote</code>
+    </div>
+  </div>
+
+  <div class="section autoclear">
+    <div class="left">
+      <h3>Download</h3>
+    </div>
+    <div class="right">
+      <p>
+        You can download this project in either
+        <a href="http://github.com/imulus/coyote/zipball/master">zip</a> or
+        <a href="http://github.com/imulus/coyote/tarball/master">tar</a> formats.
+      </p>
+      <p class="description">or get the source code on GitHub : <a href="http://github.com/imulus/coyote">imulus/coyote</a></p>
+    </div>
+  </div>
 
 </div> <!-- end: #container -->
 
 
 <div id="footer">
-	<a href="http://www.imulus.com">
-		<img src="./images/imulus.png" />
-	</a>
+  <a href="http://www.imulus.com">
+    <img src="./images/imulus.png" />
+  </a>
 </div>
 
+<script type="text/javascript" charset="utf-8" src="./scripts/retina.js"></script>
 
 <a href="http://github.com/imulus/coyote"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 </body>
