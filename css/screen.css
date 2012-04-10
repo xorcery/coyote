@@ -199,10 +199,12 @@ table i {
 #footer {
   margin: 36px;
 }
+#footer a {
+  display: block;
+  margin: auto;
+}
 #footer a img {
   display: block;
-  width: auto;
-  height: auto;
   margin: auto;
 }
  
