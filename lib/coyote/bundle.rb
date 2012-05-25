@@ -24,7 +24,7 @@ module Coyote
     end
 
     def contents
-      IO.read("spec/assets/script1.js") + IO.read("spec/assets/script2.js")
+      @assets.map { |p,a| a.contents }.reduce(&:+)
     end
 
   end

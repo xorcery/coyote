@@ -1,11 +1,11 @@
 require 'coyote/bundle'
 
 describe Coyote::Bundle do
+  before :each do
+    @bundle = Coyote::Bundle.new      
+  end
+
   context "#add" do
-    before(:each) do
-      @bundle = Coyote::Bundle.new      
-    end
-    
     it "adds an input to the bundle" do
       @bundle.add("spec/assets/script1.js")
       @bundle.assets.should have_key File.expand_path("spec/assets/script1.js")
@@ -20,21 +20,19 @@ describe Coyote::Bundle do
   
   context "#empty!" do
     it "removes all of its assets" do
-      bundle = Coyote::Bundle.new
-      bundle.add("spec/assets/script1.js")
-      bundle.empty!
-      bundle.assets.should be_empty
+      @bundle.add("spec/assets/script1.js")
+      @bundle.empty!
+      @bundle.assets.should be_empty
     end
   end
 
   context "#contents" do
     it "returns the contents of all of its assets" do
-      bundle = Coyote::Bundle.new
-      bundle.add("spec/assets/script1.js")
-      bundle.add("spec/assets/script2.js")
-      contents = IO.read("spec/assets/script1.js")
-      contents += IO.read("spec/assets/script2.js")
-      bundle.contents.should == contents
+      @bundle = Coyote::Bundle.new
+      @bundle.add("spec/assets/script1.js")
+      @bundle.add("spec/assets/script2.js")
+      contents = IO.read("spec/assets/script1.js") + IO.read("spec/assets/script2.js")
+      @bundle.contents.should == contents
     end
   end
 end
