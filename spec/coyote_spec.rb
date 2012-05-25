@@ -12,6 +12,7 @@ describe 'integrated Coyote compiler' do
       source_file   = "spec/assets/integration/javascript/script1.js"
       required_file = "spec/assets/integration/javascript/script2.js"
       output_path   = "spec/assets/integration/javascript/output.js"
+      File.delete output_path if File.exist? output_path
       Coyote.compile(source_file, output_path)
       IO.read(output_path).should == IO.read(source_file) + IO.read(required_file)
     end
