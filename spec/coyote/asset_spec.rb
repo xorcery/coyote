@@ -24,4 +24,14 @@ describe Coyote::Asset do
       asset.dependencies.should include("../scripts2/script8.js")      
     end    
   end
+  
+  context "#update!" do
+    it "resets the cache to fall back on lazy loading" do
+      asset = Coyote::Asset.new("spec/assets/asset/javascript/scripts/script7.js")
+      asset.contents
+      asset.update!
+      asset.instance_variable_get(:@contents).should be_nil
+    end
+  end
+  
 end

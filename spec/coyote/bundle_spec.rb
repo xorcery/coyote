@@ -66,6 +66,7 @@ describe Coyote::Bundle do
   context "#reset!" do
     it "sets the @contents ivar to nil to reset the memoization in #contents" do
       bundle.add("spec/assets/bundle/javascript/script1.js")
+      bundle.contents
       bundle.reset!
       bundle.instance_variable_get(:@contents).should be_nil
     end

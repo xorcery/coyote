@@ -16,9 +16,16 @@ module Coyote
       matches.reverse.collect { |match| match.last.strip }
     end
 
+    def update!
+      @contents = nil
+    end
+    
+
     def require_pattern
       Regexp.new(/\/\/=\s*require\s*(.*)$/i)
     end
+
+
 
   end
 end
