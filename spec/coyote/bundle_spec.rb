@@ -22,20 +22,6 @@ describe Coyote::Bundle do
       @bundle.add("spec/assets/bundle/javascript/script1.js")
       @bundle.assets.length.should == 1
     end
-    
-    # it "raises an exception when a file is not found" do
-    #   # expect { @bundle.add("asdf.js") }.to raise_error
-    #   pending
-    # end
-
-    # it "arranges dependencies in the proper order" do
-    #   position0 = File.expand_path "spec/assets/bundle/javascript/script5.js"
-    #   position1 = File.expand_path "spec/assets/bundle/javascript/depends_on_script6.js"
-    #   position2 = File.expand_path "spec/assets/bundle/javascript/depends_on_script_6_and_script5.js"      
-    # 
-    #   @bundle.add("spec/assets/bundle/javascript/depends_on_script6_and_script5.js")
-    #   @bundle.files.should == [position0, position1]
-    # end
   end
   
   context "#empty!" do
@@ -43,6 +29,12 @@ describe Coyote::Bundle do
       @bundle.add("spec/assets/bundle/javascript/script1.js")
       @bundle.empty!
       @bundle.assets.should be_empty
+    end
+    
+    it "removes all of the bundle's contents" do
+      @bundle.add("spec/assets/bundle/javascript/script1.js")
+      @bundle.empty!
+      @bundle.contents.should be_empty
     end
   end
 

@@ -6,7 +6,6 @@ require 'coyote'
 
 
 describe 'integrated Coyote compiler' do
-
   context "javascript" do
     it "combines multiple files" do
       source_file   = "spec/assets/integration/javascript/script1.js"
