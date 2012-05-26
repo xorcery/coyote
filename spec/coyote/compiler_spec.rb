@@ -2,21 +2,17 @@ require 'coyote/compiler'
 
 class FakeListener
 
+  class << self
+    attr_accessor :changed_files
+  end
+
   def method_missing(*args)
     self
   end
   
   def on_change(&callback)
-    callback.call(self.class.files)
+    callback.call(self.class.changed_files)
   end  
-  
-  def self.files
-    @files ||= []
-  end
-  
-  def self.files=(files)
-    @files = self.files + Array(files)
-  end
 end
 
 
@@ -84,13 +80,22 @@ describe Coyote::Compiler do
 
 
   context "#watch" do
-    it "detects file system changes and tells the bundle to refresh those files" do
-      FakeListener.files = input_file
-      Coyote::FSListener.stub(:choose).and_return FakeListener.new
-      compiler = Coyote::Compiler.new input_file, output_file, :watch => true
-      compiler.bundle.should_receive(:update!).with([File.expand_path(input_file)])
-      compiler.compile! 
+    before :each  do
+      Coyote::FSListener.stub(:choose).and_return FakeListener.new      
+      @compiler = Coyote::Compiler.new input_file, output_file, :watch => true
     end
+    
+    it "detects file system changes and tells the bundle to refresh those files" do
+      FakeListener.changed_files = [input_file]
+      @compiler.bundle.should_receive(:update!).with([File.expand_path(input_file)])
+      @compiler.compile! 
+    end
+        
+    it "does not trigger a rebuild when changed files are not in the bundle" do
+      FakeListener.changed_files = ["asdf.js"]
+      @compiler.bundle.should_not_receive(:update!)
+      @compiler.compile! 
+    end    
   end
 
   
