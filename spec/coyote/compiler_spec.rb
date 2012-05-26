@@ -1,5 +1,25 @@
 require 'coyote/compiler'
 
+class FakeListener
+
+  def method_missing(*args)
+    self
+  end
+  
+  def on_change(&callback)
+    callback.call(self.class.files)
+  end  
+  
+  def self.files
+    @files ||= []
+  end
+  
+  def self.files=(files)
+    @files = self.files + Array(files)
+  end
+end
+
+
 describe Coyote::Compiler do
   
   let(:input_file)   { "spec/assets/compiler/javascript/script3.js" }
@@ -65,10 +85,11 @@ describe Coyote::Compiler do
 
   context "#watch" do
     it "detects file system changes and tells the bundle to refresh those files" do
+      FakeListener.files = input_file
+      Coyote::FSListener.stub(:choose).and_return FakeListener.new
       compiler = Coyote::Compiler.new input_file, output_file, :watch => true
-      compiler.bundle.should_receive(:update!).with([input_file])
-      compiler.compile!      
-      `touch #{input_file}`
+      compiler.bundle.should_receive(:update!).with([File.expand_path(input_file)])
+      compiler.compile! 
     end
   end
 

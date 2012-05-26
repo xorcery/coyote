@@ -1,4 +1,5 @@
 require 'coyote/bundle'
+require 'coyote/fs_listener'
 
 module Coyote
   class Compiler
@@ -25,7 +26,18 @@ module Coyote
     
     
     def watch
-      @bundle.update! ["spec/assets/compiler/javascript/script3.js"]
+      listener = Coyote::FSListener.choose
+
+      listener.on_change do |changed_files|
+        changed_files = @bundle.files & changed_files.map {|file| File.expand_path file }
+
+        if changed_files.length > 0
+          @bundle.update! changed_files
+          save!
+        end
+      end
+
+      listener.start
     end
 
   
