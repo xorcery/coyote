@@ -61,7 +61,16 @@ describe Coyote::Compiler do
       IO.read(output_file).should == IO.read(input_file) + IO.read(required_file)
     end
   end
-  
+
+
+  context "#watch" do
+    it "detects file system changes and tells the bundle to refresh those files" do
+      compiler = Coyote::Compiler.new input_file, output_file, :watch => true
+      compiler.bundle.should_receive(:update!).with([input_file])
+      compiler.compile!      
+      `touch #{input_file}`
+    end
+  end
 
   
   

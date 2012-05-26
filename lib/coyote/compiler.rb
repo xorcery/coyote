@@ -25,7 +25,7 @@ module Coyote
     
     
     def watch
-      
+      @bundle.update! ["spec/assets/compiler/javascript/script3.js"]
     end
 
   
