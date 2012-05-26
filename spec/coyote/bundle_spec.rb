@@ -46,6 +46,33 @@ describe Coyote::Bundle do
       @bundle.contents.should == contents
     end
   end
+
+  context "#update!" do
+    it "tells the changed files's assets to update" do
+      input1 = "spec/assets/bundle/javascript/script1.js"
+      input2 = "spec/assets/bundle/javascript/script2.js"
+      @bundle.add(input1)
+      @bundle.add(input2)
+      @bundle.assets[File.expand_path(input1)].should_receive(:update!)
+      @bundle.assets[File.expand_path(input2)].should_receive(:update!)
+      @bundle.update!([File.expand_path(input1),File.expand_path(input2)])
+    end
+
+    it "resets the cache" do
+      @bundle.should_receive(:reset!)
+      @bundle.update!
+    end    
+  end
+
+  context "#reset!" do
+    it "sets the @contents ivar to nil to reset the memoization in #contents" do
+      @bundle.add("spec/assets/bundle/javascript/script1.js")
+      @bundle.reset!
+      @bundle.instance_variable_get(:@contents).should be_nil
+    end
+  end
+  
+  
 end
 
 

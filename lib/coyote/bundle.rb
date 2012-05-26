@@ -35,6 +35,19 @@ module Coyote
       # TODO: use a proper enumerator
       @contents ||= files.reverse.map { |path| @assets[path].contents }.join
     end
+    
+    
+    def update!(changed_files=[])
+      reset!
+      changed_files.each do |path|
+        @assets[path].update!
+      end
+    end
+    
+    
+    def reset!
+      @contents = nil      
+    end
 
   end
 end
