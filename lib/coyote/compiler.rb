@@ -14,7 +14,7 @@ module Coyote
    
     def compile!
       save!
-      watch if @options.fetch(:watch, nil)
+      watch if @options.fetch(:watch, false)
     end
 
    
