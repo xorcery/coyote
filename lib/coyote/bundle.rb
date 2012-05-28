@@ -12,6 +12,8 @@ module Coyote
       path = File.expand_path(input)
       asset = Coyote::Asset.new(path)
       
+      
+      @assets.delete(path) if @assets[path]
       @assets[path] = asset
       
       asset.dependencies.each do |dependency_path|
@@ -27,13 +29,13 @@ module Coyote
 
     
     def files
-      @assets.map { |path, asset| path }.reverse
+      @assets.map { |path, asset| path }
     end
 
 
     def contents
       # TODO: use a proper enumerator
-      @contents ||= files.reverse.map { |path| @assets[path].contents }.join
+      @contents ||= files.map { |path| @assets[path].contents }.join
     end
     
     

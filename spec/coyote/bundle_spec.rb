@@ -21,6 +21,15 @@ describe Coyote::Bundle do
       bundle.add("spec/assets/bundle/javascript/script1.js")
       bundle.assets.length.should == 1
     end
+    
+    it "arranges dependencies in the right order" do
+      input1 = File.expand_path "spec/assets/bundle/javascript/script5.js"
+      input2 = File.expand_path "spec/assets/bundle/javascript/script6.js"
+      dependency1 = File.expand_path "spec/assets/bundle/javascript/jquery.js"
+      bundle.add(input1)
+      bundle.add(input2)
+      bundle.files.should == [input1, input2, dependency1]
+    end
   end
   
   context "#empty!" do
