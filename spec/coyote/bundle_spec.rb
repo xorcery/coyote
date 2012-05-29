@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'coyote/bundle'
 
 describe Coyote::Bundle do

@@ -8,7 +8,7 @@ OptionParser.new do |opts|
 end.parse!
 
 if options[:version]
-  puts "coyote #{Coyote::VERSION}"
+  notify "Coyote #{Coyote::VERSION}"
   exit 0
 end
 

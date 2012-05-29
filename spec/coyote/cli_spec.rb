@@ -1,1 +1,1 @@
-require 'coyote/cli'
+# require 'coyote/cli'

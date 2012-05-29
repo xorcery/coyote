@@ -33,13 +33,13 @@ module Coyote
     def self.usable?
       require 'rb-inotify'
       if !defined?(INotify::VERSION) || Gem::Version.new(INotify::VERSION.join('.')) < Gem::Version.new('0.5.1')
-        puts "Please update rb-inotify (>= 0.5.1)\n"
+        notify "Please update rb-inotify (>= 0.5.1)", :failure
         false
       else
         true
       end
     rescue LoadError
-      puts "Please install rb-inotify gem for Linux inotify support\n"
+      notify "Please install rb-inotify gem for Linux inotify support", :failure
       false
     end
 

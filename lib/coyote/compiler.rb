@@ -22,6 +22,7 @@ module Coyote
       File.open @output, 'w+' do |file|
         file.write @bundle.contents
       end
+      notify "Saved bundle to #{@output}   [#{@bundle.files.length} files]", :timestamp, :success
     end
     
     
@@ -32,11 +33,14 @@ module Coyote
         changed_files = @bundle.files & changed_files.map {|file| File.expand_path file }
 
         if changed_files.length > 0
+          notify "Detected change, recompiling...", :warning
           @bundle.update! changed_files
           save!
         end
       end
 
+
+      notify "Watching for changes to your bundle. ctrl+c to stop.", :timestamp
       listener.start
     end
 

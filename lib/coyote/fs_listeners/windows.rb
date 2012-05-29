@@ -28,7 +28,7 @@ module Coyote
       require 'rb-fchange'
       true
     rescue LoadError
-      puts "Please install rb-fchange gem for Windows file events support\n"
+      notify "Please install rb-fchange gem for Windows file events support", :failure
       false
     end
 

@@ -17,7 +17,7 @@ module Coyote
       elsif windows? && Windows.usable?
         Windows.new
       else
-        puts "Using polling (Please help us to support your system better than that.)\n"
+        notify "Using polling (Please help us to support your system better than that.)", :failure
         Polling.new
       end
     end

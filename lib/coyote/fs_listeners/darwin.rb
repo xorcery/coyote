@@ -26,13 +26,13 @@ module Coyote
     def self.usable?
       require 'rb-fsevent'
       if !defined?(FSEvent::VERSION) || Gem::Version.new(FSEvent::VERSION) < Gem::Version.new('0.3.9')
-        puts "Please update rb-fsevent (>= 0.3.9)\n"
+        notify "Please update rb-fsevent (>= 0.3.9)", :failure
         false
       else
         true
       end
     rescue LoadError
-      puts "Please install rb-fsevent gem for Mac OSX FSEvents support\n"
+      notify "Please install rb-fsevent gem for Mac OSX FSEvents support", :failure
       false
     end
 
