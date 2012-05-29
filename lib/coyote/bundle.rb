@@ -12,8 +12,7 @@ module Coyote
       path = File.expand_path(input)
       asset = Coyote::Asset.new(path)
       
-      
-      @assets.delete(path) if @assets[path]
+      @assets.delete(path)
       @assets[path] = asset
       
       asset.dependencies.each do |dependency_path|
