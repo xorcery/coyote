@@ -19,13 +19,10 @@ module Coyote
     def update!
       @contents = nil
     end
-    
 
     def require_pattern
       Regexp.new(/\/\/=\s*require\s*(.*)$/i)
     end
-
-
 
   end
 end
