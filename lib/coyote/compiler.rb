@@ -33,17 +33,14 @@ module Coyote
         changed_files = @bundle.files & changed_files.map {|file| File.expand_path file }
 
         if changed_files.length > 0
-          notify "Detected change, recompiling...", :warning
+          notify "Detected change, recompiling...", :warning, :timestamp
           @bundle.update! changed_files
           save!
         end
       end
 
-
       notify "Watching for changes to your bundle. ctrl+c to stop.", :timestamp
       listener.start
     end
-
-  
   end
 end

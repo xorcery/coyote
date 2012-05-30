@@ -3,7 +3,7 @@ require 'colored'
 module Coyote
   class Notifier
     def self.notify(message, options)
-      message = format message
+      message = String(message)
       if options.include? :timestamp
         message = timestamp message
       end
@@ -15,10 +15,6 @@ module Coyote
       end
 
       puts message
-    end
-
-    def self.format(message)
-      String(message) + "\n"
     end
 
     def self.timestamp(message)
