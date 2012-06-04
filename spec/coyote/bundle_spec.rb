@@ -33,6 +33,16 @@ describe Coyote::Bundle do
     end
   end
   
+  context "#files" do
+    it "has fullpaths to the files" do
+      input1 = File.expand_path "spec/assets/bundle/javascript/script1.js"
+      input2 = File.expand_path "spec/assets/bundle/javascript/script2.js"
+      bundle.add(input1)
+      bundle.add(input2)
+      bundle.files.should == [input1, input2]
+    end
+  end
+  
   context "#empty!" do
     it "removes all of its assets" do
       bundle.add("spec/assets/bundle/javascript/script1.js")

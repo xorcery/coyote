@@ -28,7 +28,7 @@ module Coyote
 
     
     def files
-      @assets.map { |path, asset| path }
+      @assets.keys
     end
 
 
