@@ -1,10 +1,11 @@
 module Coyote
   class Asset
     
-    attr_reader :path
+    attr_reader :path, :relative_path
     
     def initialize(path)
-      @path = path
+      @path = File.expand_path path
+      @relative_path = @path.gsub("#{Dir.pwd}/", '')
     end
 
     def contents

@@ -16,7 +16,7 @@ module Coyote
       @assets[path] = asset
       
       asset.dependencies.each do |dependency_path|
-        relative_directory = File.dirname asset.path.gsub("#{Dir.pwd}/", '')
+        relative_directory = File.dirname asset.relative_path
         add File.join relative_directory, dependency_path
       end
     end

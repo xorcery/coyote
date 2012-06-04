@@ -2,6 +2,21 @@ require 'spec_helper'
 require 'coyote/asset'
 
 describe Coyote::Asset do
+
+  context "#path" do
+    it "is the full path to the file" do
+      asset = Coyote::Asset.new("spec/assets/asset/javascript/script1.js")
+      asset.path.should == File.expand_path("spec/assets/asset/javascript/script1.js")
+    end
+  end
+
+  context "#relative_path" do
+    it "is the path to the file relative from the process" do
+      asset = Coyote::Asset.new("spec/../spec/assets/asset/javascript/script1.js")
+      asset.relative_path.should == "spec/assets/asset/javascript/script1.js"
+    end
+  end
+  
   context "#contents" do
     it "returns the contents of the file" do
       asset = Coyote::Asset.new("spec/assets/asset/javascript/script1.js")
