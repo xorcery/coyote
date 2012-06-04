@@ -8,19 +8,19 @@ describe Coyote::Bundle do
   context "#add" do
     it "adds an input to the bundle" do
       bundle.add("spec/assets/bundle/javascript/script1.js")
-      bundle.assets.should have_key File.expand_path("spec/assets/bundle/javascript/script1.js")
+      bundle.files.should include File.expand_path("spec/assets/bundle/javascript/script1.js")
     end
     
     it "adds an input's dependencies" do
       bundle.add("spec/assets/bundle/javascript/script3.js")      
-      bundle.assets.should have_key File.expand_path("spec/assets/bundle/javascript/script3.js")
-      bundle.assets.should have_key File.expand_path("spec/assets/bundle/javascript/script4.js")
+      bundle.files.should include File.expand_path("spec/assets/bundle/javascript/script3.js")
+      bundle.files.should include File.expand_path("spec/assets/bundle/javascript/script4.js")
     end
     
     it "doesn't add the same dependency twice" do
       bundle.add("spec/assets/bundle/javascript/script1.js")
       bundle.add("spec/assets/bundle/javascript/script1.js")
-      bundle.assets.length.should == 1
+      bundle.files.length.should == 1
     end
     
     it "arranges dependencies in the right order" do
@@ -44,10 +44,10 @@ describe Coyote::Bundle do
   end
   
   context "#empty!" do
-    it "removes all of its assets" do
+    it "removes all of its files" do
       bundle.add("spec/assets/bundle/javascript/script1.js")
       bundle.empty!
-      bundle.assets.should be_empty
+      bundle.files.should be_empty
     end
     
     it "removes all of the bundle's contents" do
