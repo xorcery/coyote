@@ -1,3 +1,5 @@
 output.js
 .DS_Store
 test
+coverage
+Gemfile.lock
