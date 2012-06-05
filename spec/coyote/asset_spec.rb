@@ -3,6 +3,20 @@ require 'coyote/asset'
 
 describe Coyote::Asset do
 
+  context ".choose" do
+    it "returns an instance of JavaScript with a .js filename" do
+      Coyote::Asset.choose("script.js").class.should == Coyote::JavaScript
+    end
+    
+    it "returns an instance of CoffeeScript with a .coffee filename" do
+      Coyote::Asset.choose("script.coffee").class.should == Coyote::CoffeeScript
+    end
+
+    it "returns an instance of Less with a .css filename" do
+      Coyote::Asset.choose("stylesheet.less").class.should == Coyote::Less
+    end
+  end
+
   context "#path" do
     it "is the full path to the file" do
       asset = Coyote::Asset.new("spec/assets/asset/javascript/script1.js")
