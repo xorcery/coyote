@@ -1,14 +1,6 @@
-require 'simplecov'
-SimpleCov.start
+# require 'simplecov'
+# SimpleCov.start
 
 require 'coyote'
 
-
-# silence CLI output for tests
-module Coyote
-  class Notifier
-    def self.notify(*args)
-      self 
-    end
-  end
-end
+$stdout = StringIO.new

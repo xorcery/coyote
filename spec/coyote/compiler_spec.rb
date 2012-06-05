@@ -16,9 +16,8 @@ class FakeListener
   end  
 end
 
-
 describe Coyote::Compiler do
-  
+
   let(:input_file)   { "spec/assets/compiler/javascript/script3.js" }
   let(:required_file) { "spec/assets/compiler/javascript/script4.js" }
   let(:output_file)   { "spec/assets/compiler/javascript/output.js"  }

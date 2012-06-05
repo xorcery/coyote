@@ -4,13 +4,14 @@ module Coyote
   class Notifier
     def self.notify(message, options)
       message = String(message)
+      
       if options.include? :timestamp
         message = timestamp message
       end
 
       options.each do |option|
         if colors.has_key? option
-          message = message.send colors.fetch(option)
+          message = color(message, colors[option])
         end
       end
 
@@ -19,6 +20,10 @@ module Coyote
 
     def self.timestamp(message)
       "#{Time.new.strftime("%I:%M:%S")}      #{message}"
+    end
+
+    def self.color(message, color)
+      message.send(color)
     end
 
     def self.colors
