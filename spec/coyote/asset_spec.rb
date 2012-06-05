@@ -4,17 +4,21 @@ require 'coyote/asset'
 describe Coyote::Asset do
 
   context ".choose" do
-    it "returns an instance of JavaScript with a .js filename" do
-      Coyote::Asset.choose("script.js").class.should == Coyote::JavaScript
+    it "returns an instance of JavaScript when it's a .js filename" do
+      Coyote::Asset.choose("script.js").should be_an_instance_of Coyote::JavaScript
     end
     
-    it "returns an instance of CoffeeScript with a .coffee filename" do
-      Coyote::Asset.choose("script.coffee").class.should == Coyote::CoffeeScript
+    it "returns an instance of CoffeeScript when it's a .coffee filename" do
+      Coyote::Asset.choose("script.coffee").should be_an_instance_of Coyote::CoffeeScript
     end
 
-    it "returns an instance of Less with a .css filename" do
-      Coyote::Asset.choose("stylesheet.less").class.should == Coyote::Less
+    it "returns an instance of Less when it's a .less filename" do
+      Coyote::Asset.choose("stylesheet.less").should be_an_instance_of Coyote::Less
     end
+    
+    it "returns an instance of Asset (self) when it's an unknown filename" do
+      Coyote::Asset.choose("weird.asdf").should be_an_instance_of Coyote::Asset
+    end    
   end
 
   context "#path" do
