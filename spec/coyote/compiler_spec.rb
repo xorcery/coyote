@@ -73,8 +73,9 @@ describe Coyote::Compiler do
   
   context "#save!" do
     it "saves the bundle contents to disk" do
-      Coyote::Compiler.new(input_file, output_file).compile!
-      IO.read(output_file).should == IO.read(input_file) + IO.read(required_file)
+      compiler = Coyote::Compiler.new(input_file, output_file)
+      compiler.compile!
+      IO.read(output_file).should == compiler.bundle.contents
     end
   end
 

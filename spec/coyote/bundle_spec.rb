@@ -58,12 +58,15 @@ describe Coyote::Bundle do
   end
 
   context "#contents" do
-    it "returns the contents of all of its assets" do
-      bundle.add("spec/assets/bundle/javascript/script1.js")
-      bundle.add("spec/assets/bundle/javascript/script2.js")
-      contents = IO.read("spec/assets/bundle/javascript/script1.js") + IO.read("spec/assets/bundle/javascript/script2.js")
+    it "returns the contents of all of its assets in the right order" do
+      input1 = File.expand_path "spec/assets/bundle/javascript/script5.js"
+      input2 = File.expand_path "spec/assets/bundle/javascript/script6.js"
+      dependency1 = File.expand_path "spec/assets/bundle/javascript/jquery.js"
+      bundle.add(input1)
+      bundle.add(input2)
+      contents = IO.read(dependency1) + IO.read(input2) + IO.read(input1)
       bundle.contents.should == contents
-    end
+    end    
   end
 
   context "#update!" do

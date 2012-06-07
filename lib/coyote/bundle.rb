@@ -34,7 +34,7 @@ module Coyote
 
     def contents
       # TODO: use a proper enumerator
-      @contents ||= files.map { |path| @assets[path].contents }.join
+      @contents ||= files.reverse.map { |path| @assets[path].contents }.join
     end
     
     

@@ -1,0 +1,1 @@
+console.log("spec/assets/bundle/javascript/jquery.js");
