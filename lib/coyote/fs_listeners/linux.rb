@@ -1,5 +1,5 @@
-module Coyote
-  class Linux < FSListener
+module Coyote::FSListeners
+  class Linux < Base
     attr_reader :inotify, :files, :latency, :callback
 
     def initialize

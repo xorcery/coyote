@@ -81,7 +81,7 @@ describe Coyote::Compiler do
 
   context "#watch" do
     before :each  do
-      Coyote::FSListener.stub(:choose).and_return FakeListener.new      
+      Coyote::FSListener.stub(:new).and_return FakeListener.new      
       @compiler = Coyote::Compiler.new input_file, output_file, :watch => true
     end
     

@@ -1,5 +1,5 @@
 require 'coyote/bundle'
-require 'coyote/fs_listener'
+require 'coyote/fs_listeners'
 
 module Coyote
   class Compiler
@@ -27,7 +27,7 @@ module Coyote
     
     
     def watch
-      listener = Coyote::FSListener.choose
+      listener = Coyote::FSListener.new
 
       listener.on_change do |changed_files|
         changed_files = @bundle.files & changed_files.map {|file| File.expand_path file }

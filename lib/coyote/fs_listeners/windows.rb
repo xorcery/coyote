@@ -1,5 +1,5 @@
-module Coyote
-  class Windows < FSListener
+module Coyote::FSListeners
+  class Windows < Base
     attr_reader :fchange
 
     def initialize

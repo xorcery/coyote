@@ -1,5 +1,5 @@
-module Coyote
-  class Darwin < FSListener
+module Coyote::FSListeners
+  class Darwin < Base
     attr_reader :fsevent
 
     def initialize
