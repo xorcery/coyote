@@ -1,5 +1,5 @@
 module Coyote::Assets
-  class Asset
+  class Base
     attr_reader :path, :relative_path
 
     def initialize(path)

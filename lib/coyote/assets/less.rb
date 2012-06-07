@@ -1,4 +1,4 @@
 module Coyote::Assets
-  class Less < Asset
+  class Less < Base
   end    
 end

@@ -18,8 +18,8 @@ module Coyote
         Asset.new("stylesheet.less").should be_an_instance_of Assets::Less
       end
   
-      it "returns an instance of Asset (self) when it's an unknown filename" do
-        Asset.new("weird.asdf").should be_an_instance_of Assets::Asset
+      it "returns an instance of the Asset base class when it's an unknown filename" do
+        Asset.new("weird.asdf").should be_an_instance_of Assets::Base
       end    
     end
 

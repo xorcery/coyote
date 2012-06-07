@@ -1,4 +1,4 @@
-require 'coyote/assets/asset'
+require 'coyote/assets/base'
 require 'coyote/assets/javascript'
 require 'coyote/assets/coffeescript'
 require 'coyote/assets/less'
@@ -17,7 +17,7 @@ module Coyote
       when /\.js/i      ; JavaScript.new(path)
       when /\.coffee/i  ; CoffeeScript.new(path)
       when /\.less/i    ; Less.new(path)
-      else              ; Asset.new(path)
+      else              ; Base.new(path)
       end
     end
   end

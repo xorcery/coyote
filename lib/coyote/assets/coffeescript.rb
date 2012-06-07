@@ -1,4 +1,4 @@
 module Coyote::Assets
-  class CoffeeScript < Asset
+  class CoffeeScript < Base
   end    
 end

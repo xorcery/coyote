@@ -1,4 +1,4 @@
 module Coyote::Assets
-  class JavaScript < Asset
+  class JavaScript < Base
   end    
 end
