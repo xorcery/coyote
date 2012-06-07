@@ -1,4 +1,4 @@
-require 'coyote/asset'
+require 'coyote/assets'
 
 module Coyote
   class Bundle
