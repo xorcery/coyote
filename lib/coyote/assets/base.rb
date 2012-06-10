@@ -1,14 +1,11 @@
 module Coyote::Assets
   class Base
-    attr_reader :path, :relative_path
+    attr_reader :path, :relative_path, :contents
 
     def initialize(path)
       @path = File.expand_path path
       @relative_path = @path.gsub("#{Dir.pwd}/", '')
-    end
-
-    def contents
-      @contents ||= IO.read(@path)
+      update!
     end
 
     def dependencies
@@ -16,9 +13,8 @@ module Coyote::Assets
       matches.reverse.collect { |match| match.last.strip }
     end
 
-
     def update!
-      @contents = nil
+      @contents = IO.read(@path)
     end
 
     def require_pattern
