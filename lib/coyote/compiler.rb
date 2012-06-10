@@ -1,4 +1,4 @@
-require 'coyote/bundle'
+require 'coyote/bundles'
 require 'coyote/fs_listeners'
 
 module Coyote
@@ -8,7 +8,7 @@ module Coyote
     def initialize(input, output, options={})
       @options = options || {}
       @output = output
-      @bundle = Coyote::Bundle.new
+      @bundle = Coyote::Bundle.new(output)
       @bundle.add(input)
     end
    
@@ -22,7 +22,7 @@ module Coyote
       File.open @output, 'w+' do |file|
         file.write @bundle.contents
       end
-      notify "\n" + @bundle.manifest unless @options.fetch(:quiet)
+      notify "\n" + @bundle.manifest unless @options.fetch(:quiet, false)
       notify "Saved bundle to #{@output}   [#{@bundle.files.length} files]", :timestamp, :success
     end
     

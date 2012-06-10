@@ -1,20 +1,20 @@
 require 'coyote/assets'
 
-module Coyote
-  class Bundle
+module Coyote::Bundles
+  class Base
     attr_reader :assets
 
-    def initialize
+    def initialize(output_path)
       empty!
     end
 
     def add(input)
       path = File.expand_path(input)
       asset = Coyote::Asset.new(path)
-      
+    
       @assets.delete(path)
       @assets[path] = asset
-      
+    
       asset.dependencies.each do |dependency_path|
         relative_directory = File.dirname asset.relative_path
         add File.join relative_directory, dependency_path
@@ -26,7 +26,7 @@ module Coyote
       @assets = {}
     end
 
-    
+  
     def files
       @assets.keys
     end
@@ -36,21 +36,21 @@ module Coyote
       # TODO: use a proper enumerator
       @contents ||= files.reverse.map { |path| @assets[path].contents }.join
     end
-    
-    
+  
+  
     def update!(changed_files=[])
       reset!
       changed_files.each do |path|
         @assets[path].update!
       end
     end
-    
-    
+  
+  
     def manifest
       files.reverse.map { |path| "+ #{path}" }.join("\n")
     end
-    
-    
+  
+  
     def reset!
       @contents = nil      
     end
