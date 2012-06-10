@@ -1,5 +1,6 @@
 module Coyote::Assets
   class CoffeeScript < Base
+    require_pattern Regexp.new(/#=\s*require\s(.*)$/i)
 
     def update!
       super
@@ -10,9 +11,5 @@ module Coyote::Assets
       @contents = `cat #{@path} | coffee -sc`
     end
     
-    def require_pattern
-      Regexp.new(/#=\s*require\s(.*)$/i)
-    end
-
   end    
 end
