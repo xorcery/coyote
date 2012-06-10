@@ -16,6 +16,5 @@ module Coyote::Assets
         asset.contents.should == `cat spec/assets/assets/coffeescript/script4.coffee | coffee -sc`
       end
     end
-
   end
 end

@@ -5,9 +5,9 @@ module Coyote::Assets
       super
       compile!
     end
-
+    
     def compile!
-      @contents = `cat #{@absolute_path} | coffee -sc`
+      @contents = `cat #{@path} | coffee -sc`
     end
     
     def require_pattern
