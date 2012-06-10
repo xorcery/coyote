@@ -2,6 +2,16 @@ require 'coyote/assets'
 
 module Coyote::Bundles
   class Base
+
+    class << self
+      def filetypes(*args)
+        @filetypes ||= args.map { |arg| arg.to_s.gsub('.','') } || []
+      end
+    end
+    
+    filetypes :js, :coffee, :css, :less
+
+
     attr_reader :assets, :target
     
     def initialize(target)
@@ -12,6 +22,10 @@ module Coyote::Bundles
     def add(input)
       path = File.expand_path(input)
       asset = Coyote::Asset.new(path)
+    
+      unless self.class.filetypes.include? File.extname(path).gsub('.','')
+        return false 
+      end
     
       @assets.delete(path)
       @assets[path] = asset

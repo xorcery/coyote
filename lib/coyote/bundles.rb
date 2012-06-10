@@ -14,7 +14,7 @@ module Coyote
     def self.choose(path)
       case File.extname(path)
       when /\.js/i      ; JavaScript.new(path)
-      when /\.css/i     ; Css.new(path)
+      when /\.css/i     ; CSS.new(path)
       else              ; Base.new(path)
       end
     end

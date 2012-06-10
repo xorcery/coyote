@@ -1,4 +1,5 @@
 module Coyote::Bundles
-  class Css < Base
+  class CSS < Base
+    filetypes :css, :less
   end
 end
