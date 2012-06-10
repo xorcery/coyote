@@ -46,6 +46,11 @@ module Coyote
     end
     
     
+    def manifest
+      files.reverse.map { |path| "+ #{path}" }.join("\n")
+    end
+    
+    
     def reset!
       @contents = nil      
     end
