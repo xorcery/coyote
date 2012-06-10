@@ -1,6 +1,6 @@
 module Coyote::Assets
   class Base
-    attr_reader :path, :relative_path, :contents
+    attr_reader :path, :relative_path, :contents, :dependencies
 
     def initialize(path)
       @path = File.expand_path path
@@ -8,13 +8,14 @@ module Coyote::Assets
       update!
     end
 
-    def dependencies
+    def find_dependencies
       matches = contents.scan require_pattern
-      matches.reverse.collect { |match| match.last.strip }
+      @dependencies = matches.reverse.collect { |match| match.last.strip }
     end
 
     def update!
       @contents = IO.read(@path)
+      find_dependencies
     end
 
     def require_pattern
