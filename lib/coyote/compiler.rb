@@ -19,9 +19,7 @@ module Coyote
 
    
     def save!
-      File.open @output, 'w+' do |file|
-        file.write @bundle.contents
-      end
+      @bundle.save!
       notify "\n" + @bundle.manifest unless @options.fetch(:quiet, false)
       notify "Saved bundle to #{@output}   [#{@bundle.files.length} files]", :timestamp, :success
     end

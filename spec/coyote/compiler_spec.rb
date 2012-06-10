@@ -72,10 +72,10 @@ describe Coyote::Compiler do
 
   
   context "#save!" do
-    it "saves the bundle contents to disk" do
+    it "sends a save message to its bundle" do
       compiler = Coyote::Compiler.new(input_file, output_file)
+      compiler.bundle.should_receive(:save!)
       compiler.compile!
-      IO.read(output_file).should == compiler.bundle.contents
     end
   end
 

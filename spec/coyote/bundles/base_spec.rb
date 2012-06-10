@@ -5,7 +5,7 @@ module Coyote::Bundles
   
   describe Base do
 
-    let(:bundle) { Base.new('/path/to/output.asdf') }
+    let(:bundle) { Base.new('spec/assets/bundles/base/output.js') }
 
     context "#add" do
       it "adds an input to the bundle" do
@@ -96,5 +96,18 @@ module Coyote::Bundles
         bundle.instance_variable_get(:@contents).should be_nil
       end
     end
+    
+    
+    context "#save!" do
+      it "saves the bundle contents to disk" do
+        File.delete(bundle.target) if File.exist? bundle.target
+        bundle.add("spec/assets/bundles/base/script5.js")
+        bundle.save!
+        IO.read(bundle.target).should == bundle.contents      
+      end    
+    end
+    
+    
+    
   end
 end

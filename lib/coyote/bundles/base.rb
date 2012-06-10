@@ -2,9 +2,10 @@ require 'coyote/assets'
 
 module Coyote::Bundles
   class Base
-    attr_reader :assets
-
-    def initialize(output_path)
+    attr_reader :assets, :target
+    
+    def initialize(target)
+      @target = target
       empty!
     end
 
@@ -54,6 +55,15 @@ module Coyote::Bundles
     def reset!
       @contents = nil      
     end
+    
+    
+    def save!
+      File.open target, 'w+' do |file|
+        file.write contents
+      end      
+    end
+      
+    
 
   end
 end
