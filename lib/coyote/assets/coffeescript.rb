@@ -7,9 +7,9 @@ module Coyote::Assets
     end
 
     def compile!
-      @contents = `cat #{@path} | coffee -sc`
+      @contents = `cat #{@absolute_path} | coffee -sc`
     end
-        
+    
     def require_pattern
       Regexp.new(/#=\s*require\s(.*)$/i)
     end
