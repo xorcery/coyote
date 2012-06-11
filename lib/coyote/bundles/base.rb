@@ -34,7 +34,8 @@ module Coyote::Bundles
     def add_file(path)
       return false unless path_is_directory_or_kosher_file?(path)
       asset = Coyote::Asset.new(path)
-      @assets.delete(path)
+      @files.delete(path) 
+      @files << path
       @assets[path] = asset
       add_dependencies(asset)
     end
@@ -65,22 +66,23 @@ module Coyote::Bundles
 
     def empty!
       @assets = {}
+      @files = []
     end
 
   
     def files
-      @assets.keys
+      @files ||= []
     end
 
 
     def contents
-      @contents ||= files.reverse.map { |path| @assets[path].contents }.join
+      @contents ||= files.reverse.map { |path| assets[path].contents }.join
     end
   
   
     def update!(changed_files=[])
       reset!
-      changed_files.each { |path| @assets[path].update! }
+      changed_files.each { |path| assets[path].update! }
     end
   
   
