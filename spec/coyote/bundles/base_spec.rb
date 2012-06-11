@@ -33,6 +33,18 @@ module Coyote::Bundles
         bundle.add(input2)
         bundle.files.should == [input1, input2, dependency1]
       end
+
+      it "only adds file that exist" do
+        bundle.add("spec/assets/bundles/base/does_not_exist.js")
+        bundle.files.should == []
+      end
+      
+      it "can recursively add a directory" do
+        nested_script1 = File.expand_path "spec/assets/bundles/base/directory1/directory1_script.js"
+        nested_script2 = File.expand_path "spec/assets/bundles/base/directory1/directory2/directory2_script.js"
+        bundle.add("spec/assets/bundles/base/directory1")
+        bundle.files.should == [nested_script1, nested_script2]
+      end      
     end
   
     context "#files" do

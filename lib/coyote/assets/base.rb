@@ -10,7 +10,7 @@ module Coyote::Assets
         
     require_pattern Regexp.new(/\/\/=\s*require\s*(.*)$/i)
     
-    
+    attr_accessor :contents
     attr_reader :path, :relative_path, :contents, :dependencies
 
     def initialize(path)
@@ -20,12 +20,12 @@ module Coyote::Assets
     end
 
     def find_dependencies
-      matches = contents.scan self.class.require_pattern
-      @dependencies = matches.reverse.collect { |match| match.last.strip }
+      matches = self.contents.scan self.class.require_pattern
+      @dependencies = matches.reverse.map { |match| match.last.strip }
     end
 
     def update!
-      @contents = IO.read(@path)
+      self.contents = IO.read(@path)
       find_dependencies
     end
 

@@ -21,19 +21,45 @@ module Coyote::Bundles
 
     def add(input)
       path = File.expand_path(input)
-      asset = Coyote::Asset.new(path)
-    
-      unless self.class.filetypes.include? File.extname(path).gsub('.','')
-        return false 
+      if File.directory? path
+        add_directory path
+      elsif File.exists? path
+        add_file path
+      else
+        notify "Could not find #{path}", :failure
       end
+    end
     
+    
+    def add_file(path)
+      return false unless path_is_directory_or_kosher_file?(path)
+      asset = Coyote::Asset.new(path)
       @assets.delete(path)
       @assets[path] = asset
-    
+      add_dependencies(asset)
+    end
+
+
+    def add_directory(dir_path)
+      Dir.foreach(dir_path) do |path|
+        next if path == '.' or path == '..'
+        path = "#{dir_path}/#{path}"
+        add path if path_is_directory_or_kosher_file?(path)
+      end
+    end
+
+
+    def add_dependencies(asset)
       asset.dependencies.each do |dependency_path|
         relative_directory = File.dirname asset.relative_path
         add File.join relative_directory, dependency_path
       end
+    end
+    
+
+    def path_is_directory_or_kosher_file?(path)
+      return true if File.directory?(path)        
+      self.class.filetypes.include? File.extname(path).gsub('.','')
     end
 
 

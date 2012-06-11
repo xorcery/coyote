@@ -9,6 +9,7 @@ module Coyote::Assets
     
     def compile!
       @contents = `cat #{@path} | coffee -sc`
+      self
     end
     
   end    

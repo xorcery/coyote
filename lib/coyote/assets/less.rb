@@ -1,13 +1,26 @@
 module Coyote::Assets
   class Less < Base
+    require_pattern Regexp.new(/@import\s*['|"](.*)['|"]\s*;$/i)
 
-    def update!
+
+    def find_dependencies
       super
-      compile!
+      @dependencies.map! do |file|
+        path = File.expand_path(File.join(File.dirname(@relative_path), file))
+        if File.exists? path
+          file
+        elsif File.exists?(path + ".less")
+          file + ".less"
+        else
+          nil
+        end
+      end.compact!
     end
+
 
     def compile!
       @contents = `lessc #{@path}`
+      self
     end
 
   end    
