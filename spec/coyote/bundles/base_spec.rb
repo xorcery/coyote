@@ -119,11 +119,5 @@ module Coyote::Bundles
       end    
     end
     
-    
-    context "#compress!" do
-      it "it compresses the contents"
-    end
-    
-    
   end
 end
