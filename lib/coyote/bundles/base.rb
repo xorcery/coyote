@@ -1,5 +1,4 @@
 require 'coyote/assets'
-require 'coyote/compressors'
 
 module Coyote::Bundles
   class Base
@@ -8,20 +7,15 @@ module Coyote::Bundles
       def filetypes(*args)
         @filetypes ||= args.map { |arg| arg.to_s.gsub('.','') } || []
       end
-
-      def compressor(klass = nil)
-        @compressor ||= klass || :Dummy
-      end        
     end
     
     filetypes :js, :coffee, :css, :less
-    compressor :Dummy
 
-    attr_reader :assets, :target, :compressor
+    attr_accessor :contents
+    attr_reader :assets, :target
     
     def initialize(target)
       @target = target
-      @compressor = Coyote::Compressors.new(self.class.compressor)
       empty!
     end
 
@@ -54,16 +48,13 @@ module Coyote::Bundles
 
 
     def contents
-      # TODO: use a proper enumerator
       @contents ||= files.reverse.map { |path| @assets[path].contents }.join
     end
   
   
     def update!(changed_files=[])
       reset!
-      changed_files.each do |path|
-        @assets[path].update!
-      end
+      changed_files.each { |path| @assets[path].update! }
     end
   
   
@@ -85,9 +76,8 @@ module Coyote::Bundles
     
 
     def compress!
-      @contents = @compressor.compress(contents)
+      self
     end
-      
     
 
   end

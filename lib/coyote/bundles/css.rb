@@ -1,6 +1,8 @@
 module Coyote::Bundles
   class CSS < Base
     filetypes :css, :less
-    compressor :CSS
+
+    def compress!
+    end
   end
 end
