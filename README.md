@@ -1,11 +1,12 @@
 COYOTE
 =============
 
+
 ##A speedy tool for combining and compressing your JavaScript, CoffeeScript, CSS and LESS source files.
 
 Coyote combines your source files into a single script or stylesheet to reduce HTTP overhead and make development easier. It has built-in support for <a href="https://github.com/sstephenson/sprockets">Sprockets-style</a> dependency syntax (`#= require x`) and a lightning-fast, built-in watch mechanism to detect changes to your source files and recompile on the fly. For increased optimization, you can optionally run the final compilation through the Google Closure Compiler before save.
 
-
+[![Build Status](https://secure.travis-ci.org/imulus/coyote.png)](http://travis-ci.org/imulus/coyote)
 
 
 ###Installation
