@@ -108,6 +108,13 @@ module Coyote::Bundles
     end
     
     
+    context "#compress!" do
+      it "it compresses the contents" do
+        bundle.compressor.should_receive(:compress).with(bundle.contents)
+        bundle.compress!
+      end
+    end
+    
     
   end
 end

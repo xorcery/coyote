@@ -68,6 +68,13 @@ describe Coyote::Compiler do
         compiler.compile!
       end
     end
+    
+    it "compresses the bundle if the :compress option is set to true" do
+      options = {:compress => true}
+      compiler = Coyote::Compiler.new(input_file, output_file, options)        
+      compiler.bundle.should_receive :compress!
+      compiler.compile!
+    end    
   end
 
   

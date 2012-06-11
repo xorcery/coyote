@@ -19,6 +19,7 @@ module Coyote
 
    
     def save!
+      @bundle.compress! if @options.fetch(:compress, false)
       @bundle.save!
       notify "\n" + @bundle.manifest unless @options.fetch(:quiet, false)
       notify "Saved bundle to #{@output}   [#{@bundle.files.length} files]", :timestamp, :success
