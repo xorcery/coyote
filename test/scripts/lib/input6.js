@@ -1,1 +1,0 @@
-console.log('Input6.js');

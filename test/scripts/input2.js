@@ -1,1 +1,0 @@
-console.log('Input2.js');

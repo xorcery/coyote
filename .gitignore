@@ -4,3 +4,8 @@ output.css
 test
 coverage
 Gemfile.lock
+
+/pkg/*
+Manifest
+*.gemspec
+*.gem
