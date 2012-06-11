@@ -1,0 +1,1 @@
+console.log "spec/assets/coffeescript/script3.js"

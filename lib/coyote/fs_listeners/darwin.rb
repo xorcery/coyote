@@ -1,5 +1,5 @@
-module Coyote
-  class Darwin < FSListener
+module Coyote::FSListeners
+  class Darwin < Base
     attr_reader :fsevent
 
     def initialize
@@ -26,13 +26,13 @@ module Coyote
     def self.usable?
       require 'rb-fsevent'
       if !defined?(FSEvent::VERSION) || Gem::Version.new(FSEvent::VERSION) < Gem::Version.new('0.3.9')
-        print "Please update rb-fsevent (>= 0.3.9)\n".red
+        notify "Please update rb-fsevent (>= 0.3.9)", :failure
         false
       else
         true
       end
     rescue LoadError
-      print "Please install rb-fsevent gem for Mac OSX FSEvents support\n".red
+      notify "Please install rb-fsevent gem for Mac OSX FSEvents support", :failure
       false
     end
 

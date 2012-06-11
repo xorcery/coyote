@@ -1,0 +1,1 @@
+//= require scripts/script6.js

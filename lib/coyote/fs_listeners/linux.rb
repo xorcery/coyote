@@ -1,5 +1,5 @@
-module Coyote
-  class Linux < FSListener
+module Coyote::FSListeners
+  class Linux < Base
     attr_reader :inotify, :files, :latency, :callback
 
     def initialize
@@ -33,13 +33,13 @@ module Coyote
     def self.usable?
       require 'rb-inotify'
       if !defined?(INotify::VERSION) || Gem::Version.new(INotify::VERSION.join('.')) < Gem::Version.new('0.5.1')
-        print "Please update rb-inotify (>= 0.5.1)\n".red
+        notify "Please update rb-inotify (>= 0.5.1)", :failure
         false
       else
         true
       end
     rescue LoadError
-      print "Please install rb-inotify gem for Linux inotify support\n".red
+      notify "Please install rb-inotify gem for Linux inotify support", :failure
       false
     end
 

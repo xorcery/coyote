@@ -1,12 +1,6 @@
-# OS generated files #
-######################
-.DS_Store?
+output.js
+output.css
 .DS_Store
-ehthumbs.db
-Icon?
-Thumbs.db
-
-/pkg/*
-Manifest
-*.gemspec
-*.gem
+test
+coverage
+Gemfile.lock

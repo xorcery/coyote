@@ -1,5 +1,5 @@
-module Coyote
-  class Windows < FSListener
+module Coyote::FSListeners
+  class Windows < Base
     attr_reader :fchange
 
     def initialize
@@ -28,7 +28,7 @@ module Coyote
       require 'rb-fchange'
       true
     rescue LoadError
-      print "Please install rb-fchange gem for Windows file events support\n".red
+      notify "Please install rb-fchange gem for Windows file events support", :failure
       false
     end
 

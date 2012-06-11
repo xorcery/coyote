@@ -1,5 +1,5 @@
-module Coyote
-  class Polling < FSListener
+module Coyote::FSListeners
+  class Polling < Base
     attr_reader :callback, :latency
 
     def initialize

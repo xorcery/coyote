@@ -1,22 +1,27 @@
-module Coyote
-  class Less < Asset
-    def update!
+module Coyote::Assets
+  class Less < Base
+    require_pattern Regexp.new(/@import\s*['|"](.*)['|"]\s*;$/i)
+
+
+    def find_dependencies
       super
-      compile!
+      @dependencies.map! do |file|
+        path = File.expand_path(File.join(File.dirname(@relative_path), file))
+        if File.exists? path
+          file
+        elsif File.exists?(path + ".less")
+          file + ".less"
+        else
+          nil
+        end
+      end.compact!
     end
 
-    protected
-    
-    # Defines the regex pattern for scanning the contents of the
-    # file to look for require directives
-    def require_pattern
-      Regexp.new(/\/\/=\s*require\s(.*)$/i)  # '//= require a/b/c.less' => 'a/b/c.less'
-    end
-
-    private
 
     def compile!
-      @contents = `lessc #{@absolute_path}`
+      @contents = `lessc #{@path}`
+      self
     end
-  end
+
+  end    
 end
