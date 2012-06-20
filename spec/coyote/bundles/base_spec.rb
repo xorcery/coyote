@@ -85,13 +85,10 @@ module Coyote::Bundles
 
     context "#update!" do
       it "tells the changed files's assets to update" do
-        input1 = "spec/assets/bundles/base/script1.js"
-        input2 = "spec/assets/bundles/base/script2.js"
-        bundle.add(input1)
-        bundle.add(input2)
-        bundle.assets[File.expand_path(input1)].should_receive(:update!)
-        bundle.assets[File.expand_path(input2)].should_receive(:update!)
-        bundle.update!([File.expand_path(input1),File.expand_path(input2)])
+        input = "spec/assets/bundles/base/script1.js"
+        bundle.add(input)
+        bundle.assets[File.expand_path(input)].should_receive(:update!)
+        bundle.update!([File.expand_path(input)])
       end
 
       it "resets the cache" do

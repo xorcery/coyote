@@ -1,5 +1,7 @@
 require 'coyote/bundles'
 require 'coyote/fs_listeners'
+require 'benchmark'
+
 
 module Coyote
   class Compiler
@@ -20,9 +22,12 @@ module Coyote
    
     def save!
       notify "\n" + @bundle.manifest unless @options.fetch(:quiet, false)
-      @bundle.compress! if @options.fetch(:compress, false)
-      @bundle.save!
-      notify "Saved bundle to #{@output}   [#{@bundle.files.length} files]", :timestamp, :success
+      time = Benchmark.realtime do
+        @bundle.compress! if @options.fetch(:compress, false)
+        @bundle.save!
+      end
+      
+      notify "Saved bundle to #{@output}   [#{@bundle.files.length} files] [#{'%.4f' % time} sec]", :timestamp, :success
     end
     
     

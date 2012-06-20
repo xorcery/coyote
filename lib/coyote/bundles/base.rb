@@ -82,20 +82,32 @@ module Coyote::Bundles
   
     def update!(changed_files=[])
       reset!
-      changed_files.each { |path| assets[path].update! }
+      changed_files.each do |path| 
+        asset = assets[path]
+        asset.update! 
+        rebuild! and return if asset.dependencies_have_changed?
+      end
     end
   
   
     def manifest
       files.reverse.map { |path| "+ #{path}" }.join("\n")
-    end
+    end  
   
   
     def reset!
       @contents = nil      
     end
-    
-    
+  
+
+    def rebuild!
+      notify "Dependencies have changed. Refreshing bundle and recompiling...", :timestamp, :warning
+      entry_point = files.first
+      empty!
+      add entry_point
+    end
+
+
     def save!
       File.open target, 'w+' do |file|
         file.write contents

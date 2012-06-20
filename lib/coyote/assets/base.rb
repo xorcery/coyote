@@ -20,9 +20,14 @@ module Coyote::Assets
     end
 
     def find_dependencies
+      @last_dependencies = @dependencies
       matches = self.contents.scan self.class.require_pattern
       @dependencies = matches.reverse.map { |match| match.last.strip }
     end
+    
+    def dependencies_have_changed?
+      @last_dependencies != @dependencies
+    end    
 
     def update!
       self.contents = IO.read(@path)
