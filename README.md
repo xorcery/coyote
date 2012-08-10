@@ -52,7 +52,7 @@ Coyote combines your source files into a single script or stylesheet to reduce H
 			<td>Get the version of your Coyote gem</td>
 		</tr>
 	</tbody>
-</table>            
+</table>
 
 
 
@@ -85,7 +85,7 @@ Coyote ships with convenience methods for neatly defining tasks in your Rakefile
 		  config.input = "src/application.coffee"
 		  config.output = "build/application.min.js"
 		  config.options = { :compress => true }
-		end 
+		end
 
 		coyote :watch do |config|
 		  config.input = "src/application.coffee"
