@@ -82,7 +82,7 @@
             <td>Get the version of your Coyote gem</td>
           </tr>
         </tbody>
-      </table>            
+      </table>
     </div>
   </div>
 
@@ -115,16 +115,10 @@
       <br />
       <code>
         <b class="keyword">require</b> <b class="string>">'coyote/rake'</b><br /><br />
-        <b class="method">coyote</b> <b class="symbol">:build</b> <b class="keyword">do</b> <b class="yield">|<b class="variable">config</b>|</b><br />
+        <b class="method">coyote</b> <b class="keyword">do</b> <b class="yield">|<b class="variable">config</b>|</b><br />
         &nbsp;&nbsp;<b class="variable">config.input</b> = <b class="string">"src/application.coffee"</b><br />
         &nbsp;&nbsp;<b class="variable">config.output</b> = <b class="string">"build/application.min.js"</b><br />
-        &nbsp;&nbsp;<b class="variable">config.options</b> = <b class="hash">{ <b class="symbol">:compress</b> => <b class="boolean">true</b> }</b><br />        
-        <b class="keyword">end</b>
-        <br /><br />
-        <b class="method">coyote</b> <b class="symbol">:watch</b> <b class="keyword">do</b> <b class="yield">|<b class="variable">config</b>|</b><br />
-        &nbsp;&nbsp;<b class="variable">config.input</b> = <b class="string">"src/application.coffee"</b><br />
-        &nbsp;&nbsp;<b class="variable">config.output</b> = <b class="string">"build/application.min.js"</b><br />
-        &nbsp;&nbsp;<b class="variable">config.options</b> = <b class="hash">{ <b class="symbol">:quiet</b> => <b class="boolean">true</b> }</b><br />        
+        &nbsp;&nbsp;<b class="variable">config.options</b> = <b class="hash">{ <b class="symbol">:compress</b> => <b class="boolean">true</b> }</b><br />
         <b class="keyword">end</b>
       </code>
 
