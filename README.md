@@ -11,20 +11,24 @@ Coyote combines your source files into a single script or stylesheet to reduce H
 
 ###Installation
 
-		$ gem install coyote
-
+```bash
+$ gem install coyote
+```
 
 
 ###Command Line Interface
 
 **Syntax:**
 
-		$ coyote [input_filepath]:[output_filepath]
+```bash
+$ coyote [input_filepath]:[output_filepath]
+```
 
 **Example**
 
-		$ coyote src/application.coffee:build/application.min.js
-
+```bash
+$ coyote src/application.coffee:build/application.min.js
+```
 
 
 ###Options
@@ -63,13 +67,17 @@ Coyote has support for [Sprockets-style](https://github.com/sstephenson/sprocket
 
 **Syntax:** (JavaScript)
 
-		//= require other_file.js
-		//= require some_directory
+```javascript
+//= require other_file.js
+//= require some_directory
+```
 
 **Syntax:** (CoffeeScript)
 
-		#= require other_file.coffee
-		#= require some_directory
+```coffee
+#= require other_file.coffee
+#= require some_directory
+```
 
 Paths used in `require` statements are evaluated relative to the file which contains them.
 
@@ -78,30 +86,33 @@ Paths used in `require` statements are evaluated relative to the file which cont
 
 Coyote ships with convenience methods for neatly defining tasks in your Rakefile:
 
+```ruby
+require 'coyote/rake'
 
-		require 'coyote/rake'
-
-		coyote :build do |config|
-		  config.input = "src/application.coffee"
-		  config.output = "build/application.min.js"
-		  config.options = { :compress => true }
-		end
-
-		coyote :watch do |config|
-		  config.input = "src/application.coffee"
-		  config.output = "build/application.min.js"
-		  config.options = { :quiet => true }
-		end
-
+coyote :build do |config|
+  config.input = "src/application.coffee"
+  config.output = "build/application.min.js"
+  config.options = { :compress => true }
+end
+```
 
 This will create two Rake tasks, `build` and `watch`, which you can run as standard tasks: `rake build` and `rake watch`.
+
+```bash
+$ rake build
+```
+
+```bash
+$ rake watch
+```
 
 
 ###Contribute
 **We'd love your help. Fork us so we can make Coyote better.**
 
-		$ git clone git://github.com/imulus/coyote
-
+```bash
+$ git clone git://github.com/imulus/coyote
+```
 
 ###Download
 
