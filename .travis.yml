@@ -5,6 +5,6 @@ rvm:
   - 1.9.3
 notifications:
   recipients:
-    - casey.ohara@imulus.com
+    - ci@imulus.com
 
 
