@@ -15,7 +15,9 @@ module Coyote::Bundles
         notify "Google closure API failed to compile, creating uncompressed file\n", :failure
         notify "Errors:", :failure
         notify "#{compiler.errors.to_s}", :failure
-      end      
+      else
+        notify "Google closure API failed to compile, creating uncompressed file\n", :failure
+      end
     end
-  end    
+  end
 end
