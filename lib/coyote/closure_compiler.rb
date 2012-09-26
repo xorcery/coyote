@@ -11,7 +11,7 @@ module Coyote
     def compile(content)
       @content = content
       params = {
-        'compilation_level' => 'ADVANCED_OPTIMIZATIONS',
+        'compilation_level' => 'SIMPLE_OPTIMIZATIONS',
         'output_format' => 'xml',
         'output_info' => 'compiled_code',
         'js_code' => @content
