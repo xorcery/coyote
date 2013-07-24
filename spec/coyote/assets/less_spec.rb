@@ -7,7 +7,7 @@ module Coyote::Assets
       it "compiles the contents" do
         asset = Less.new("spec/assets/assets/less/stylesheet1.less")
         asset.compile!
-        asset.contents.should == `lessc spec/assets/assets/less/stylesheet1.less`
+        asset.contents.should == Bundler.with_clean_env { `lessc spec/assets/assets/less/stylesheet1.less` }
       end
     end
     

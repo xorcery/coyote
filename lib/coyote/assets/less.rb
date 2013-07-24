@@ -19,7 +19,9 @@ module Coyote::Assets
 
 
     def compile!
-      @contents = `lessc #{@path}`
+      Bundler.with_clean_env do
+        @contents = `lessc #{@path}`
+      end
       self
     end
 

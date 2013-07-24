@@ -6,7 +6,9 @@ module Coyote::Bundles
       notify "Compressing bundle...", :warning, :timestamp
       tmp = "#{@target}.#{Time.now.to_i}.less"
       File.open(tmp, 'w+') { |f| f.write contents }
-      self.contents = `lessc #{tmp} -x`
+      Bundler.with_clean_env do
+        self.contents = `lessc #{tmp} -x`
+      end
       File.delete tmp
     end
 
