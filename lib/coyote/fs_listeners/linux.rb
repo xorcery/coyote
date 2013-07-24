@@ -52,7 +52,7 @@ module Coyote::FSListeners
     def watch_change
       @watch_change = true
       until @stop
-        if Config::CONFIG['build'] =~ /java/ || IO.select([inotify.to_io], [], [], latency)
+        if RbConfig::CONFIG['build'] =~ /java/ || IO.select([inotify.to_io], [], [], latency)
           break if @stop
 
           sleep latency
