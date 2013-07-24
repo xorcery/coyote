@@ -1,4 +1,7 @@
-source :rubygems
+source 'https://rubygems.org'
+gemspec
+
+
 
 gem "rspec", "~> 2.10.0"
 gem "guard", "~> 1.0.3"
