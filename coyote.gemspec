@@ -29,5 +29,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'simplecov', '~> 0.6.4'
   spec.add_development_dependency 'growl', '~> 1.0.3'
   spec.add_development_dependency 'rake', '0.9.2.2'
-  spec.add_development_dependency 'colored', '>= 1.2'
 end
